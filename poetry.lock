@@ -13,6 +13,14 @@ wcwidth = "*"
 tests = ["pytest", "pytest-cov", "pytest-lazy-fixture"]
 
 [[package]]
+name = "unidecode"
+version = "1.3.6"
+description = "ASCII transliterations of Unicode text"
+category = "main"
+optional = false
+python-versions = ">=3.5"
+
+[[package]]
 name = "wcwidth"
 version = "0.2.6"
 description = "Measures the displayed width of unicode strings in a terminal"
@@ -23,8 +31,9 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "f49b204e7a88679a997c4cbc098b29758371d0edb173be49cf58eb6a4b1ce52a"
+content-hash = "73b23e38359c5c2b2105772fca29a6f8080f1b64b2051c8ff255d84e4342949b"
 
 [metadata.files]
 prettytable = []
+unidecode = []
 wcwidth = []

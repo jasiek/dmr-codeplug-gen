@@ -24,4 +24,11 @@ class CountryGroupListGenerator:
         self._country_id = str(country_id)
 
     def grouplists(self):
-        pass
+        matching_ids = [
+            contact.internal_id
+            for contact in self._contacts
+            if str(contact.calling_id).startswith(self._country_id)
+        ]
+        i = 1
+        # TODO: 15/06/2023 (jps): Make this generic
+        yield GroupList(i, "Poland", matching_ids)

@@ -1,61 +1,61 @@
 import sys
 import json
 from unidecode import unidecode
-from prettytable import PrettyTable, PLAIN_COLUMNS
 
 CONTACT_NAME_MAX = 16  # https://github.com/OpenRTX/dmrconfig/blob/master/d868uv.c#L317
 
+# TODO:
+#
+# Digital channels
+# Analog channels
+# Zones
+# Scanlists (low prio)
+# Messages (low prio)
+# Intro lines (low prio)
+
 
 class Codeplug:
-    def __init__(self, contact_gen, grouplist_gen):
+    def __init__(self, contact_gen, grouplist_gen, dmr_id, callsign):
         self.contact_gen = contact_gen
         self.grouplist_gen = grouplist_gen
+        self.dmr_id = dmr_id
+        self.callsign = callsign
 
     def generate(self, where):
         self.write_radio(where)
         self.write_contacts(where)
         self.write_grouplists(where)
+        self.write_uid_and_name(where)
 
     def write_radio(self, where):
         print("Radio: Anytone AT-D878UV", file=where)
+        print("", file=where)
+
+    def write_uid_and_name(self, where):
+        print(f"ID: {self.dmr_id}", file=where)
+        print(f"Name: {self.callsign}", file=where)
+        print("", file=where)
 
     def write_contacts(self, where):
-        t = PrettyTable(["Contact", "Name", "Type", "ID", "RxTone"])
-        t.set_style(PLAIN_COLUMNS)
-        t.align = "l"
+        print("Contact Name             Type    ID       RxTone", file=where)
         for contact in self.contact_gen.contacts():
-            t.add_row(
-                [
-                    contact.internal_id,
-                    self._format_contact_name(contact.name),
-                    "Group",
-                    contact.calling_id,
-                    "-",
-                ]
-            )
+            print("%5d  %s %-7s %-8d %s" % (contact.internal_id, self._format_contact_name(contact.name), "Group", contact.calling_id, "-"), file=where)
 
-        print(t.get_string(sortby="Contact", file=where))
+        print("", file=where)
 
     def write_grouplists(self, where):
-        t = PrettyTable(["Grouplist", "Name", "Contacts"])
-        t.set_style(PLAIN_COLUMNS)
-        t.align = "l"
+        print("Grouplist Name                              Contacts", file=where)
         for grouplist in self.grouplist_gen.grouplists():
-            t.add_row(
-                [
-                    grouplist.internal_id,
-                    self._format_contact_name(grouplist.name),
-                    self._format_contact_ids(grouplist.contact_ids),
-                ]
-            )
-        print(t.get_string(sortby="Grouplist", file=where))
+            print("%5d   %s %s" % (grouplist.internal_id, self._format_contact_name(grouplist.name), self._format_contact_ids(grouplist.contact_ids)), file=where)
+
+        print("", file=where)
 
     def _format_contact_name(self, name):
         # NOTE: 13/06/2023 (jps): Max size of contact name
         name = name[:CONTACT_NAME_MAX]
         # NOTE: 13/06/2023 (jps): Only ascii characters are permitted
         name = unidecode(name)
-        return name
+        return name.replace(" ", "_").ljust(CONTACT_NAME_MAX)
 
     def _format_contact_ids(self, contact_ids):
         ranges = []

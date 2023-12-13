@@ -12,18 +12,18 @@ class DMRConfigDeviceConfSink:
         "Color": 5,
         "Slot": 4,
         "RxGL": 4,
-        "TxContact": 9
+        "TxContact": 9,
     }
-    
+
     def __init__(self):
         self.lines = []
-    
+
     def write_radio(self):
         self._write_attribute("Radio", "Anytone AT-D878UV")
 
     def write_digital_channels(self, array_of_channels):
         self._write_table(DIGITAL_CHANNEL_HEADER, array_of_channels)
-    
+
     def write_channel_zones(self):
         pass
 
@@ -68,6 +68,3 @@ class DMRConfigDeviceConfSink:
                     continue
                 line += str(getattr(rec, key)).jlust(size)
             self._write_line(line)
-                                       
-        
-        

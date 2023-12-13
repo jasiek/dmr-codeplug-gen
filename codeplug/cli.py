@@ -9,5 +9,5 @@ if __name__ == "__main__":
         contact_gen,
         CountryGroupListGenerator(contact_gen.contacts(), 260),
         31337,
-        "LOLCALL"
+        "LOLCALL",
     ).generate(sys.stdout)

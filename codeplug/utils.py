@@ -11,6 +11,7 @@ class TypeChecked:
             raise TypeError(f"Expected {self.expected_type}, got {type(value)}")
         instance.__dict__[self.name] = value
 
+
 def create_class_with_attributes(attribute_dict):
     class CustomClass:
         def __init__(self, **kwargs):

@@ -9,9 +9,11 @@ class BrandmeisterTGContactGenerator:
     def contacts(self):
         i = 1
         for key in self._contacts:
-            yield Contact(internal_id=i,
-                          name=self._sanitize_contact(self._contacts[key]),
-                          calling_id=int(key))
+            yield Contact(
+                internal_id=i,
+                name=self._sanitize_contact(self._contacts[key]),
+                calling_id=int(key),
+            )
             i += 1
 
     def _sanitize_contact(self, name):

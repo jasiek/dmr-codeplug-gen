@@ -1,12 +1,28 @@
-class Contact:
-    def __init__(self, internal_id, name, calling_id):
-        self.internal_id = internal_id
-        self.name = name
-        self.calling_id = calling_id
+from utils import create_class_with_attributes
 
+Contact = create_class_with_attributes({
+    "internal_id": int,
+    "name": str,
+    "calling_id": int
+})
 
-class GroupList:
-    def __init__(self, internal_id, name, contact_ids):
-        self.internal_id = internal_id
-        self.name = name
-        self.contact_ids = contact_ids
+GroupList = create_class_with_attributes({
+    "internal_id": int,
+    "name": str,
+    "contact_ids": list
+})
+
+DigitalChannel = create_class_with_attributes({
+    "Name": str,
+    "Receive": str,
+    "Transmit": str,
+    "Power": str,
+    "Scan": int,
+    "TOT": None,
+    "RO": str,
+    "Admit": str,
+    "Color": int,
+    "Slot": int,
+    "RxGL": int,
+    "TxContact": int
+})

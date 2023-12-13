@@ -39,7 +39,7 @@ class Codeplug:
     def write_contacts(self, where):
         print("Contact Name             Type    ID       RxTone", file=where)
         for contact in self.contact_gen.contacts():
-            print("%5d  %s %-7s %-8d %s" % (contact.internal_id, self._format_contact_name(contact.name), "Group", contact.calling_id, "-"), file=where)
+            print("%5d   %s %-7s %-8d %s" % (contact.internal_id, self._format_contact_name(contact.name), "Group", contact.calling_id, "-"), file=where)
 
         print("", file=where)
 
@@ -50,12 +50,17 @@ class Codeplug:
 
         print("", file=where)
 
+    def write_digital_channels(self, where):
+        print("Digital Name             Receive   Transmit Power Scan TOT RO Admit  Color Slot RxGL TxContact", file=where)
+        for chan in self.digi_chan_gen.generate():
+            pass
+
     def _format_contact_name(self, name):
         # NOTE: 13/06/2023 (jps): Max size of contact name
         name = name[:CONTACT_NAME_MAX]
         # NOTE: 13/06/2023 (jps): Only ascii characters are permitted
         name = unidecode(name)
-        return name.replace(" ", "_").ljust(CONTACT_NAME_MAX)
+        return name.ljust(CONTACT_NAME_MAX).replace(" ", "_")
 
     def _format_contact_ids(self, contact_ids):
         ranges = []

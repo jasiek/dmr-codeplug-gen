@@ -46,12 +46,13 @@ class DMRConfigDeviceConfSink:
         pass
 
     def output(self, io):
-        pass
+        for line in self.lines:
+            io.write(line + "\n")
 
     # private methods
 
     def _write_attribute(self, key, value):
-        self.lines << f"{key}: {value}"
+        self.lines.append(f"{key}: {value}")
 
     def _write_line(self, line):
         self.lines << line

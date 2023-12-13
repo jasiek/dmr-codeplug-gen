@@ -13,9 +13,15 @@ class TypeChecked:
 
 def create_class_with_attributes(attribute_dict):
     class CustomClass:
-        def __init__(self):
+        def __init__(self, **kwargs):
             for name, type_ in attribute_dict.items():
-                setattr(self, name, None)  # Initialize all attributes to None
+                if name in kwargs:
+                    value = kwargs[name]
+                    if not isinstance(value, type_):
+                        raise TypeError(f"Expected {type_}, got {type(value)}")
+                    setattr(self, name, value)
+                else:
+                    setattr(self, name, None)
 
     for name, type_ in attribute_dict.items():
         setattr(CustomClass, name, TypeChecked(name, type_))

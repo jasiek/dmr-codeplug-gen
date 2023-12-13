@@ -9,7 +9,9 @@ class BrandmeisterTGContactGenerator:
     def contacts(self):
         i = 1
         for key in self._contacts:
-            yield Contact(i, self._sanitize_contact(self._contacts[key]), int(key))
+            yield Contact(internal_id=i,
+                          name=self._sanitize_contact(self._contacts[key]),
+                          calling_id=int(key))
             i += 1
 
     def _sanitize_contact(self, name):
@@ -30,5 +32,4 @@ class CountryGroupListGenerator:
             if str(contact.calling_id).startswith(self._country_id)
         ]
         i = 1
-        # TODO: 15/06/2023 (jps): Make this generic
-        yield GroupList(i, "Poland", matching_ids)
+        yield GroupList(internal_id=i, name="Poland", contact_ids=matching_ids)

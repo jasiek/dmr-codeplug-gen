@@ -1,0 +1,4971 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<rxf version="1.0">
+	<link rel="self" href="http://przemienniki.net/export/rxf.xml" type="appliction/xml"/>
+	<link>http://przemienniki.net</link>
+	<updated>2023-12-10 20:44:25</updated>
+	<generated>2023-12-13 23:16:21</generated>
+	<generator>przemienniki.net v.2.12.0 (2019/02/04)</generator>
+	<dictionary>
+		<item>
+			<type>activation</type>
+			<name>CARRIER</name>
+			<value>4</value>
+			<description><![CDATA[nośną]]></description>
+		</item>
+		<item>
+			<type>activation</type>
+			<name>1750</name>
+			<value>32</value>
+			<description><![CDATA[ton 1750Hz]]></description>
+		</item>
+		<item>
+			<type>activation</type>
+			<name>CTCSS</name>
+			<value>256</value>
+			<description><![CDATA[CTCSS]]></description>
+		</item>
+		<item>
+			<type>activation</type>
+			<name>DCS</name>
+			<value>2048</value>
+			<description><![CDATA[DCS]]></description>
+		</item>
+		<item>
+			<type>activation</type>
+			<name>DTMF</name>
+			<value>16384</value>
+			<description><![CDATA[DTMF]]></description>
+		</item>
+		<item>
+			<type>activation</type>
+			<name>UNKNOWN</name>
+			<value>16777216</value>
+			<description><![CDATA[b.d.]]></description>
+		</item>
+		<item>
+			<type>band</type>
+			<name>10M</name>
+			<value>64</value>
+			<description><![CDATA[10m]]></description>
+			<preferedColor>#aa7fff</preferedColor>
+		</item>
+		<item>
+			<type>band</type>
+			<name>6M</name>
+			<value>1024</value>
+			<description><![CDATA[6m]]></description>
+			<preferedColor>#686898</preferedColor>
+		</item>
+		<item>
+			<type>band</type>
+			<name>4M</name>
+			<value>2048</value>
+			<description><![CDATA[4m]]></description>
+			<preferedColor>#878787</preferedColor>
+		</item>
+		<item>
+			<type>band</type>
+			<name>2M</name>
+			<value>4096</value>
+			<description><![CDATA[2m]]></description>
+			<preferedColor>#46c646</preferedColor>
+		</item>
+		<item>
+			<type>band</type>
+			<name>70CM</name>
+			<value>16384</value>
+			<description><![CDATA[70cm]]></description>
+			<preferedColor>#2a7fd4</preferedColor>
+		</item>
+		<item>
+			<type>band</type>
+			<name>23CM</name>
+			<value>32768</value>
+			<description><![CDATA[23cm]]></description>
+			<preferedColor>#d42a55</preferedColor>
+		</item>
+		<item>
+			<type>band</type>
+			<name>13CM</name>
+			<value>65536</value>
+			<description><![CDATA[13cm]]></description>
+			<preferedColor>#ff5500</preferedColor>
+		</item>
+		<item>
+			<type>band</type>
+			<name>3CM</name>
+			<value>1048576</value>
+			<description><![CDATA[3cm]]></description>
+			<preferedColor>#8e4f30</preferedColor>
+		</item>
+		<item>
+			<type>mode</type>
+			<name>FM</name>
+			<value>4</value>
+			<description><![CDATA[FM]]></description>
+			<preferedColor>#46c646</preferedColor>
+		</item>
+		<item>
+			<type>mode</type>
+			<name>DSTAR</name>
+			<value>32</value>
+			<description><![CDATA[DSTAR/DV]]></description>
+			<preferedColor>#ff5500</preferedColor>
+		</item>
+		<item>
+			<type>mode</type>
+			<name>ATV</name>
+			<value>256</value>
+			<description><![CDATA[ATV]]></description>
+			<preferedColor>#2a7fd4</preferedColor>
+		</item>
+		<item>
+			<type>mode</type>
+			<name>ECHOLINK</name>
+			<value>1024</value>
+			<description><![CDATA[Echolink]]></description>
+			<preferedColor>#d42a55</preferedColor>
+		</item>
+		<item>
+			<type>mode</type>
+			<name>MOTOTRBO</name>
+			<value>2048</value>
+			<description><![CDATA[DMR]]></description>
+			<preferedColor>#ff7f00</preferedColor>
+		</item>
+		<item>
+			<type>mode</type>
+			<name>APCO25</name>
+			<value>4096</value>
+			<description><![CDATA[APCO-25]]></description>
+			<preferedColor>#aa2aff</preferedColor>
+		</item>
+		<item>
+			<type>mode</type>
+			<name>C4FM</name>
+			<value>8192</value>
+			<description><![CDATA[C4FM/Fusion]]></description>
+			<preferedColor>#ffd400</preferedColor>
+		</item>
+		<item>
+			<type>mode</type>
+			<name>FMLINK</name>
+			<value>16384</value>
+			<description><![CDATA[FM-Link]]></description>
+			<preferedColor>#4caf50</preferedColor>
+		</item>
+		<item>
+			<type>status</type>
+			<name>WORKING</name>
+			<value>1</value>
+			<description><![CDATA[działający]]></description>
+			<preferedColor>#46c646</preferedColor>
+		</item>
+		<item>
+			<type>status</type>
+			<name>DISABLED</name>
+			<value>2</value>
+			<description><![CDATA[wyłączony]]></description>
+			<preferedColor>#ff2b00</preferedColor>
+		</item>
+		<item>
+			<type>status</type>
+			<name>UNKNOWN</name>
+			<value>4</value>
+			<description><![CDATA[nieznany]]></description>
+			<preferedColor>#969696</preferedColor>
+		</item>
+		<item>
+			<type>status</type>
+			<name>TESTING</name>
+			<value>8</value>
+			<description><![CDATA[testowy]]></description>
+			<preferedColor>#2a7fd4</preferedColor>
+		</item>
+		<item>
+			<type>status</type>
+			<name>BUILDING</name>
+			<value>16</value>
+			<description><![CDATA[budowany]]></description>
+			<preferedColor>#8e4f30</preferedColor>
+		</item>
+		<item>
+			<type>status</type>
+			<name>PLANNED</name>
+			<value>32</value>
+			<description><![CDATA[planowany]]></description>
+			<preferedColor>#ff5500</preferedColor>
+		</item>
+	</dictionary>
+	<repeaters>
+		<repeater>
+			<qra>SR1ASR</qra>
+			<id>9045680</id>
+			<hash></hash>
+			<created>2021-02-27 15:38:05</created>
+			<updated>2023-06-25 03:22:41</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2025-09-22</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.025000</qrg>
+			<qrg type="tx">438.625000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Szczecin]]></qth>
+			<location>
+				<locator>JO73GK</locator>
+				<latitude>53.456806</latitude>
+				<longitude>14.547729</longitude>
+				<altitudeOverSea>73</altitudeOverSea>
+				<altitudeOverGround>48</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>10.00</trxPower>
+			<operator>SQ1FYZ</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR1ASR</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045680</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR1KG</qra>
+			<id>6346372</id>
+			<hash>b34209d86ddb995861e7c522563070e2</hash>
+			<created>2010-11-13 02:11:50</created>
+			<updated>2020-06-30 23:23:32</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>10240</modeInt>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.625000</qrg>
+			<qrg type="tx">439.225000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Kołobrzeg]]></qth>
+			<location>
+				<locator>JO74SE</locator>
+				<latitude>54.178284</latitude>
+				<longitude>15.553207</longitude>
+				<altitudeOverSea>2</altitudeOverSea>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>10.00</trxPower>
+			<operator>SQ1KW</operator>
+			<operator>SQ1GU</operator>
+			<remarks><![CDATA[YAESU DR-1XE , Antena  X-510   50m]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR1KG</link>
+			<link>https://www.bsk.kolobrzeg.pl/przemiennki-bsk/</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/6346372</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR1UVX</qra>
+			<id>9023475</id>
+			<hash>106324a54b115b6c54f29fb8fef73534</hash>
+			<created>2015-10-21 19:09:38</created>
+			<updated>2015-12-31 13:40:15</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.787500</qrg>
+			<qrg type="tx">439.387500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Stargard]]></qth>
+			<location>
+				<locator>JO73MI</locator>
+				<latitude>53.342431</latitude>
+				<longitude>15.024889</longitude>
+				<altitudeOverSea>35</altitudeOverSea>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<operator>SQ1GZG</operator>
+			<remarks><![CDATA[SP-DMR
+RD625
+TS1 TF260
+TS2 TG9]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR1UVX</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9023475</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR1WAD</qra>
+			<id>9045720</id>
+			<hash></hash>
+			<created>2021-10-14 21:53:29</created>
+			<updated>2021-10-14 21:53:31</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2026-09-29</licenseExpiryDate>
+			<modeInt>10240</modeInt>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.050000</qrg>
+			<qrg type="tx">438.650000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Wałcz]]></qth>
+			<location>
+				<locator>JO83FG</locator>
+				<latitude>53.278132</latitude>
+				<longitude>16.483364</longitude>
+				<altitudeOverSea>115</altitudeOverSea>
+				<altitudeOverGround>35</altitudeOverGround>
+			</location>
+			<activationInt>16777216</activationInt>
+
+			<activation>UNKNOWN</activation>
+			<trxPower>10.00</trxPower>
+			<operator>SQ1GQN</operator>
+			<operator>SQ1GQV</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR1WAD</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045720</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR1ZDR</qra>
+			<id>9045708</id>
+			<hash></hash>
+			<created>2021-06-26 11:15:57</created>
+			<updated>2021-06-26 11:15:58</updated>
+			<statusInt>16</statusInt>
+			<status>BUILDING</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.712500</qrg>
+			<qrg type="tx">438.312500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Kalisz Pomorski]]></qth>
+			<location>
+				<locator>JO73WH</locator>
+				<latitude>53.301882</latitude>
+				<longitude>15.908961</longitude>
+				<altitudeOverSea>91</altitudeOverSea>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<operator>SQ1FYZ</operator>
+			<operator>SQ1GZG</operator>
+			<remarks><![CDATA[Przemiennik w trakcie budowy i zgłoszenia w UKE,]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR1ZDR</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045708</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR1ZW</qra>
+			<id>4545002</id>
+			<hash>14b77e81a55f17def3bd3aa26c0c2e22</hash>
+			<created>2010-12-26 16:48:23</created>
+			<updated>2023-04-19 17:14:17</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2028-04-17</licenseExpiryDate>
+			<modeInt>10240</modeInt>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.237500</qrg>
+			<qrg type="tx">438.837500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Świnoujście]]></qth>
+			<location>
+				<locator>JO73DV</locator>
+				<latitude>53.909511</latitude>
+				<longitude>14.254612</longitude>
+				<altitudeOverSea>3</altitudeOverSea>
+				<altitudeOverGround>40</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<operator>SP1WSX</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR1ZW</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/4545002</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR2BC</qra>
+			<id>9044962</id>
+			<hash></hash>
+			<created>2018-03-29 23:39:30</created>
+			<updated>2022-01-20 20:23:46</updated>
+			<statusInt>2</statusInt>
+			<status>DISABLED</status>
+			<licenseExpiryDate>2023-03-14</licenseExpiryDate>
+			<modeInt>10240</modeInt>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.687500</qrg>
+			<qrg type="tx">439.287500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Bydgoszcz]]></qth>
+			<location>
+				<locator>JO83XD</locator>
+				<latitude>53.130098</latitude>
+				<longitude>17.945776</longitude>
+				<altitudeOverSea>58</altitudeOverSea>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP2FKB</operator>
+			<remarks><![CDATA[Warstwa radiowa 2x Motorola GM 340
+YSF Room Poland ID29114
+DMR Hblink Bydgoszcz-Poland HBlink Network
+Brandmeister 2602 Poland TG260 Statyczna TS1 CC2
+DMR Plus Polska IPSC2-Poland]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR2BC</link>
+			<link>http://sp2fkb.ddns.net:3800/</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9044962</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR2DCH</qra>
+			<id>9045145</id>
+			<hash></hash>
+			<created>2020-02-14 09:09:54</created>
+			<updated>2022-01-02 21:32:11</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2025-01-15</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.787500</qrg>
+			<qrg type="tx">438.387500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Człuchów]]></qth>
+			<location>
+				<locator>JO83QP</locator>
+				<latitude>53.660436</latitude>
+				<longitude>17.379398</longitude>
+				<altitudeOverSea>169</altitudeOverSea>
+				<altitudeOverGround>54</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP2GCH</operator>
+			<remarks><![CDATA[Color Code 2]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR2DCH</link>
+			<link>https://sr2dch.pzk.pl</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045145</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR2DMR</qra>
+			<id>9021217</id>
+			<hash></hash>
+			<created>2015-10-07 15:24:05</created>
+			<updated>2023-08-30 06:15:38</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2028-03-14</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.712500</qrg>
+			<qrg type="tx">439.312500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Jabłowo Pałuckie - wieża p.poż]]></qth>
+			<location>
+				<locator>JO82WW</locator>
+				<latitude>52.919733</latitude>
+				<longitude>17.836519</longitude>
+				<altitudeOverSea>202</altitudeOverSea>
+				<altitudeOverGround>40</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP2GG</operator>
+			<remarks><![CDATA[CC2]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR2DMR</link>
+			<link>https://www.facebook.com/profile.php?id=100064510003135</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9021217</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR2GDD</qra>
+			<id>9044943</id>
+			<hash></hash>
+			<created>2017-11-03 11:45:21</created>
+			<updated>2020-04-03 14:58:04</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2022-10-24</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.687500</qrg>
+			<qrg type="tx">438.287500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Gdańsk]]></qth>
+			<location>
+				<locator>JO94II</locator>
+				<altitudeOverSea>10</altitudeOverSea>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP2TFV</operator>
+			<remarks><![CDATA[wysokość anteny 41m
+antena 5dbi]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR2GDD</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9044943</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR2IN</qra>
+			<id>9045150</id>
+			<hash></hash>
+			<created>2020-04-12 10:11:43</created>
+			<updated>2020-04-12 10:11:44</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2024-04-04</licenseExpiryDate>
+			<modeInt>10240</modeInt>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.637500</qrg>
+			<qrg type="tx">438.237500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Inowrocław]]></qth>
+			<location>
+				<locator>JO92DT</locator>
+			</location>
+			<activationInt>16777216</activationInt>
+
+			<activation>UNKNOWN</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ2FRG</operator>
+			<remarks><![CDATA[Przemiennik Inowrocławskiego Klubu Krótkofalowców SP2KCW]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR2IN</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045150</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR2OX</qra>
+			<id>9043741</id>
+			<hash>109a7974ebcb571acece86cac9be3484</hash>
+			<created>2017-01-03 09:06:52</created>
+			<updated>2018-10-19 10:27:39</updated>
+			<statusInt>2</statusInt>
+			<status>DISABLED</status>
+			<licenseExpiryDate>2021-11-14</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.875000</qrg>
+			<qrg type="tx">439.475000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Gdynia]]></qth>
+			<location>
+				<locator>JO94GN</locator>
+				<latitude>54.550543</latitude>
+				<longitude>18.537683</longitude>
+				<altitudeOverSea>40</altitudeOverSea>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>10.00</trxPower>
+			<operator>SP2FRN</operator>
+			<remarks><![CDATA[ColorCode przemiennika: 02]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR2OX</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9043741</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR2UVF</qra>
+			<id>8997029</id>
+			<hash>2e9a14a9f2f0b74afd5e279cf135a7d9</hash>
+			<created>2012-10-31 21:02:33</created>
+			<updated>2019-07-01 19:08:32</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2022-05-24</licenseExpiryDate>
+			<modeInt>10272</modeInt>
+			<mode>DSTAR</mode>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.337500</qrg>
+			<qrg type="tx">438.937500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Bydgoszcz]]></qth>
+			<location>
+				<locator>JO93BD</locator>
+				<latitude>53.142333</latitude>
+				<longitude>18.134742</longitude>
+				<altitudeOverSea>85</altitudeOverSea>
+				<altitudeOverGround>40</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ2RBY</operator>
+			<operator>SQ2FRB</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR2UVF</link>
+			<link>http://sr2uvf.ampr.org</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/8997029</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR2UVG</qra>
+			<id>9006122</id>
+			<hash>852a2e7b0f80271e9511e9c41f8deaa3</hash>
+			<created>2015-02-20 09:12:14</created>
+			<updated>2018-10-19 10:26:43</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2022-01-23</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.237500</qrg>
+			<qrg type="tx">438.837500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Chwaszczyno EMITEL]]></qth>
+			<location>
+				<locator>JO94FK</locator>
+				<latitude>54.452753</latitude>
+				<longitude>18.435949</longitude>
+				<altitudeOverSea>344</altitudeOverSea>
+				<altitudeOverGround>161</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<ctcss type="tx">94.8</ctcss>
+			<trxPower>10.00</trxPower>
+			<operator>SP2XDM</operator>
+			<remarks><![CDATA[1. Przemiennik DMR, uruchamiany CC2.
+
+2.Przemiennik pracujący na podstawie tego samego pozwolenia co przemiennik D-STAR SR2UVG-B
+
+3. Przemiennik osiągalny z ręki mocą 1 wata z Juraty (JO94CB).]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR2UVG</link>
+			<link>http://lewczuk.pl/index.php/pl/sr2uvg</link>
+			<link>http://lewczuk.pl/index.php/pl/sr2uvg-pozwolenie-radiowe/category/188</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9006122</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR2UVO</qra>
+			<id>9002912</id>
+			<hash>5e3861d55ffebd3de225f13c9f55bad2</hash>
+			<created>2014-06-15 12:06:58</created>
+			<updated>2022-01-25 14:36:51</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>10272</modeInt>
+			<mode>DSTAR</mode>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.362500</qrg>
+			<qrg type="tx">438.962500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Włocławek]]></qth>
+			<location>
+				<locator>JO92MP</locator>
+				<latitude>52.642110</latitude>
+				<longitude>19.051580</longitude>
+				<altitudeOverSea>59</altitudeOverSea>
+				<altitudeOverGround>35</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>10.00</trxPower>
+			<operator>SP2OFF</operator>
+			<remarks><![CDATA[Antena Diamond X-510
+DMR Color Code 1]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR2UVO</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9002912</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR2VVV</qra>
+			<id>9001912</id>
+			<hash>6fdc093abc73318291030b02bfa4a67e</hash>
+			<created>2013-09-11 13:15:37</created>
+			<updated>2020-02-04 18:20:48</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2025-01-31</licenseExpiryDate>
+			<modeInt>2080</modeInt>
+			<mode>DSTAR</mode>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.737500</qrg>
+			<qrg type="tx">439.337500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Szubin]]></qth>
+			<location>
+				<locator>JO83VA</locator>
+				<latitude>53.016054</latitude>
+				<longitude>17.762658</longitude>
+				<altitudeOverSea>120</altitudeOverSea>
+				<altitudeOverGround>20</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP2GG</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR2VVV</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9001912</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR3DGW</qra>
+			<id>9044993</id>
+			<hash></hash>
+			<created>2018-10-21 10:45:47</created>
+			<updated>2018-10-21 10:45:49</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2023-08-02</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.950000</qrg>
+			<qrg type="tx">438.550000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Gorzów Wielkopolski]]></qth>
+			<location>
+				<locator>JO72PR</locator>
+				<latitude>52.744249</latitude>
+				<longitude>15.280424</longitude>
+				<altitudeOverSea>63</altitudeOverSea>
+				<altitudeOverGround>20</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>10.00</trxPower>
+			<operator>SP3HTF</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR3DGW</link>
+			<link>http://sq9jdo.com.pl/DMR/Przemienniki/SR3DGW.html</link>
+			<link>https://www.qrz.com/lookup/SP3HTF</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9044993</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR3DJ</qra>
+			<id>9045692</id>
+			<hash></hash>
+			<created>2021-03-11 10:58:04</created>
+			<updated>2021-03-11 10:58:06</updated>
+			<statusInt>32</statusInt>
+			<status>PLANNED</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.525000</qrg>
+			<qrg type="tx">438.125000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[RTCN Jemiołów/Łagów maszt EmiTel]]></qth>
+			<location>
+				<locator>JO72PI</locator>
+				<latitude>52.346795</latitude>
+				<longitude>15.276266</longitude>
+				<altitudeOverSea>160</altitudeOverSea>
+				<altitudeOverGround>185</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<operator>SP3DFR</operator>
+			<remarks><![CDATA[Antena RX/TX GP9N wysokość zawieszenia 185,00m n.p.t., feeder 7/8"@200m; Zakres częstotliwości pracy anteny: 144-146 MHz / 430-440 MHz Zysk: UHF 9.75 dBd Długość: 5,15 cm Złącze: N antena posiada 3 przeciwwagi o długości 49 cm każda.
+Urządzenie: Hytera RD985 UHF.
+Sieć DMR+
+Color Code: 5.
+Slot 1 TG260
+Slot 2 TG2605, TG8005, TG26057
+Obiekt: RTCN Jemiołów – Radiowo-Telewizyjne Centrum Nadawcze w Jemiołowie gmina Łagów 66-220 Łagów, maszt o wysokości 316 metrów i betonowa wieża o wysokości 99 metrów. Centrum zbudowano w latach 1960-1962]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR3DJ</link>
+			<link>http://sr3zj.qrz.pl/</link>
+			<link>http://www.dmrplus.eu</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045692</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR3DOS</qra>
+			<id>9045202</id>
+			<hash>cc4d975eca8878f5e29e083a65ad667d</hash>
+			<created>2020-12-08 10:06:28</created>
+			<updated>2023-09-22 06:44:56</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2026-01-07</licenseExpiryDate>
+			<modeInt>10272</modeInt>
+			<mode>DSTAR</mode>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.687500</qrg>
+			<qrg type="tx">438.287500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Ostrów Wielkopolski]]></qth>
+			<location>
+				<locator>JO81VP</locator>
+				<latitude>51.659738</latitude>
+				<longitude>17.797780</longitude>
+				<altitudeOverSea>133</altitudeOverSea>
+				<altitudeOverGround>15</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>9.00</trxPower>
+			<operator>SQ3TGY</operator>
+			<operator>SQ3KNL</operator>
+			<remarks><![CDATA[Budowa:
+TX: Motorola GM950
+RX: Motorola GM950
+Duplexer: K&L 6CU-00066
+Ant: Diamond X300N
+Przemiennik TRIO-MODE DMR+C4FM+D-STAR
+
+DASHBOARD:
+http://185.22.9.7:81/
+
+C4FM (YSF PL POLAND) - Możliwość zmiany room-ów poprzez zastosowanie WIRES-X
+
+
+DMR: Color-Code(CC):1
+ TS1: 260, 2600, 2603
+ TS2: TG26037, TG260080, TG26038 , TG26034 , TG26036, TG26066]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR3DOS</link>
+			<link>https://brandmeister.network/?page=repeater&amp;id=260003</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045202</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR3DRW</qra>
+			<id>9045706</id>
+			<hash>87fb467c4b45b14b48c38f6ee4c9df41</hash>
+			<created>2021-05-16 17:37:49</created>
+			<updated>2021-05-16 17:39:14</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.737500</qrg>
+			<qrg type="tx">438.337500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Rawicz]]></qth>
+			<location>
+				<locator>JO81KO</locator>
+				<latitude>51.609440</latitude>
+				<longitude>16.867769</longitude>
+				<altitudeOverSea>101</altitudeOverSea>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>10.00</trxPower>
+			<operator>SP3QYJ</operator>
+			<remarks><![CDATA[CC1]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR3DRW</link>
+			<link>https://brandmeister.network/?page=repeater&amp;id=260005</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045706</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR3DSE</qra>
+			<id>9044947</id>
+			<hash></hash>
+			<created>2017-12-02 19:19:32</created>
+			<updated>2018-01-09 14:22:42</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.137500</qrg>
+			<qrg type="tx">438.737500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Śrem]]></qth>
+			<location>
+				<locator>JO82MC</locator>
+				<latitude>52.086156</latitude>
+				<longitude>17.022016</longitude>
+				<altitudeOverSea>80</altitudeOverSea>
+				<altitudeOverGround>44</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>10.00</trxPower>
+			<operator>SQ3GJH</operator>
+			<remarks><![CDATA[CC1, Hytera RD625]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR3DSE</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9044947</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR3DZG</qra>
+			<id>9045091</id>
+			<hash>13b10deb3d3896c26f54b70cb81498a9</hash>
+			<created>2019-02-27 17:11:50</created>
+			<updated>2020-12-31 19:43:17</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2024-03-14</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.362500</qrg>
+			<qrg type="tx">438.962500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Zielona Góra]]></qth>
+			<location>
+				<locator>JO71SW</locator>
+				<latitude>51.935510</latitude>
+				<longitude>15.527107</longitude>
+				<altitudeOverSea>198</altitudeOverSea>
+				<altitudeOverGround>30</altitudeOverGround>
+			</location>
+			<activationInt>16777216</activationInt>
+
+			<activation>UNKNOWN</activation>
+			<trxPower>5.00</trxPower>
+			<operator>SP3AMO</operator>
+			<operator>SP3DFR</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR3DZG</link>
+			<link>https://brandmeister.network/?page=repeater&amp;id=260306</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045091</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR3KA</qra>
+			<id>8997049</id>
+			<hash>112f6e89394d84ad2ee7f6be951033c9</hash>
+			<created>2013-02-06 14:01:29</created>
+			<updated>2021-05-28 13:25:18</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2018-02-01</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.775000</qrg>
+			<qrg type="tx">439.375000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Kaszczor]]></qth>
+			<location>
+				<locator>JO81BX</locator>
+				<latitude>51.958967</latitude>
+				<longitude>16.162937</longitude>
+				<altitudeOverSea>75</altitudeOverSea>
+				<altitudeOverGround>10</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>5.00</trxPower>
+			<operator>SP3TLU</operator>
+			<remarks><![CDATA[X510,
+DMR BM]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR3KA</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/8997049</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR3KEP</qra>
+			<id>9045098</id>
+			<hash></hash>
+			<created>2019-03-19 16:04:54</created>
+			<updated>2023-04-07 23:20:12</updated>
+			<statusInt>2</statusInt>
+			<status>DISABLED</status>
+			<licenseExpiryDate>2024-03-19</licenseExpiryDate>
+			<modeInt>10244</modeInt>
+			<mode>FM</mode>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.837500</qrg>
+			<qrg type="tx">438.437500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Kępno]]></qth>
+			<location>
+				<locator>JO91AH</locator>
+				<latitude>51.297605</latitude>
+				<longitude>18.003350</longitude>
+				<altitudeOverSea>172</altitudeOverSea>
+				<altitudeOverGround>77</altitudeOverGround>
+			</location>
+			<activationInt>256</activationInt>
+
+			<activation>CTCSS</activation>
+			<ctcss type="rx">103.5</ctcss>
+			<trxPower>15.00</trxPower>
+			<remarks><![CDATA[Antena  zamontowana na wysokiej wieży budynek elewatora  + maszt trelina 12m. ( Przemiennik posiada zdjęte anteny, pozostał tylko widoczny maszt bez anten. )]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR3KEP</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045098</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR3KRZ</qra>
+			<id>9045127</id>
+			<hash></hash>
+			<created>2019-09-13 13:22:52</created>
+			<updated>2019-10-21 20:11:15</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2024-09-26</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.087500</qrg>
+			<qrg type="tx">438.687500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Krzemieniewo]]></qth>
+			<location>
+				<locator>JO81KU</locator>
+				<latitude>51.857324</latitude>
+				<longitude>16.842054</longitude>
+				<altitudeOverSea>111</altitudeOverSea>
+				<altitudeOverGround>12</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP3SPK</operator>
+			<remarks><![CDATA[Przemiennik sieci DMR+ Color Code 3
+TG 260 grupa wywoławcza sieci DMR+
+TG2603 grupa połączona z siecią Brand Meister
+
+więcej na stronie http://dmrplus.pl]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR3KRZ</link>
+			<link>http://dmrplus.pl/przemienniki</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045127</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR3MDV</qra>
+			<id>9045149</id>
+			<hash></hash>
+			<created>2020-03-22 21:25:09</created>
+			<updated>2023-09-10 15:54:03</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2024-12-17</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.975000</qrg>
+			<qrg type="tx">439.575000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[]]></qth>
+			<location>
+				<locator>JO81HU</locator>
+				<latitude>51.844431</latitude>
+				<longitude>16.594033</longitude>
+				<altitudeOverSea>93</altitudeOverSea>
+				<altitudeOverGround>129</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>10.00</trxPower>
+			<operator>SP3AK</operator>
+			<remarks><![CDATA[Sirio SO 437N]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR3MDV</link>
+			<link>https://brandmeister.network/</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045149</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR3UVP</qra>
+			<id>8997045</id>
+			<hash>bdc9024433106352dac5043045e47908</hash>
+			<created>2013-02-02 23:16:05</created>
+			<updated>2020-02-21 20:35:09</updated>
+			<statusInt>16</statusInt>
+			<status>BUILDING</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.837500</qrg>
+			<qrg type="tx">439.437500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Poznań]]></qth>
+			<location>
+				<locator>JO82KL</locator>
+				<latitude>52.459156</latitude>
+				<longitude>16.905933</longitude>
+				<altitudeOverSea>195</altitudeOverSea>
+				<altitudeOverGround>90</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>10.00</trxPower>
+			<operator>SP3VSS</operator>
+			<remarks><![CDATA[TX - Motorola GM360
+RX - Motorola GM340
+
+antena wspólna z TX-SR3X  Cushcraft ARX-270  12dBi @ 90m npt]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR3UVP</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/8997045</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR3ZBZ</qra>
+			<id>9045807</id>
+			<hash>4f40df605af98c08ec41f6b624add769</hash>
+			<created>2023-03-06 14:04:30</created>
+			<updated>2023-03-07 16:10:44</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2028-03-02</licenseExpiryDate>
+			<modeInt>10240</modeInt>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.762500</qrg>
+			<qrg type="tx">438.362500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Chodzież]]></qth>
+			<location>
+				<locator>JO82KX</locator>
+				<latitude>52.998288</latitude>
+				<longitude>16.906704</longitude>
+				<altitudeOverSea>55</altitudeOverSea>
+				<altitudeOverGround>8</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP3QBA</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR3ZBZ</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045807</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR4BAU</qra>
+			<id>9045105</id>
+			<hash></hash>
+			<created>2019-05-12 23:31:15</created>
+			<updated>2023-02-10 22:53:49</updated>
+			<statusInt>2</statusInt>
+			<status>DISABLED</status>
+			<licenseExpiryDate>2024-11-21</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.762500</qrg>
+			<qrg type="tx">438.362500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Augustów]]></qth>
+			<location>
+				<locator>KO13LU</locator>
+				<latitude>53.837154</latitude>
+				<longitude>22.979150</longitude>
+				<altitudeOverSea>125</altitudeOverSea>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP4BK</operator>
+			<operator>SP4XKS</operator>
+			<operator>SP4MPN</operator>
+			<remarks><![CDATA[MTR-2000, DMRID: 260433,]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR4BAU</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045105</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR4BI</qra>
+			<id>9044985</id>
+			<hash>587b318ea89fa90c984d974e4183372d</hash>
+			<created>2018-08-27 12:31:37</created>
+			<updated>2023-01-27 21:48:26</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2023-08-20</licenseExpiryDate>
+			<modeInt>10244</modeInt>
+			<mode>FM</mode>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.862500</qrg>
+			<qrg type="tx">438.462500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Juchnowiec]]></qth>
+			<location>
+				<locator>KO13NA</locator>
+				<latitude>53.015542</latitude>
+				<longitude>23.135219</longitude>
+				<altitudeOverSea>152</altitudeOverSea>
+				<altitudeOverGround>35</altitudeOverGround>
+			</location>
+			<activationInt>256</activationInt>
+
+			<activation>CTCSS</activation>
+			<ctcss type="rx">67.0</ctcss>
+			<ctcss type="tx">67.0</ctcss>
+			<trxPower>15.00</trxPower>
+			<operator>SP4FEU</operator>
+			<remarks><![CDATA[MOTOROLA MTR-2000  , sterownik MMDVM.
+Color Code 4.
+Przemiennik pracuje w  sieci Brandmeister ,HBLink ,DMR PLUS
+----------------------------------------------------------------------------
+Mod C4FM
+
+PL C4FM Poland (YCS260)
+
+DG-ID# 60 Wywoławcza polska grupa rozmówna Fusion II
+
+DG-ID# 84 Okręg 4, woj. warmińsko-mazurskie, podlaskie
+
+DG-ID# 95 Regionalna warmińsko-mazurska
+
+DG-ID# 90 Lokalna C4FM
+
+DG-ID# 97 Grupa odbiorcza alertów METEO - ZAKAZ NADAWANIA!!!
+
+
+
+oraz Analogowo FM
+
+CTCSS odbiornika:67.0Hz
+CTCSS nadajnika:67.0 Hz
+
+Antena  Radmor 3284/3
+
+Grupy TG na SR4BI 
+
+SLOT 1
+
+TG 260 Wywoławcza - BrandMeister
+
+TG 1260 Wywoławcza - DMR PLUS
+
+TG 26004Grupa Dynamiczna Okręgowa SP4 do połączeń HBLink Polska
+
+TG 4 Grupa do rozmów na reflektorze XLX132-D D-Star/DMR/YSF Dynamiczna (aktywacja PTT 10 min)
+
+TG 5 Grupa do rozmów lokalnych Białystok na XLX260-E Dynamiczna (aktywacja PTT 10 min)
+
+TG 6 Grupa do rozmów na reflektorze XLX260-A Dynamiczna (aktywacja PTT 10 min)
+
+TG 11 EmCom Polska (BM-HBLink)
+
+TG 12 EmCom Podlasie (BM-HBLink)
+
+TG 26000 Grupa Dynamiczna - Techniczna HBLink Polska
+
+----------------------------------------------
+
+SLOT 2
+
+TG 10 Podlaska (BM-HBLink)
+
+TG 260 Wywoławcza - HBLink Polska
+
+TG 8004 Okręgowa SP4 DMR PLUS
+
+TG 2604 Okręgowa SP4 do połączeń BrandMeister - DMR PLUS
+
+TG 7 Grupa - Lokalna HBLink
+
+TG 8 Wywoławcza - HBLink Polska
+
+TG 9 Grupa statyczna oraz linkowanie się do reflektorów
+
+TG 20 Grupa Dynamiczna (aktywacja PTT 10 min) do rozmów na przemienniku SR4X Analog ..:::.. HBLink - Białystok
+
+TG 40 Echolink NODE:ID 438584 SR4BI-R HBLink - Białystok
+
+TG 60 Grupa do rozmów na reflektorze NXDN HBLink PL
+
+TG 61 Grupa do rozmów na reflektorze P25 HBLink PL
+
+TG 260 Grupa Wywoławcza HBLink Polska
+
+TG 260454(SR4BI) Grupa - Lokalna
+
+TG 260453(SR4BIA) Grupa - Lokalna
+
+TG 260099 GPS/RRS/APRS.
+
+260097 Echo (NOTICE: private call, not a TG)
+
+TG 9990 Echo TEST DMR PLUS
+
+TG 9999 Echo TEST HBLink
+
+Informacje na żądanie
+
+AKTYWACJA PTT od 2-5 sekund
+
+Lokalny Serwis Informacyjny:Białystok
+TG 50 - Info
+TG 51 - Pogoda
+TG 52 - Pogoda za 12H
+TG 53 - Meteo alerty
+TG 54 - Poziom rzek
+TG 55 - Lokalne info
+
+Lokalny Serwis Informacyjny:Giżycko
+TG 70 - Info
+TG 71 - Pogoda
+TG 72 - Pogoda za 12H
+TG 73 - Meteo alerty
+TG 74 - Poziom rzek
+TG 75 - Lokalne info
+
+Pogoda w regionie teraz i za 12H
+TG 78/79 - Augustów
+TG 80/81 - Sokółka
+TG 82/83 - Hajnówka
+TG 84/85 - Łomża
+TG 86/87 - Zambrów
+TG 88/89 - Suwałki
+TG 90/91 - Siemiatycze]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR4BI</link>
+			<link>https://sr4bi.pl</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9044985</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR4BIA</qra>
+			<id>9045111</id>
+			<hash></hash>
+			<created>2019-07-20 11:09:29</created>
+			<updated>2022-10-30 18:33:19</updated>
+			<statusInt>2</statusInt>
+			<status>DISABLED</status>
+			<licenseExpiryDate>2024-08-02</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.650000</qrg>
+			<qrg type="tx">439.250000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Białystok]]></qth>
+			<location>
+				<locator>KO13OC</locator>
+				<latitude>53.107935</latitude>
+				<longitude>23.184082</longitude>
+				<altitudeOverSea>156</altitudeOverSea>
+				<altitudeOverGround>25</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP4FEU</operator>
+			<remarks><![CDATA[Pozwolenie UKE nr : DC.WML.5101.2512.2019.2
+2 X GM 340 + modem MMDVM ,
+Antena Lafayette MA-2000 Falkos Zysk: VHF 6.5 dB UHF 9.5 dB  ,
+Color Code 4.
+Pracuje w sieci HBLink & BrandMeister & DMR PLUS
+
+Grupy TG na  SR4BIA
+
+SLOT 1
+
+TG 260 Wywoławcza - BrandMeister
+
+TG 1260 Wywoławcza - DMR PLUS
+
+TG 26004Grupa Dynamiczna Okręgowa SP4 do połączeń HBLink Polska
+
+TG 4 Grupa do rozmów na reflektorze XLX132-D D-Star/DMR/YSF Dynamiczna (aktywacja PTT 10 min)
+
+TG 5 Grupa do rozmów lokalnych Białystok na XLX260-E Dynamiczna (aktywacja PTT 10 min)
+
+TG 6 Grupa do rozmów na reflektorze XLX260-A Dynamiczna (aktywacja PTT 10 min)
+
+TG 11 EmCom Polska (BM-HBLink)
+
+TG 12 EmCom Podlasie (BM-HBLink)
+
+TG 26000 Grupa Dynamiczna - Techniczna HBLink Polska
+
+----------------------------------------------
+
+SLOT 2
+
+TG 10 Podlaska (BM-HBLink)
+
+TG 260 Wywoławcza - HBLink Polska
+
+TG 8004 Okręgowa SP4 DMR PLUS
+
+TG 2604 Okręgowa SP4 do połączeń BrandMeister - DMR PLUS
+
+TG 7 Grupa - Lokalna HBLink
+
+TG 8 Wywoławcza - HBLink Polska
+
+TG 9 Grupa statyczna oraz linkowanie się do reflektorów
+
+TG 20 Grupa Dynamiczna (aktywacja PTT 10 min) do rozmów na przemienniku SR4X Analog ..:::.. HBLink - Białystok
+
+TG 40 Echolink NODE:ID 438584 SR4BI-R HBLink - Białystok
+
+TG 60 Grupa do rozmów na reflektorze NXDN HBLink PL
+
+TG 61 Grupa do rozmów na reflektorze P25 HBLink PL
+
+TG 260 Grupa Wywoławcza HBLink Polska
+
+TG 260454(SR4BI) Grupa - Lokalna
+
+TG 260453(SR4BIA) Grupa - Lokalna
+
+TG 260099 GPS/RRS/APRS.
+
+260097 Echo (NOTICE: private call, not a TG)
+
+TG 9990 Echo TEST DMR PLUS
+
+TG 9999 Echo TEST HBLink
+
+Informacje na żądanie
+
+AKTYWACJA PTT od 2-5 sekund
+
+Lokalny Serwis Informacyjny:Białystok
+TG 50 - Info
+TG 51 - Pogoda
+TG 52 - Pogoda za 12H
+TG 53 - Meteo alerty
+TG 54 - Poziom rzek
+TG 55 - Lokalne info
+
+Lokalny Serwis Informacyjny:Giżycko
+TG 70 - Info
+TG 71 - Pogoda
+TG 72 - Pogoda za 12H
+TG 73 - Meteo alerty
+TG 74 - Poziom rzek
+TG 75 - Lokalne info
+
+Pogoda w regionie teraz i za 12H
+TG 78/79 - Augustów
+TG 80/81 - Sokółka
+TG 82/83 - Hajnówka
+TG 84/85 - Łomża
+TG 86/87 - Zambrów
+TG 88/89 - Suwałki
+TG 90/91 - Siemiatycze]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR4BIA</link>
+			<link>https://sr4bi.pl/</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045111</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR4BSK</qra>
+			<id>9044994</id>
+			<hash></hash>
+			<created>2018-11-17 12:05:44</created>
+			<updated>2021-11-05 09:15:45</updated>
+			<statusInt>2</statusInt>
+			<status>DISABLED</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.887500</qrg>
+			<qrg type="tx">438.487500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Sokólka]]></qth>
+			<location>
+				<locator>KO13SJ</locator>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ4RSU</operator>
+			<remarks><![CDATA[Przemiennik MMDVM.
+Color Code 4.
+Przemiennik pracuje w sieci DMR+]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR4BSK</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9044994</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR4DGD</qra>
+			<id>9010777</id>
+			<hash>377bcb2b6861140fba8e81baf3e56ce9</hash>
+			<created>2015-07-30 23:00:42</created>
+			<updated>2021-03-09 22:32:47</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.650000</qrg>
+			<qrg type="tx">438.250000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Góra Dylewska EMITEL]]></qth>
+			<location>
+				<locator>JO93XN</locator>
+				<latitude>53.549375</latitude>
+				<longitude>19.940454</longitude>
+				<altitudeOverSea>312</altitudeOverSea>
+				<altitudeOverGround>45</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ4FXY</operator>
+			<remarks><![CDATA[Przemiennik MOTOROLA DR3000, antena COMET GP-9 na szczycie 40-metrowej wieży. Moc 10 W. Przemiennik włączony do sieci BRANDMEISTER.
+
+AKTYWACJA CC1]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR4DGD</link>
+			<link>http://sp4.jestok.com</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9010777</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR4DMR</qra>
+			<id>9043550</id>
+			<hash></hash>
+			<created>2016-08-21 13:14:16</created>
+			<updated>2023-09-28 12:32:57</updated>
+			<statusInt>32</statusInt>
+			<status>PLANNED</status>
+			<modeInt>10240</modeInt>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.012500</qrg>
+			<qrg type="tx">438.612500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Ełk]]></qth>
+			<location>
+				<locator>KO13ET</locator>
+				<latitude>53.815738</latitude>
+				<longitude>22.375785</longitude>
+				<altitudeOverSea>127</altitudeOverSea>
+				<altitudeOverGround>45</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP4XKB</operator>
+			<remarks><![CDATA[UWAGA!. Zainteresowanych uruchomieniem i wsparciem tego przemiennika zapraszam do kontaktu 
+s p 4 x k b @ g m a i l . c o m
+
+
+
+
+Przemiennik DMR+ / Fusion II
+
+Przemiennik sieci DMRplus 
+Color Code 4
+
+Przemiennik Fusion II (YCS)
+połączenia wyłącznie za pomocą grup DG-ID
+domyślna grupa DG-ID 60
+pozostałe grupy DG-ID dostępne dynamicznie
+
+Przemiennik na stałe zalogowany do reflektora YSF: 26001 PL-C4FM-Poland (YCS260)
+
+Nie używać funkcji Wires-X (przycisk X)
+Przemiennik pracuje wyłącznie w sieci Fusion II (YCS)]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR4DMR</link>
+			<link>http://dmrplus.pl</link>
+			<link>http://c4fm.pl</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9043550</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR4DX</qra>
+			<id>9045802</id>
+			<hash>9b0f28366d534511a1e98cb85ec4aa65</hash>
+			<created>2023-02-06 11:33:14</created>
+			<updated>2023-03-06 20:04:51</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2028-02-02</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.900000</qrg>
+			<qrg type="tx">439.500000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Pasłęk]]></qth>
+			<location>
+				<locator>JO94TB</locator>
+				<latitude>54.060989</latitude>
+				<longitude>19.618992</longitude>
+				<altitudeOverSea>55</altitudeOverSea>
+				<altitudeOverGround>10</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP4KDK</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR4DX</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045802</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR4EL</qra>
+			<id>9045198</id>
+			<hash></hash>
+			<created>2020-11-13 20:50:39</created>
+			<updated>2023-01-21 08:58:59</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2025-11-10</licenseExpiryDate>
+			<modeInt>10240</modeInt>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.450000</qrg>
+			<qrg type="tx">439.050000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Elbląg]]></qth>
+			<location>
+				<locator>JO94QE</locator>
+				<latitude>54.189015</latitude>
+				<longitude>19.394187</longitude>
+				<altitudeOverSea>16</altitudeOverSea>
+				<altitudeOverGround>35</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP2KRM</operator>
+			<remarks><![CDATA[Radio: Motorola CM140(TX)/CM340(RX)
+Antena: Diamond X200
+Kabel: 4m H1000
+Domyślna lokalna grupa rozmówna:
+DMR TS2 TG 260460 / C4FM reflektor YSF #52742
+
+Dziękuję firmie ATMEL z Elbląga za udostępnienie miejsca na maszcie i połączenia z siecią.
+
+
+Zasada działania:
+Gdy przemiennik odbierze transmisję DMR/C4FM przychodzącą radiowo lub z internetu, to podtrzymuje tą emisję(modulację) z której przyszła transmisja przez 30 sekund po zakończeniu odbioru.
+
+Gdy przemiennik jest aktywny na Twoim radiu, a nic nie słychać - bez paniki :) Przemiennik może nadawać w innym systemie. Po zakończeniu nadawania przez przemiennik czekamy 30 sekund i próbujemy się połączyć.]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR4EL</link>
+			<link>http://sr4el.hub.elblag.pl:3460</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045198</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR4FSK</qra>
+			<id>9045857</id>
+			<hash>609a3f15a11403de60f0b390ff2a8151</hash>
+			<created>2023-09-19 19:14:01</created>
+			<updated>2023-09-19 19:14:01</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>10240</modeInt>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.925000</qrg>
+			<qrg type="tx">439.525000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Grajewo]]></qth>
+			<location>
+				<locator>KO13FP</locator>
+				<latitude>53.635713</latitude>
+				<longitude>22.467744</longitude>
+				<altitudeOverSea>128</altitudeOverSea>
+				<altitudeOverGround>30</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP4XKB</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR4FSK</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045857</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR4KT</qra>
+			<id>8997506</id>
+			<hash></hash>
+			<created>2013-03-15 10:17:33</created>
+			<updated>2023-08-01 09:29:52</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2028-03-21</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.675000</qrg>
+			<qrg type="tx">439.275000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Kętrzyn]]></qth>
+			<location>
+				<locator>KO04QB</locator>
+				<latitude>54.081550</latitude>
+				<longitude>21.370446</longitude>
+				<altitudeOverSea>110</altitudeOverSea>
+			</location>
+			<activationInt>16777216</activationInt>
+
+			<activation>UNKNOWN</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ4AFJ</operator>
+			<remarks><![CDATA[Przemiennik w sieci DMR PLUS  ( color code 4 ) planowana rozbudowa o moduły YSF (FUSION) i DSTAR oraz możliwość pracy rownież w trybie FM.
+Antena Diamond X200 około 130 mnpm Motorola MTR2000 z modułem DV na bazie MMDVM od Konrada SP4XKB.]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR4KT</link>
+			<link>https://sp4pkm.ketrzyn.pl</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/8997506</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR4L</qra>
+			<id>9044958</id>
+			<hash></hash>
+			<created>2018-03-29 23:35:18</created>
+			<updated>2023-06-28 10:52:14</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2023-03-14</licenseExpiryDate>
+			<modeInt>10240</modeInt>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.500000</qrg>
+			<qrg type="tx">438.100000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Łomża]]></qth>
+			<location>
+				<locator>KO13AE</locator>
+				<latitude>53.183005</latitude>
+				<longitude>22.052192</longitude>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ4NJQ</operator>
+			<remarks><![CDATA[Przemiennik w systemie DMR BM
+Color Code 1.
+TS1: 260
+TS2: 2604, 26041, 26042, 26053, 26059
+Grupy dynamiczne (na żądanie) aktywowane są na 15 min.
+
+Fusion YCS/YSF-room POLAND]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR4L</link>
+			<link>https://sp4.jestok.com/17305</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9044958</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR4MID</qra>
+			<id>9011788</id>
+			<hash>c6e6b7cc486780a20e566f2f417ee9cb</hash>
+			<created>2015-08-06 20:06:15</created>
+			<updated>2020-07-06 11:25:42</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.625000</qrg>
+			<qrg type="tx">438.225000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Miłki k/Giżycka EMITEL]]></qth>
+			<location>
+				<locator>KO03WW</locator>
+				<latitude>53.937727</latitude>
+				<longitude>21.844764</longitude>
+				<altitudeOverSea>244</altitudeOverSea>
+				<altitudeOverGround>180</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ4LWO</operator>
+			<remarks><![CDATA[Przemiennik DMR Motorola MTR2000 + MMDVM. Przemiennik włączony do sieci BRANDMEISTER. 
+
+Anteny: X-300 @180m RX, GP-98 @ 210m TX, 230m LDF-5 7/8"]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR4MID</link>
+			<link>https://sp4.jestok.com</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9011788</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR4MWO</qra>
+			<id>9045062</id>
+			<hash></hash>
+			<created>2019-02-06 16:48:52</created>
+			<updated>2023-07-29 16:26:46</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2024-01-30</licenseExpiryDate>
+			<modeInt>10244</modeInt>
+			<mode>FM</mode>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.550000</qrg>
+			<qrg type="tx">438.150000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Mrągowo]]></qth>
+			<location>
+				<locator>KO03PU</locator>
+				<latitude>53.866333</latitude>
+				<longitude>21.285911</longitude>
+				<altitudeOverSea>162</altitudeOverSea>
+			</location>
+			<activationInt>260</activationInt>
+
+			<activation>CARRIER</activation>
+			<activation>CTCSS</activation>
+			<ctcss type="rx">67.0</ctcss>
+			<ctcss type="tx">67.0</ctcss>
+			<trxPower>5.00</trxPower>
+			<operator>SQ4FAE</operator>
+			<remarks><![CDATA[Przemiennik w systemie DMRplus, DMRBM, Fusion YSF, Fusion II YCS. FM analog ctcss 67Hz. 
+Szczegóły na dashbordzie przemiennika: http://sq4fae.ddns.net:8000/]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR4MWO</link>
+			<link>http://dmrplus.pl/</link>
+			<link>http://c4fm-pl.manifo.com/</link>
+			<link>http://91.245.87.196/ipsc/</link>
+			<link>http://fcs260.xreflector.net/ycs/#</link>
+			<link>http://195.26.76.59/status/list.htm</link>
+			<link>http://sq4fae.ddns.net:8000/</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045062</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR4OE</qra>
+			<id>4658875</id>
+			<hash>5c42115a61ae8749a2b6c4761a0681b5</hash>
+			<created>2010-11-13 02:11:50</created>
+			<updated>2023-01-14 17:47:55</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2028-01-11</licenseExpiryDate>
+			<modeInt>10240</modeInt>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.800000</qrg>
+			<qrg type="tx">439.400000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Olecko]]></qth>
+			<location>
+				<locator>KO14GA</locator>
+				<latitude>54.035498</latitude>
+				<longitude>22.500114</longitude>
+				<altitudeOverSea>220</altitudeOverSea>
+				<altitudeOverGround>42</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP4XKB</operator>
+			<operator>SP4SKD</operator>
+			<remarks><![CDATA[Przemiennik DMR+ / Fusion II
+
+Przemiennik sieci DMRplus 
+Color Code 4
+
+Przemiennik Fusion II (YCS)
+połączenia wyłącznie za pomocą grup DG-ID
+domyślna grupa DG-ID 60
+pozostałe grupy DG-ID dostępne dynamicznie
+
+Przemiennik na stałe zalogowany do reflektora YSF: 26001 PL-C4FM-Poland (YCS260)
+
+Nie używać funkcji Wires-X (przycisk X)
+Przemiennik pracuje wyłącznie w sieci Fusion II (YCS)]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR4OE</link>
+			<link>http://dmrplus.pl</link>
+			<link>http://c4fm.pl</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/4658875</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR4OND</qra>
+			<id>9011786</id>
+			<hash>b8be29eb5a83d12cc586080aa5ee1eb3</hash>
+			<created>2015-08-06 20:01:06</created>
+			<updated>2015-08-06 20:01:06</updated>
+			<statusInt>16</statusInt>
+			<status>BUILDING</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.675000</qrg>
+			<qrg type="tx">438.275000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Olsztyn]]></qth>
+			<location>
+				<locator>KO03GS</locator>
+				<latitude>53.773118</latitude>
+				<longitude>20.513320</longitude>
+				<altitudeOverSea>167</altitudeOverSea>
+				<altitudeOverGround>35</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<link>http://przemienniki.net/przemienniki/70cm/SR4OND</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9011786</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR4ONT</qra>
+			<id>9011785</id>
+			<hash>7f46df8b7b1caf572cd8c4f3ee808864</hash>
+			<created>2015-08-06 20:00:15</created>
+			<updated>2023-08-13 14:51:16</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.900000</qrg>
+			<qrg type="tx">438.500000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Olsztyn]]></qth>
+			<location>
+				<locator>KO03FS</locator>
+				<latitude>53.770592</latitude>
+				<longitude>20.490134</longitude>
+				<altitudeOverSea>180</altitudeOverSea>
+				<altitudeOverGround>70</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>10.00</trxPower>
+			<operator>SQ4BJA</operator>
+			<remarks><![CDATA[przemiennik DMR MOTOTRBO DR3000 połączony z siecią BrandMeister - zsieciowane oba sloty.
+COLOR CODE 1 (CC1)]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR4ONT</link>
+			<link>https://sp4.jestok.com</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9011785</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR4SN</qra>
+			<id>8996881</id>
+			<hash>de83b336661211c6a763ac3ac7a364d5</hash>
+			<created>2011-10-17 00:08:36</created>
+			<updated>2023-06-09 18:03:04</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>10276</modeInt>
+			<mode>FM</mode>
+			<mode>DSTAR</mode>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.275000</qrg>
+			<qrg type="tx">438.875000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Szczytno]]></qth>
+			<location>
+				<locator>KO03MN</locator>
+				<latitude>53.564684</latitude>
+				<longitude>21.000160</longitude>
+				<altitudeOverSea>142</altitudeOverSea>
+			</location>
+			<activationInt>260</activationInt>
+
+			<activation>CARRIER</activation>
+			<activation>CTCSS</activation>
+			<ctcss type="rx">67.0</ctcss>
+			<trxPower>15.00</trxPower>
+			<operator>SP4TWQ</operator>
+			<remarks><![CDATA[Antena Diamond, urządzenie Motorola 2x GM340 + Modem MMDVM
+
+Brandmeister
+Color Code 4
+TG statyczne TS1: 260, 2604
+TG statyczne TS2: 26041, 26059
+Do łączności lokalnych TG9 TS2
+
+DMR+
+Color Code 4
+TG statyczna TS1: 260 (uruchamiana grupą 1260)
+Do łączności lokalnych TG9 TS2 (uruchamiana grupą 90)
+
+DMR Serwer
+Color Code 4
+TG statyczna TS1: 260 (uruchamiana grupą 2260)
+Do łączności lokalnych TG7 TS2 (uruchamiana grupą 3)]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR4SN</link>
+			<link>https://brandmeister.network/?page=repeater&amp;id=260403</link>
+			<link>http://dmrplus.pl</link>
+			<link>http://kurpie.hblink.network/</link>
+			<link>https://sp4.jestok.com</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/8996881</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR4UBI</qra>
+			<id>9043483</id>
+			<hash></hash>
+			<created>2016-04-26 06:32:49</created>
+			<updated>2023-04-20 17:40:59</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2028-04-18</licenseExpiryDate>
+			<modeInt>2080</modeInt>
+			<mode>DSTAR</mode>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.825000</qrg>
+			<qrg type="tx">439.425000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Białystok]]></qth>
+			<location>
+				<locator>KO13ND</locator>
+				<latitude>53.132887</latitude>
+				<longitude>23.138298</longitude>
+				<altitudeOverSea>145</altitudeOverSea>
+				<altitudeOverGround>35</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>10.00</trxPower>
+			<operator>SQ4O</operator>
+			<operator>SP4XKB</operator>
+			<remarks><![CDATA[MOTOROLA MTR-2000 + PROCOM DPF 70/6 + CNT-400 16m + RADMOR 3284, sterownik MMDVM by SP4XKB.
+Pracuje w sieci IPSC2/DMR+.]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR4UBI</link>
+			<link>http://dmrplus.pl</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9043483</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR4UG</qra>
+			<id>9002917</id>
+			<hash>d958e2811460b4d32009bf8753906c64</hash>
+			<created>2014-07-03 09:57:28</created>
+			<updated>2023-01-14 17:47:28</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2028-01-11</licenseExpiryDate>
+			<modeInt>10272</modeInt>
+			<mode>DSTAR</mode>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.175000</qrg>
+			<qrg type="tx">438.775000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Giby]]></qth>
+			<location>
+				<locator>KO14QA</locator>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP4XKB</operator>
+			<remarks><![CDATA[D-Star, DMR+, Fusion II YCS260]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR4UG</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9002917</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR5DMR</qra>
+			<id>9044832</id>
+			<hash></hash>
+			<created>2017-01-27 09:22:24</created>
+			<updated>2018-11-18 14:53:35</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2022-02-05</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.612500</qrg>
+			<qrg type="tx">438.212500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[06-461 Koziczyn 46]]></qth>
+			<location>
+				<locator>KO02IX</locator>
+				<latitude>52.980992</latitude>
+				<longitude>20.677636</longitude>
+				<altitudeOverSea>181</altitudeOverSea>
+				<altitudeOverGround>10</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ5OMZ</operator>
+			<operator>SP5DKS</operator>
+			<remarks><![CDATA[RPT DMR BM CC1,  MMDVM 2XMotorola GM 360, Antena Lafayette MV-2000, wysokość 10 m n. p. g., 181 m.n.p.m]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR5DMR</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9044832</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR5DVR</qra>
+			<id>9044968</id>
+			<hash>84bfe6f85ef5ab82d0442153e2404a77</hash>
+			<created>2018-06-16 13:01:56</created>
+			<updated>2020-05-30 04:34:10</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2023-06-05</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.762500</qrg>
+			<qrg type="tx">439.362500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[RADOM - maszt Emitel]]></qth>
+			<location>
+				<locator>KO01NJ</locator>
+				<latitude>51.408264</latitude>
+				<longitude>21.113534</longitude>
+				<altitudeOverSea>176</altitudeOverSea>
+				<altitudeOverGround>80</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ5DRO</operator>
+			<operator>SQ5SUI</operator>
+			<remarks><![CDATA[TS1 statycznie TG2605
+TS2 statycznie TG26057 TG260015
+CC5
+Antena GP-6 na 80m nad gruntem na maszcie RON Radom Emitel.]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR5DVR</link>
+			<link>http://www.qrz.com/db/SR5DVR</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9044968</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR5KAB</qra>
+			<id>9043606</id>
+			<hash></hash>
+			<created>2016-11-09 22:58:25</created>
+			<updated>2023-09-27 22:50:33</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2028-06-19</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.800000</qrg>
+			<qrg type="tx">439.400000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Warszawa]]></qth>
+			<location>
+				<locator>KO02MF</locator>
+				<latitude>52.219587</latitude>
+				<longitude>21.017187</longitude>
+				<altitudeOverSea>112</altitudeOverSea>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP5KAB</operator>
+			<remarks><![CDATA[Diamond X-300 , Hytera RD
+CC 5
+TS 1 2605
+TS 2 statyczne 26055TG KAB]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR5KAB</link>
+			<link>https://www.sp5kab.pl/przemienniki</link>
+			<link>https://brandmeister.network/?page=repeater&amp;id=260550</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9043606</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR5MDV</qra>
+			<id>9045718</id>
+			<hash>d6286eb4dbf78f014dcc5aa0f73fa4c2</hash>
+			<created>2021-09-29 00:31:17</created>
+			<updated>2022-11-05 08:42:32</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2026-10-26</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.287500</qrg>
+			<qrg type="tx">438.887500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Mińsk Mazowiecki]]></qth>
+			<location>
+				<locator>KO02SE</locator>
+				<latitude>52.177192</latitude>
+				<longitude>21.552627</longitude>
+				<altitudeOverSea>153</altitudeOverSea>
+				<altitudeOverGround>40</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>5.00</trxPower>
+			<operator>SQ5AKC</operator>
+			<operator>SP5OSP</operator>
+			<remarks><![CDATA[Urządzenie TX/RX: 2x Kenwood TK-8180 oraz MMDVM (PiStar)
+Antena: Comet GP6N (RX) / Sirio CX-432 (TX)
+Moc nadawcza 5W
+Przemiennik pracuje w trybie mieszanym DMR / NXDN
+DMR Color Code:5 TSlot1: TG260 (Polska)  TSlot2: TG 8005, TG9 (Lokalna)
+NXDN- RAN1 i praca w grupie 26000 (Polska)
+UWAGA: 15 min. po ostatniej wykrytej aktywności na odbiorniku przemiennik przechodzi w tryb mieszany]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR5MDV</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045718</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR5OK</qra>
+			<id>9045140</id>
+			<hash></hash>
+			<created>2020-01-29 23:09:56</created>
+			<updated>2021-03-02 09:29:21</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2025-01-29</licenseExpiryDate>
+			<modeInt>3104</modeInt>
+			<mode>DSTAR</mode>
+			<mode>ECHOLINK</mode>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.662500</qrg>
+			<qrg type="tx">439.262500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Kadzidło]]></qth>
+			<location>
+				<locator>KO03RF</locator>
+				<latitude>53.234690</latitude>
+				<longitude>21.456630</longitude>
+				<altitudeOverSea>118</altitudeOverSea>
+				<altitudeOverGround>15</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP5NAF</operator>
+			<echolink>55578</echolink>
+			<remarks><![CDATA[Antena 3x5/8 Big Star, urządzenie Motorola MTR2000 + Modem MMDVM
+
+Brandmeister
+Color Code 5
+TG statyczne TS1: 2605
+TG statyczne TS2: 26059
+Do łączności lokalnych TG9 TS2
+
+DMR+
+Color Code 5
+TG statyczna TS1: 260 (uruchamiana grupą 1260)
+Do łączności lokalnych TG9 TS2 (uruchamiana grupą 90)
+
+DMR Serwer
+Color Code 5
+TG statyczna TS1: 260 (uruchamiana grupą 2260)
+Do łączności lokalnych TG7 TS2 (uruchamiana grupą 3)
+
+EchoLink 55578
+Lokalnie odbierany na DMR TG10 TS2]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR5OK</link>
+			<link>https://brandmeister.network/?page=repeater&amp;id=260525</link>
+			<link>http://dmrplus.pl/serwery</link>
+			<link>http://kurpie.hblink.network:8088/</link>
+			<link>http://echolink.org/links.jsp</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045140</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR5PLZ</qra>
+			<id>9044975</id>
+			<hash></hash>
+			<created>2018-07-01 15:37:33</created>
+			<updated>2018-07-01 15:37:34</updated>
+			<statusInt>16</statusInt>
+			<status>BUILDING</status>
+			<licenseExpiryDate>2023-04-18</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.787500</qrg>
+			<qrg type="tx">439.387500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Płock]]></qth>
+			<location>
+				<locator>JO92UN</locator>
+				<latitude>52.543202</latitude>
+				<longitude>19.715920</longitude>
+				<altitudeOverSea>102</altitudeOverSea>
+				<altitudeOverGround>40</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ5AXA</operator>
+			<operator>SP5MP</operator>
+			<remarks><![CDATA[X200N]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR5PLZ</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9044975</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR5UOS</qra>
+			<id>9044822</id>
+			<hash></hash>
+			<created>2017-01-12 10:48:55</created>
+			<updated>2021-03-02 09:29:18</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2022-01-23</licenseExpiryDate>
+			<modeInt>2080</modeInt>
+			<mode>DSTAR</mode>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.312500</qrg>
+			<qrg type="tx">438.912500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Ostrołęka]]></qth>
+			<location>
+				<locator>KO03SB</locator>
+				<latitude>53.080289</latitude>
+				<longitude>21.569459</longitude>
+				<altitudeOverSea>138</altitudeOverSea>
+				<altitudeOverGround>42</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP5NAF</operator>
+			<remarks><![CDATA[Antena Diamond X-300, urządzenie Motorola MTR2000 + Modem MMDVM
+
+Brandmeister
+Color Code 5
+TG statyczne TS1: 2605
+TG statyczne TS2: 26059
+Do łączności lokalnych TG9 TS2
+
+DMR+
+Color Code 5
+TG statyczna TS1: 260 (uruchamiana grupą 1260)
+Do łączności lokalnych TG9 TS2 (uruchamiana grupą 90)
+
+DMR Serwer
+Color Code 5
+TG statyczna TS1: 260 (uruchamiana grupą 2260)
+Do łączności lokalnych TG7 TS2 (uruchamiana grupą 3)]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR5UOS</link>
+			<link>http://sp5kvw.com/przemienniki-w-ostrolece/</link>
+			<link>https://brandmeister.network/?page=repeater&amp;id=260515</link>
+			<link>http://kurpie.hblink.network:8088/</link>
+			<link>http://dmrplus.pl/serwery</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9044822</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR5WAD</qra>
+			<id>9044979</id>
+			<hash>81c748dd1daeecb930a7cb2662b8b390</hash>
+			<created>2018-07-16 14:05:08</created>
+			<updated>2023-09-03 13:23:25</updated>
+			<statusInt>2</statusInt>
+			<status>DISABLED</status>
+			<licenseExpiryDate>2023-07-10</licenseExpiryDate>
+			<modeInt>2052</modeInt>
+			<mode>FM</mode>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.737500</qrg>
+			<qrg type="tx">438.337500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Warszawa - komin EC Kawęczyn]]></qth>
+			<location>
+				<locator>KO02NG</locator>
+				<latitude>52.268254</latitude>
+				<longitude>21.128688</longitude>
+				<altitudeOverSea>400</altitudeOverSea>
+				<altitudeOverGround>305</altitudeOverGround>
+			</location>
+			<activationInt>260</activationInt>
+
+			<activation>CARRIER</activation>
+			<activation>CTCSS</activation>
+			<ctcss type="rx">127.3</ctcss>
+			<ctcss type="tx">127.3</ctcss>
+			<trxPower>15.00</trxPower>
+			<operator>SP5KAB</operator>
+			<operator>SP5TA</operator>
+			<operator>SQ5IT</operator>
+			<remarks><![CDATA[NIE DZIAŁA (AWARIA – przemiennik został uszkodzony podczas burzy) – w zastępstwie, ale wyłącznie jako DMR, pracuje przemiennik SR5WW
+
+Przemiennik pracuje na zastępczej antenie typu CAD oraz w dwóch systemach: analogowym i DMR
+
+Antena Radmor 8x5/8  urządzenie tymczasowo Hytera RD985S 
+32m 1/2 andrew 
+
+Analog:
+CTCSS: odbiór i nadawanie - 127.3 Hz
+
+DMR:
+Color Code 5
+TG statyczne TS1: TG2605
+TG statyczne TS1: TG260552 (ID BM)
+TG statycznie TS1: TG260015 (EMCOM)
+TG statyczne TS2: TG26055 (SP5KAB)
+TG statyczne TS2: TG26057 (MASR)
+
+Zasilanie awaryjne 12V
+TS1 - TG9, TG260, Grupy dynamiczne, regionalne i narodowe oraz GPS, DATA i Private Call.
+
+TS2 Tylko grupy statyczne i reflektory.
+
+TX preamble duration: 960ms
+Repeat Request Priority: First Come First Send]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR5WAD</link>
+			<link>https://sp5kab.pl/przemienniki/</link>
+			<link>https://brandmeister.network/?page=repeater&amp;id=260552</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9044979</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR5WB</qra>
+			<id>9006133</id>
+			<hash>d096d5831e9a272de3d32fe2261059ab</hash>
+			<created>2015-03-23 22:32:24</created>
+			<updated>2021-11-11 17:54:32</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2020-04-14</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.950000</qrg>
+			<qrg type="tx">438.550000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Moszna-Parcela komin Elektrociepłowni Pruszków II]]></qth>
+			<location>
+				<locator>KO02IE</locator>
+				<latitude>52.175313</latitude>
+				<longitude>20.742929</longitude>
+				<altitudeOverSea>341</altitudeOverSea>
+				<altitudeOverGround>256</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ5AGQ</operator>
+			<operator>SP5QWK</operator>
+			<remarks><![CDATA[Antena: Sigma Wireless SA-410 4x dipol 1/2 fali - zysk 5 dBd - polaryzacja pionowa.
+Urządzenie: Hytera RD985 UHF.
+Sieć Brandmeister
+Color Code: 5.
+Slot 1 TG2605, 260501
+Slot 2 TG26041, 26057
+
+Obiekt: komin Elektrociepłowni Pruszków II o wysokości 256 m n.p.t. – zlokalizowany w miejscowości Moszna-Wieś koło Pruszkowa, w gminie Brwinów w województwie mazowieckim.]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR5WB</link>
+			<link>http://sp5.jestok.com</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9006133</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR5WD</qra>
+			<id>9043604</id>
+			<hash>982044da8b29bc9c3393de2f39d7583d</hash>
+			<created>2016-11-09 12:45:45</created>
+			<updated>2023-10-27 15:24:47</updated>
+			<statusInt>2</statusInt>
+			<status>DISABLED</status>
+			<licenseExpiryDate>2021-11-13</licenseExpiryDate>
+			<modeInt>10240</modeInt>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.800000</qrg>
+			<qrg type="tx">438.400000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Moszna-Parcela]]></qth>
+			<location>
+				<locator>KO02IE</locator>
+				<latitude>52.175313</latitude>
+				<longitude>20.742929</longitude>
+				<altitudeOverSea>341</altitudeOverSea>
+				<altitudeOverGround>256</altitudeOverGround>
+			</location>
+			<activationInt>16777216</activationInt>
+
+			<activation>UNKNOWN</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP5QWK</operator>
+			<operator>SQ7EHO</operator>
+			<operator>SP7WOG</operator>
+			<operator>SQ5AGQ</operator>
+			<remarks><![CDATA[Antena: Sigma Wireless SA-410 4x dipol 1/2 fali - zysk 5dB - polaryzacja pionowa; urządzenie : 2x Motorola i MMDVM
+
+Przemiennik pracuje tylko w Narrow FM (NFM)]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR5WD</link>
+			<link>https://sp5.jestok.com/sr5wd/</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9043604</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR5WU</qra>
+			<id>7480115</id>
+			<hash>03901c5f595d7adf388858031eeb5ad6</hash>
+			<created>2010-11-13 02:11:50</created>
+			<updated>2023-07-02 17:03:52</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.175000</qrg>
+			<qrg type="tx">438.775000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Warszawa-Ursynów]]></qth>
+			<location>
+				<locator>KO02MD</locator>
+				<latitude>52.150552</latitude>
+				<longitude>21.042197</longitude>
+				<altitudeOverSea>103</altitudeOverSea>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>10.00</trxPower>
+			<operator>SQ5AG</operator>
+			<operator>SP5EB</operator>
+			<operator>SP5MRK</operator>
+			<remarks><![CDATA[Antena Diamond X-510 (wysokość ok. 45m npt),
+
+DMR w sieci Brandmeister.
+MMDVM + 2 x Motorola GM340
+
+Color Code: 5
+
+Timeslot 1 preferowany do połączeń lokalnych, grup dynamicznych, reflektorów, danych GPS, wywołań indywidualnych.
+
+Bieżący stan aktywnych linków: https://brandmeister.network/?page=repeater&id=260512]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR5WU</link>
+			<link>https://brandmeister.network/?page=repeater&amp;id=260512</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/7480115</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR5WW</qra>
+			<id>8817865</id>
+			<hash>e73e499b11b3206dba47a9e137aee2ea</hash>
+			<created>2010-11-13 02:11:50</created>
+			<updated>2023-11-21 22:00:22</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2024-09-01</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.900000</qrg>
+			<qrg type="tx">438.500000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Warszawa - Komin EC Kawęczyn]]></qth>
+			<location>
+				<locator>KO02NG</locator>
+				<latitude>52.268254</latitude>
+				<longitude>21.128688</longitude>
+				<altitudeOverSea>400</altitudeOverSea>
+				<altitudeOverGround>305</altitudeOverGround>
+			</location>
+			<activationInt>16777216</activationInt>
+
+			<activation>UNKNOWN</activation>
+			<trxPower>8.00</trxPower>
+			<operator>SP5KAB</operator>
+			<remarks><![CDATA[Urządzenie Motorola MTR2000 + MMDVM pi-star, antena KAD
+MULTIMODE
+FUSION (C4FM)
+APCO-P25]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR5WW</link>
+			<link>https://sp5kab.pl/przemienniki/</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/8817865</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR6AA</qra>
+			<id>9044882</id>
+			<hash></hash>
+			<created>2017-03-06 15:15:30</created>
+			<updated>2023-08-03 13:36:19</updated>
+			<statusInt>2</statusInt>
+			<status>DISABLED</status>
+			<licenseExpiryDate>2022-04-21</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.975000</qrg>
+			<qrg type="tx">438.575000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Brzeg]]></qth>
+			<location>
+				<locator>JO80RU</locator>
+				<latitude>50.853732</latitude>
+				<longitude>17.460135</longitude>
+				<altitudeOverSea>198</altitudeOverSea>
+				<altitudeOverGround>43</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>5.00</trxPower>
+			<operator>SP6TK</operator>
+			<remarks><![CDATA[nr pozwolenia 
+DZC.WML.5101.694.2017.2
+motorola GM340 x 2 + MMDVM + PiStar
+TRX ant. X300]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR6AA</link>
+			<link>http://sr6aa.qrz.pl</link>
+			<link>http://sp6tk.qrz.pl</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9044882</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR6DMO</qra>
+			<id>9006112</id>
+			<hash>2eff72c81d30173221284562a30b4a6d</hash>
+			<created>2015-01-22 19:22:34</created>
+			<updated>2015-01-22 19:23:16</updated>
+			<statusInt>16</statusInt>
+			<status>BUILDING</status>
+			<modeInt>2052</modeInt>
+			<mode>FM</mode>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.025000</qrg>
+			<qrg type="tx">438.625000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Oława]]></qth>
+			<location>
+				<locator>JO80PW</locator>
+			</location>
+			<activationInt>260</activationInt>
+
+			<activation>CARRIER</activation>
+			<activation>CTCSS</activation>
+			<ctcss type="rx">94.8</ctcss>
+			<ctcss type="tx">94.8</ctcss>
+			<trxPower>15.00</trxPower>
+			<operator>SQ6NCJ</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR6DMO</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9006112</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR6DMR</qra>
+			<id>9003122</id>
+			<hash>bc03a4a0503d73828da8f27390ad7fb8</hash>
+			<created>2014-09-24 23:19:26</created>
+			<updated>2021-06-14 20:07:54</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.887500</qrg>
+			<qrg type="tx">438.487500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Wrocław]]></qth>
+			<location>
+				<locator>JO81MC</locator>
+				<latitude>51.114774</latitude>
+				<longitude>17.067787</longitude>
+			</location>
+			<activationInt>16777216</activationInt>
+
+			<activation>UNKNOWN</activation>
+			<operator>SQ6NCJ</operator>
+			<remarks><![CDATA[CC:0]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR6DMR</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9003122</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR6DZM</qra>
+			<id>9044955</id>
+			<hash></hash>
+			<created>2018-02-16 20:40:26</created>
+			<updated>2018-02-16 20:40:28</updated>
+			<statusInt>16</statusInt>
+			<status>BUILDING</status>
+			<licenseExpiryDate>2023-01-10</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.037500</qrg>
+			<qrg type="tx">438.637500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Żmigród]]></qth>
+			<location>
+				<locator>JO81KL</locator>
+				<latitude>51.475320</latitude>
+				<longitude>16.905376</longitude>
+				<altitudeOverSea>89</altitudeOverSea>
+				<altitudeOverGround>70</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ6ODL</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR6DZM</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9044955</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR6HBL</qra>
+			<id>9045660</id>
+			<hash></hash>
+			<created>2021-01-30 16:09:34</created>
+			<updated>2021-01-30 16:09:35</updated>
+			<statusInt>32</statusInt>
+			<status>PLANNED</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.950000</qrg>
+			<qrg type="tx">438.550000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Wrocław]]></qth>
+			<location>
+				<locator>JO81LC</locator>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP6TK</operator>
+			<operator>SQ6NZW</operator>
+			<remarks><![CDATA[Przemiennik lokalnej sieci HBLink Wrocław
+TS1 Brandmeister, TS2 HBLink Wrocław]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR6HBL</link>
+			<link>http://www.hblinkwroc.pl</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045660</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR6OP</qra>
+			<id>4393397</id>
+			<hash>eb6132c541610d383dbb974e9f598b60</hash>
+			<created>2010-11-13 02:11:50</created>
+			<updated>2017-07-07 23:04:26</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2018-01-07</licenseExpiryDate>
+			<modeInt>2052</modeInt>
+			<mode>FM</mode>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.725000</qrg>
+			<qrg type="tx">439.325000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Opole]]></qth>
+			<location>
+				<locator>JO80XQ</locator>
+				<latitude>50.675862</latitude>
+				<longitude>17.956617</longitude>
+				<altitudeOverSea>200</altitudeOverSea>
+				<altitudeOverGround>30</altitudeOverGround>
+			</location>
+			<activationInt>256</activationInt>
+
+			<activation>CTCSS</activation>
+			<ctcss type="rx">94.8</ctcss>
+			<ctcss type="tx">94.8</ctcss>
+			<trxPower>10.00</trxPower>
+			<operator>SQ6DXP</operator>
+			<remarks><![CDATA[2 x Motorola GM950, Diamond X-50, LDF-4]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR6OP</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/4393397</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR6RWS</qra>
+			<id>9043709</id>
+			<hash></hash>
+			<created>2016-12-24 17:32:50</created>
+			<updated>2018-10-21 11:40:48</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2022-09-12</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.600000</qrg>
+			<qrg type="tx">438.200000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Wielka Sowa]]></qth>
+			<location>
+				<locator>JO80FQ</locator>
+				<latitude>50.680321</latitude>
+				<longitude>16.485667</longitude>
+				<altitudeOverSea>1015</altitudeOverSea>
+				<altitudeOverGround>25</altitudeOverGround>
+			</location>
+			<activationInt>16777216</activationInt>
+
+			<activation>UNKNOWN</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ6ODL</operator>
+			<operator>SQ6POG</operator>
+			<remarks><![CDATA[CC 1
+subskrypcja grup statycznych:
+slot 1: 260, 2606
+slot 2: brak subskrypcji]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR6RWS</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9043709</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR6TW</qra>
+			<id>9010202</id>
+			<hash>c630a2a06db1ddda02cd9cec594a2b5e</hash>
+			<created>2015-07-26 15:53:37</created>
+			<updated>2023-12-05 21:33:15</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2020-09-01</licenseExpiryDate>
+			<modeInt>10272</modeInt>
+			<mode>DSTAR</mode>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.150000</qrg>
+			<qrg type="tx">438.750000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Chełstów]]></qth>
+			<location>
+				<locator>JO81RI</locator>
+				<latitude>51.345552</latitude>
+				<longitude>17.497358</longitude>
+				<altitudeOverSea>266</altitudeOverSea>
+				<altitudeOverGround>38</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ6KOA</operator>
+			<operator>SP6TT</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR6TW</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9010202</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR6UKR</qra>
+			<id>9045092</id>
+			<hash></hash>
+			<created>2019-03-04 19:12:24</created>
+			<updated>2021-07-18 20:12:53</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.825000</qrg>
+			<qrg type="tx">438.425000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Krapkowice]]></qth>
+			<location>
+				<locator>JO80XL</locator>
+				<latitude>50.488055</latitude>
+				<longitude>17.969159</longitude>
+				<altitudeOverSea>181</altitudeOverSea>
+				<altitudeOverGround>18</altitudeOverGround>
+			</location>
+			<activationInt>16777216</activationInt>
+
+			<activation>UNKNOWN</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ6KMM</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR6UKR</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045092</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR7DBZ</qra>
+			<id>9045128</id>
+			<hash></hash>
+			<created>2019-09-15 10:55:22</created>
+			<updated>2021-09-19 08:48:33</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>2052</modeInt>
+			<mode>FM</mode>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.962500</qrg>
+			<qrg type="tx">438.562500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Busko-Zdroj]]></qth>
+			<location>
+				<locator>KO00IL</locator>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ7FSO</operator>
+			<remarks><![CDATA[Motorola MTR2000, płytka SP4XKB, Diamond X-300]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR7DBZ</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045128</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR7DMK</qra>
+			<id>9044966</id>
+			<hash></hash>
+			<created>2018-05-04 13:09:21</created>
+			<updated>2021-03-02 10:10:39</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2023-04-03</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.812500</qrg>
+			<qrg type="tx">439.412500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Łysa Góra/Nowa Słupia - RTCN Święty Krzyż EmiTel]]></qth>
+			<location>
+				<locator>KO00MU</locator>
+				<latitude>50.860322</latitude>
+				<longitude>21.048573</longitude>
+				<altitudeOverSea>595</altitudeOverSea>
+				<altitudeOverGround>120</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ7RN</operator>
+			<operator>SP8I</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR7DMK</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9044966</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR7DMR</qra>
+			<id>9006111</id>
+			<hash>8b7e353cfa6eaf5ca196462672910cf1</hash>
+			<created>2015-01-14 11:15:22</created>
+			<updated>2022-07-19 09:06:03</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2025-03-27</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.675000</qrg>
+			<qrg type="tx">438.275000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Góra Kamieńsk wieża EmiTel]]></qth>
+			<location>
+				<locator>JO91RE</locator>
+				<latitude>51.205645</latitude>
+				<longitude>19.435416</longitude>
+				<altitudeOverSea>387</altitudeOverSea>
+				<altitudeOverGround>75</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ7LRX</operator>
+			<operator>SQ7SCC</operator>
+			<remarks><![CDATA[Color Code: CC1
+Podłączony do sieci Brandmeister
+Przemiennik obsługuje Enhanced Channel Access.
+
+
+Antena 5/8 RADMOR]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR7DMR</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9006111</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR7DSC</qra>
+			<id>9045095</id>
+			<hash></hash>
+			<created>2019-03-16 18:11:27</created>
+			<updated>2023-09-17 22:11:39</updated>
+			<statusInt>8</statusInt>
+			<status>TESTING</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.687500</qrg>
+			<qrg type="tx">439.287500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Skierniewice]]></qth>
+			<location>
+				<locator>KO01BX</locator>
+				<latitude>51.974983</latitude>
+				<longitude>20.144561</longitude>
+				<altitudeOverSea>121</altitudeOverSea>
+				<altitudeOverGround>45</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ5FBI</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR7DSC</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045095</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR7DVK</qra>
+			<id>9044974</id>
+			<hash>f331ee2429cd84fd2876691b4fbfa520</hash>
+			<created>2018-06-23 00:46:24</created>
+			<updated>2023-03-23 17:23:41</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2028-03-14</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.725000</qrg>
+			<qrg type="tx">438.325000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Kutno]]></qth>
+			<location>
+				<locator>JO92QF</locator>
+				<latitude>52.241023</latitude>
+				<longitude>19.353639</longitude>
+				<altitudeOverSea>122</altitudeOverSea>
+				<altitudeOverGround>20</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP7X</operator>
+			<operator>SP7LAK</operator>
+			<operator>SP7IIX</operator>
+			<remarks><![CDATA[CC: 1
+Brandmeister DMR-ID: 260778]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR7DVK</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9044974</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR7LDA</qra>
+			<id>9045679</id>
+			<hash></hash>
+			<created>2021-02-26 14:21:16</created>
+			<updated>2021-05-28 13:25:36</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2026-02-18</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.850000</qrg>
+			<qrg type="tx">438.450000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Łódź]]></qth>
+			<location>
+				<locator>JO91SS</locator>
+				<latitude>51.780793</latitude>
+				<longitude>19.533964</longitude>
+				<altitudeOverSea>305</altitudeOverSea>
+				<altitudeOverGround>25</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ7SCC</operator>
+			<remarks><![CDATA[Warstwa radiowa: MTR200, Duplekser: PROCOM, Antena: RADMOR, Logika: MMDVM]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR7LDA</link>
+			<link>https://brandmeister.network/?page=repeater&amp;id=260001</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045679</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR7LDD</qra>
+			<id>9043597</id>
+			<hash></hash>
+			<created>2016-11-05 16:11:37</created>
+			<updated>2023-01-05 13:37:04</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2028-01-04</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.625000</qrg>
+			<qrg type="tx">438.225000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Łódź]]></qth>
+			<location>
+				<locator>JO91RR</locator>
+				<latitude>51.746115</latitude>
+				<longitude>19.450216</longitude>
+				<altitudeOverSea>245</altitudeOverSea>
+				<altitudeOverGround>55</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ7SCC</operator>
+			<remarks><![CDATA[-Antena F-718
+-warstwa radiowa 2x MOTOROLA GM 340]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR7LDD</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9043597</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR7LDQ</qra>
+			<id>9045721</id>
+			<hash></hash>
+			<created>2021-10-14 21:53:53</created>
+			<updated>2021-11-16 10:23:09</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2026-09-29</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.250000</qrg>
+			<qrg type="tx">438.850000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Plichtow]]></qth>
+			<location>
+				<locator>JO91TT</locator>
+				<latitude>51.814756</latitude>
+				<longitude>19.619306</longitude>
+				<altitudeOverSea>233</altitudeOverSea>
+				<altitudeOverGround>241</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ7IQO</operator>
+			<remarks><![CDATA[15W X510 GM1200 / GM340 SGQ-450 MX-72, 233/243m.a.s.l. - DMR]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR7LDQ</link>
+			<link>https://www.qrz.com/db/SQ7IQO</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045721</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR7LM</qra>
+			<id>7063920</id>
+			<hash>e2d2e9cdfab5727154b8f14d2523edab</hash>
+			<created>2010-12-26 16:48:24</created>
+			<updated>2019-12-31 20:27:29</updated>
+			<statusInt>16</statusInt>
+			<status>BUILDING</status>
+			<licenseExpiryDate>2024-10-02</licenseExpiryDate>
+			<modeInt>2052</modeInt>
+			<mode>FM</mode>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.600000</qrg>
+			<qrg type="tx">439.200000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Łódź]]></qth>
+			<location>
+				<locator>JO91SS</locator>
+				<latitude>51.761471</latitude>
+				<longitude>19.539368</longitude>
+				<altitudeOverSea>239</altitudeOverSea>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ7NHR</operator>
+			<remarks><![CDATA[Diamond X-510]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR7LM</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/7063920</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR7SAN</qra>
+			<id>9045806</id>
+			<hash>297658e2f9eb4e369d0629a247eb44e2</hash>
+			<created>2023-02-26 18:27:03</created>
+			<updated>2023-02-26 18:51:10</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2028-02-10</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.462500</qrg>
+			<qrg type="tx">439.062500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Koprzywnica]]></qth>
+			<location>
+				<locator>KO00TO</locator>
+				<latitude>50.593202</latitude>
+				<longitude>21.591853</longitude>
+				<altitudeOverSea>147</altitudeOverSea>
+				<altitudeOverGround>14</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ7OWV</operator>
+			<operator>SQ7PTE</operator>
+			<remarks><![CDATA[CC7
+Antena Diamond x300]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR7SAN</link>
+			<link>http://sr7san-79.ddns.net</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045806</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR7T</qra>
+			<id>9044949</id>
+			<hash></hash>
+			<created>2018-01-02 13:47:30</created>
+			<updated>2018-03-14 09:25:17</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2023-12-15</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.275000</qrg>
+			<qrg type="tx">438.875000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Złota]]></qth>
+			<location>
+				<locator>KO00HJ</locator>
+				<latitude>50.382386</latitude>
+				<longitude>20.592706</longitude>
+				<altitudeOverSea>230</altitudeOverSea>
+				<altitudeOverGround>20</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ7TCW</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR7T</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9044949</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR7UWI</qra>
+			<id>9006118</id>
+			<hash>7cb7cd3ce1d4b9d5b2c545fd819097af</hash>
+			<created>2015-02-18 18:54:09</created>
+			<updated>2021-02-26 14:22:35</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2020-05-04</licenseExpiryDate>
+			<modeInt>2080</modeInt>
+			<mode>DSTAR</mode>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.925000</qrg>
+			<qrg type="tx">438.525000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Czastary]]></qth>
+			<location>
+				<locator>JO91DG</locator>
+				<latitude>51.259814</latitude>
+				<longitude>18.322125</longitude>
+				<altitudeOverSea>190</altitudeOverSea>
+				<altitudeOverGround>15</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP7BIX</operator>
+			<operator>SP7F</operator>
+			<operator>SO7BIT</operator>
+			<remarks><![CDATA[Antena Diamond X200. Przemiennik podłączony do sieci Brandmeister.]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR7UWI</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9006118</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR8AVB</qra>
+			<id>9045151</id>
+			<hash></hash>
+			<created>2020-04-22 20:17:32</created>
+			<updated>2020-09-17 09:19:43</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2025-04-29</licenseExpiryDate>
+			<modeInt>10272</modeInt>
+			<mode>DSTAR</mode>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.412500</qrg>
+			<qrg type="tx">439.012500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Biała Podlaska]]></qth>
+			<location>
+				<locator>KO12NA</locator>
+				<latitude>52.030614</latitude>
+				<longitude>23.147055</longitude>
+				<altitudeOverSea>140</altitudeOverSea>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ8ISH</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR8AVB</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045151</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR8DMB</qra>
+			<id>9045157</id>
+			<hash></hash>
+			<created>2020-06-09 10:09:55</created>
+			<updated>2020-07-16 14:33:07</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.975000</qrg>
+			<qrg type="tx">439.575000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Bezmiechowa]]></qth>
+			<location>
+				<locator>KN19EM</locator>
+				<latitude>49.521832</latitude>
+				<longitude>22.411545</longitude>
+				<altitudeOverSea>615</altitudeOverSea>
+				<altitudeOverGround>15</altitudeOverGround>
+			</location>
+			<activationInt>16777216</activationInt>
+
+			<activation>UNKNOWN</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP8EBC</operator>
+			<remarks><![CDATA[Color Code (CC) 1, MMDVM, Diamond X-50, duplekser Procom DPF70/6. Przemiennik został uruchomiony w docelowej lokalizacji 7 czerwca 2020. W razie problemów z jego pracą proszę o informację na sp8ebc@interia.pl]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR8DMB</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045157</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR8DMK</qra>
+			<id>9044977</id>
+			<hash></hash>
+			<created>2018-07-04 12:04:30</created>
+			<updated>2021-03-01 19:28:18</updated>
+			<statusInt>2</statusInt>
+			<status>DISABLED</status>
+			<licenseExpiryDate>2022-09-01</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.775000</qrg>
+			<qrg type="tx">439.375000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[RTCN Sucha Góra/Krosno EmiTel-Czarnorzeki 90]]></qth>
+			<location>
+				<locator>KN09VS</locator>
+				<latitude>49.756122</latitude>
+				<longitude>21.812941</longitude>
+				<altitudeOverSea>585</altitudeOverSea>
+				<altitudeOverGround>74</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>10.00</trxPower>
+			<operator>SP8EFJ</operator>
+			<operator>SP8WJS</operator>
+			<remarks><![CDATA[Antena RX/TX MA-2000 wysokość zawieszenia 74,40m n.p.t., feeder 2"; Zakres częstotliwości pracy anteny: 144-146 MHz / 430-440 MHz Zysk: UHF 7.35 dBd Długość: 255 cm Złącze: N antena posiada 3 przeciwwagi.
+
+Przemiennik został wyłączony i zdemontowany na czas remontu/przebudowy wieży EmiTel-a RTCN Krosno/Sucha Góra do wiosny 2021. Po tym okresie będzie ponownie włączony.]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR8DMK</link>
+			<link>http://otpzk05.pl/</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9044977</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR8DMR</qra>
+			<id>9045090</id>
+			<hash></hash>
+			<created>2019-02-24 19:00:03</created>
+			<updated>2022-11-13 13:22:57</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2026-11-17</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.237500</qrg>
+			<qrg type="tx">438.837500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Chotycze - RTCN Łosice]]></qth>
+			<location>
+				<locator>KO12JE</locator>
+				<latitude>52.186240</latitude>
+				<longitude>22.781650</longitude>
+				<altitudeOverSea>184</altitudeOverSea>
+				<altitudeOverGround>275</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP8KB</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR8DMR</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045090</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR8DRL</qra>
+			<id>9044887</id>
+			<hash></hash>
+			<created>2017-04-09 21:06:31</created>
+			<updated>2020-03-14 09:29:42</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2022-02-15</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.675000</qrg>
+			<qrg type="tx">438.275000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Lublin]]></qth>
+			<location>
+				<locator>KO11GF</locator>
+				<latitude>51.234937</latitude>
+				<longitude>22.545933</longitude>
+				<altitudeOverSea>185</altitudeOverSea>
+				<altitudeOverGround>46</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ8ISD</operator>
+			<operator>SP8GPB</operator>
+			<operator>SQ8MFR</operator>
+			<remarks><![CDATA[Antena: Radmor 3284/3, o zysku energetycznym względem dipola λ/2 8 dBd (10,15 dBi).
+Tor odbiorczo – nadawczy: 2 x Motorola GM350.]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR8DRL</link>
+			<link>http://krotkofalowcy-lublin.pl/dvsr8drl/</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9044887</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR8DVP</qra>
+			<id>9044834</id>
+			<hash></hash>
+			<created>2017-01-28 14:13:16</created>
+			<updated>2022-01-25 13:52:49</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2022-01-05</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.850000</qrg>
+			<qrg type="tx">438.450000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Kazimierz Dolny]]></qth>
+			<location>
+				<locator>KO01XH</locator>
+				<latitude>51.325496</latitude>
+				<longitude>21.968573</longitude>
+				<altitudeOverSea>207</altitudeOverSea>
+				<altitudeOverGround>90</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<operator>SQ5AGQ</operator>
+			<operator>SQ8AGI</operator>
+			<operator>SP8RSU</operator>
+			<remarks><![CDATA[Urządzenie TX/RX: Motorola MTR-2000
+Antena: VHF/UHF Vertical Folded Dipole Array
+Linia zasilająca: 100 m przewodu LDF6-50 (1 1/4")
+Separacja TX/RX: filtr dupleksowy 12-to komorowy Huber+Suhner typ: 2900.17.0002
+W torze odbiorczym Multicoupler Procom PRO-AR4G-N
+W torze nadawczym Combiner Celwave
+Awaryjne podtrzymanie zasilania
+
+Miejsce zainstalowania: Kazimierz Dolny - SLR Emitel http://emi.emitel.pl/EMITEL/ObjectImages/DODR_E2E.jpg]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR8DVP</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9044834</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR8RD</qra>
+			<id>9045075</id>
+			<hash></hash>
+			<created>2019-02-07 18:18:20</created>
+			<updated>2023-04-09 14:26:54</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2024-02-19</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.362500</qrg>
+			<qrg type="tx">438.962500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Stalowa Wola]]></qth>
+			<location>
+				<locator>KO10AN</locator>
+				<latitude>50.553361</latitude>
+				<longitude>22.074279</longitude>
+				<altitudeOverSea>208</altitudeOverSea>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP8I</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR8RD</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045075</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR8UVC</qra>
+			<id>9043542</id>
+			<hash></hash>
+			<created>2016-07-29 06:30:49</created>
+			<updated>2021-08-24 17:43:59</updated>
+			<statusInt>2</statusInt>
+			<status>DISABLED</status>
+			<licenseExpiryDate>2021-07-22</licenseExpiryDate>
+			<modeInt>10272</modeInt>
+			<mode>DSTAR</mode>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.950000</qrg>
+			<qrg type="tx">439.550000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Biała Podlaska]]></qth>
+			<location>
+				<locator>KO12NB</locator>
+				<latitude>52.048835</latitude>
+				<longitude>23.116651</longitude>
+				<altitudeOverSea>147</altitudeOverSea>
+				<altitudeOverGround>25</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP8QEO</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR8UVC</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9043542</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR8UWD</qra>
+			<id>9002888</id>
+			<hash>a438c89842ce73115e6aa1dc1714ed62</hash>
+			<created>2014-02-11 12:11:06</created>
+			<updated>2017-01-03 09:38:30</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2019-03-12</licenseExpiryDate>
+			<modeInt>10272</modeInt>
+			<mode>DSTAR</mode>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.912500</qrg>
+			<qrg type="tx">438.512500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Włodawa]]></qth>
+			<location>
+				<locator>KO11SN</locator>
+				<latitude>51.558078</latitude>
+				<longitude>23.553710</longitude>
+				<altitudeOverSea>173</altitudeOverSea>
+				<altitudeOverGround>38</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>10.00</trxPower>
+			<operator>SP8NTH</operator>
+			<operator>SQ8ISJ</operator>
+			<remarks><![CDATA[C4FM - pracuje w sieci YSF. Reflektor PL SR8UWD]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR8UWD</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9002888</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9ASR</qra>
+			<id>9043573</id>
+			<hash>cd6f7ed78a0ec00e56496355de6da13c</hash>
+			<created>2016-10-10 17:17:26</created>
+			<updated>2023-04-07 23:19:35</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2021-11-08</licenseExpiryDate>
+			<modeInt>2052</modeInt>
+			<mode>FM</mode>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.700000</qrg>
+			<qrg type="tx">438.300000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Góra Żar]]></qth>
+			<location>
+				<locator>JN99OS</locator>
+				<latitude>49.787232</latitude>
+				<longitude>19.224770</longitude>
+				<altitudeOverSea>748</altitudeOverSea>
+				<altitudeOverGround>10</altitudeOverGround>
+			</location>
+			<activationInt>256</activationInt>
+
+			<activation>CTCSS</activation>
+			<ctcss type="rx">74.4</ctcss>
+			<ctcss type="tx">74.4</ctcss>
+			<trxPower>15.00</trxPower>
+			<operator>SP9LVZ</operator>
+			<operator>SQ9MYX</operator>
+			<remarks><![CDATA[DMR / FM]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9ASR</link>
+			<link>http://sp9kmq.sp-radio.eu</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9043573</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9BN</qra>
+			<id>9036397</id>
+			<hash>e59f9d3b675552399f5bfd5ea818f813</hash>
+			<created>2016-01-10 14:14:07</created>
+			<updated>2018-09-23 11:24:28</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.625000</qrg>
+			<qrg type="tx">439.225000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Bedzin]]></qth>
+			<location>
+				<locator>JO90NH</locator>
+				<latitude>50.319022</latitude>
+				<longitude>19.115659</longitude>
+				<altitudeOverSea>339</altitudeOverSea>
+				<altitudeOverGround>43</altitudeOverGround>
+			</location>
+			<activationInt>16777216</activationInt>
+
+			<activation>UNKNOWN</activation>
+			<trxPower>10.00</trxPower>
+			<operator>SQ9GIN</operator>
+			<operator>SP9UVG</operator>
+			<operator>SP9XLM</operator>
+			<remarks><![CDATA[Color Code 9]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9BN</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9036397</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9BSR</qra>
+			<id>9031090</id>
+			<hash>dab53766dd1ea19f7498d4ac8c54056e</hash>
+			<created>2015-12-04 15:41:23</created>
+			<updated>2019-09-22 12:51:15</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2020-11-20</licenseExpiryDate>
+			<modeInt>2052</modeInt>
+			<mode>FM</mode>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.650000</qrg>
+			<qrg type="tx">438.250000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Góra Szyndzielnia]]></qth>
+			<location>
+				<locator>JN99MS</locator>
+				<latitude>49.760053</latitude>
+				<longitude>19.001327</longitude>
+				<altitudeOverSea>1026</altitudeOverSea>
+			</location>
+			<activationInt>256</activationInt>
+
+			<activation>CTCSS</activation>
+			<ctcss type="rx">74.4</ctcss>
+			<trxPower>15.00</trxPower>
+			<operator>SP0BASR</operator>
+			<remarks><![CDATA[DMR/FM]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9BSR</link>
+			<link>http://sp9kmq.sp-radio.eu/</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9031090</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9CSR</qra>
+			<id>9043614</id>
+			<hash></hash>
+			<created>2016-11-15 18:25:06</created>
+			<updated>2018-04-05 12:16:45</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2021-12-13</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.912500</qrg>
+			<qrg type="tx">439.512500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Osiek]]></qth>
+			<location>
+				<locator>JN99OW</locator>
+				<latitude>49.933851</latitude>
+				<longitude>19.249664</longitude>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP9LVZ</operator>
+			<remarks><![CDATA[Przemiennik pracuje w sieci DMR-PLUS, może być okresowo wyłączany. Dane dodatkowe: CC1, TS1 grupa 260, TS2 grupa 2609. Aktywność przemiennika można sprawdzić na: http://dmrplus.pl/ipsc2-381]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9CSR</link>
+			<link>http://sp9kmq.sp-radio.eu</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9043614</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9DBN</qra>
+			<id>9044938</id>
+			<hash></hash>
+			<created>2017-10-20 16:08:02</created>
+			<updated>2018-08-25 10:35:20</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.875000</qrg>
+			<qrg type="tx">438.475000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Mysłowice]]></qth>
+			<location>
+				<locator>JO90NF</locator>
+				<latitude>50.213236</latitude>
+				<longitude>19.127539</longitude>
+			</location>
+			<activationInt>16777216</activationInt>
+
+			<activation>UNKNOWN</activation>
+			<trxPower>10.00</trxPower>
+			<operator>SQ9GIN</operator>
+			<operator>SP9UVG</operator>
+			<operator>SQ9DHP</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9DBN</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9044938</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9DBY</qra>
+			<id>9045704</id>
+			<hash></hash>
+			<created>2021-04-12 21:56:31</created>
+			<updated>2021-06-14 20:08:25</updated>
+			<statusInt>8</statusInt>
+			<status>TESTING</status>
+			<licenseExpiryDate>2026-03-15</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.550000</qrg>
+			<qrg type="tx">439.150000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Bytom]]></qth>
+			<location>
+				<locator>JO90KI</locator>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>HF9D</operator>
+			<operator>SP9UVG</operator>
+			<remarks><![CDATA[Ant. GP 4 x 5/8, przemiennik pracuje w sieci HBLink Silesia, ważne CC9, inne dane dostępne w necie.]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9DBY</link>
+			<link>https://brandmeister.network/?page=repeater&amp;id=260006</link>
+			<link>http://silesia.hblink.network:8011/</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045704</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9DDP</qra>
+			<id>9045097</id>
+			<hash></hash>
+			<created>2019-03-19 16:04:16</created>
+			<updated>2019-08-21 08:11:20</updated>
+			<statusInt>16</statusInt>
+			<status>BUILDING</status>
+			<licenseExpiryDate>2024-03-14</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.950000</qrg>
+			<qrg type="tx">438.550000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Góra Kicarz]]></qth>
+			<location>
+				<locator>KN09IK</locator>
+				<latitude>49.435756</latitude>
+				<longitude>20.734167</longitude>
+				<altitudeOverSea>667</altitudeOverSea>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<operator>SQ9OKT</operator>
+			<remarks><![CDATA[BUDOWANY - OBIEKT NA KTÓRYM MA BYĆ ZAINSTALOWANY PRZEMIENNIK JEST W BUDOWIE]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9DDP</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045097</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9DJK</qra>
+			<id>9045002</id>
+			<hash></hash>
+			<created>2019-01-20 23:24:08</created>
+			<updated>2020-06-09 11:46:09</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2024-02-04</licenseExpiryDate>
+			<modeInt>10240</modeInt>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.775000</qrg>
+			<qrg type="tx">438.375000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Włodowice - Jura]]></qth>
+			<location>
+				<locator>JO90RN</locator>
+				<latitude>50.579506</latitude>
+				<longitude>19.449523</longitude>
+				<altitudeOverSea>410</altitudeOverSea>
+				<altitudeOverGround>18</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>12.00</trxPower>
+			<operator>SP9JKL</operator>
+			<operator>SP9UVG</operator>
+			<operator>SQ9GIN</operator>
+			<remarks><![CDATA[Wysokość n.p.m.: 	410 m
+Wysokość nad poziomem gruntu: 	20 m 
+Lokalizacja: 	50,5 N, 19,4 E
+kolor code 1]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9DJK</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045002</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9DKA</qra>
+			<id>9002854</id>
+			<hash>7e07da5f6f0e235c194b69e306d2dd36</hash>
+			<created>2014-01-20 11:12:15</created>
+			<updated>2021-03-06 16:44:30</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.900000</qrg>
+			<qrg type="tx">438.500000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Siemianowice Śląskie]]></qth>
+			<location>
+				<locator>JO90MH</locator>
+				<latitude>50.298203</latitude>
+				<longitude>19.005029</longitude>
+				<altitudeOverSea>314</altitudeOverSea>
+				<altitudeOverGround>35</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP9UVG</operator>
+			<operator>SQ9GIN</operator>
+			<remarks><![CDATA[CC1]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9DKA</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9002854</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9DLI</qra>
+			<id>9045003</id>
+			<hash></hash>
+			<created>2019-01-22 17:24:44</created>
+			<updated>2020-10-16 21:56:24</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.375000</qrg>
+			<qrg type="tx">438.975000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Limanowa Lipowe]]></qth>
+			<location>
+				<locator>KN09EQ</locator>
+				<latitude>49.704911</latitude>
+				<longitude>20.402898</longitude>
+				<altitudeOverSea>539</altitudeOverSea>
+				<altitudeOverGround>25</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>10.00</trxPower>
+			<operator>SQ9OKT</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9DLI</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045003</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9DMR</qra>
+			<id>9005872</id>
+			<hash>660350455e76722066da726eafea4d67</hash>
+			<created>2014-11-14 08:27:55</created>
+			<updated>2017-02-25 14:51:06</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.850000</qrg>
+			<qrg type="tx">438.450000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Katowice]]></qth>
+			<location>
+				<locator>JO90MF</locator>
+				<altitudeOverSea>285</altitudeOverSea>
+				<altitudeOverGround>81</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ9VH</operator>
+			<operator>SQ9JTI</operator>
+			<remarks><![CDATA[Hytera RD985 UHF, aktywacja CC1]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9DMR</link>
+			<link>http://www.sp-dmr.pl/?p=528</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9005872</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9DSK</qra>
+			<id>9045126</id>
+			<hash></hash>
+			<created>2019-09-09 15:01:30</created>
+			<updated>2020-09-02 22:00:28</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.925000</qrg>
+			<qrg type="tx">438.525000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[SZCZAWNICA]]></qth>
+			<location>
+				<locator>KN09FK</locator>
+				<latitude>49.418869</latitude>
+				<longitude>20.476544</longitude>
+				<altitudeOverSea>702</altitudeOverSea>
+				<altitudeOverGround>10</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ9OKT</operator>
+			<operator>SP9RNS</operator>
+			<remarks><![CDATA[MMDVM RPI3 
+TX MOTOROLA CM340
+RX MOTOROLA GM340
+ANT X200N
+ID 260926
+CC-9
+TS1 TG260
+TS2 TG2609 TG26093 TG26095 TG260015
+www.radioklub.pl]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9DSK</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045126</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9DV</qra>
+			<id>9044984</id>
+			<hash>0b2c19a981340f617e4fd13d3608682a</hash>
+			<created>2018-08-27 12:25:58</created>
+			<updated>2019-07-21 20:41:54</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2021-07-12</licenseExpiryDate>
+			<modeInt>10276</modeInt>
+			<mode>FM</mode>
+			<mode>DSTAR</mode>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.725000</qrg>
+			<qrg type="tx">438.325000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Węgrzce]]></qth>
+			<location>
+				<locator>JO90XC</locator>
+				<latitude>50.116012</latitude>
+				<longitude>19.969213</longitude>
+				<altitudeOverSea>281</altitudeOverSea>
+				<altitudeOverGround>10</altitudeOverGround>
+			</location>
+			<activationInt>256</activationInt>
+
+			<activation>CTCSS</activation>
+			<ctcss type="rx">67.0</ctcss>
+			<trxPower>10.00</trxPower>
+			<operator>SQ9GOL</operator>
+			<operator>SQ9JDO</operator>
+			<operator>SQ9WDZ</operator>
+			<operator>SQ9MYX</operator>
+			<remarks><![CDATA[Antena Diamond X510 
+Duplexer Kathrein
+MMDVM oraz analog.]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9DV</link>
+			<link>http://sq9jdo.com.pl/SR9DV/SR9DV.html</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9044984</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9DXK</qra>
+			<id>9045100</id>
+			<hash></hash>
+			<created>2019-03-24 11:39:24</created>
+			<updated>2022-01-01 19:13:31</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2024-03-15</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.012500</qrg>
+			<qrg type="tx">438.612500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Bytom]]></qth>
+			<location>
+				<locator>JO90KI</locator>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>5.00</trxPower>
+			<operator>SQ9SBE</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9DXK</link>
+			<link>http://www.dx.katowice.pl</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045100</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9GR</qra>
+			<id>9045824</id>
+			<hash>227daf7958ceadb4b1698ab566261289</hash>
+			<created>2023-05-19 20:07:27</created>
+			<updated>2023-10-14 13:14:43</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2028-01-25</licenseExpiryDate>
+			<modeInt>10276</modeInt>
+			<mode>FM</mode>
+			<mode>DSTAR</mode>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.937500</qrg>
+			<qrg type="tx">438.537500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Gorlice, maszt Emitel na Górze Cmentarnej]]></qth>
+			<location>
+				<locator>KN09NP</locator>
+				<latitude>49.664762</latitude>
+				<longitude>21.152389</longitude>
+				<altitudeOverSea>350</altitudeOverSea>
+				<altitudeOverGround>35</altitudeOverGround>
+			</location>
+			<activationInt>260</activationInt>
+
+			<activation>CARRIER</activation>
+			<activation>CTCSS</activation>
+			<ctcss type="rx">162.2</ctcss>
+			<ctcss type="tx">162.2</ctcss>
+			<trxPower>15.00</trxPower>
+			<operator>SP9WTN</operator>
+			<operator>SP9RQA</operator>
+			<operator>SQ9EZE</operator>
+			<remarks><![CDATA[Przemiennik multisystemowy
+FM - TX/RX CTCSS 162.2Hz
+DMR - TG 260999 CC9 TS2
+Fusion/C4FM: YSF:PL-GORLICE (76263) 
+DSTAR - XLX333A]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9GR</link>
+			<link>https://www.facebook.com/sp9kgr</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045824</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9JSR</qra>
+			<id>9045138</id>
+			<hash></hash>
+			<created>2019-12-29 09:32:47</created>
+			<updated>2021-08-06 19:51:20</updated>
+			<statusInt>2</statusInt>
+			<status>DISABLED</status>
+			<licenseExpiryDate>2024-08-13</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.712500</qrg>
+			<qrg type="tx">439.312500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Jastrzębie Zdrój]]></qth>
+			<location>
+				<locator>JN99HX</locator>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>10.00</trxPower>
+			<operator>SQ9MAS</operator>
+			<operator>SQ9DHS</operator>
+			<remarks><![CDATA[Info opiekun SQ9MAS, SQ9DHS:
+Tel: 530568050
+sq9mas@gmail.com
+CC9, TS1 i 2, Statyczne TG260 i TG8
+RPT zlinkowane z HBlink
+TG 6,7,8,94]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9JSR</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045138</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9KAO</qra>
+			<id>9045702</id>
+			<hash></hash>
+			<created>2021-04-07 23:49:32</created>
+			<updated>2021-04-07 23:49:33</updated>
+			<statusInt>32</statusInt>
+			<status>PLANNED</status>
+			<modeInt>14372</modeInt>
+			<mode>FM</mode>
+			<mode>DSTAR</mode>
+			<mode>MOTOTRBO</mode>
+			<mode>APCO25</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.612500</qrg>
+			<qrg type="tx">439.212500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Tarnów]]></qth>
+			<location>
+				<locator>KO00LA</locator>
+				<latitude>50.033140</latitude>
+				<longitude>20.998133</longitude>
+				<altitudeOverSea>236</altitudeOverSea>
+				<altitudeOverGround>20</altitudeOverGround>
+			</location>
+			<activationInt>16777216</activationInt>
+
+			<activation>UNKNOWN</activation>
+			<trxPower>10.00</trxPower>
+			<operator>SQ9PUZ</operator>
+			<operator>SQ9PCH</operator>
+			<operator>SQ9MUR</operator>
+			<operator>SQ9OL</operator>
+			<remarks><![CDATA[Przemiennik Yaesu DR-1X ,mmdvm, pistar , UVS-300]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9KAO</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045702</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9PJD</qra>
+			<id>9045784</id>
+			<hash>2e5f0a24c86d09caf450e0e1681f228e</hash>
+			<created>2022-12-23 18:57:14</created>
+			<updated>2022-12-23 18:57:14</updated>
+			<statusInt>8</statusInt>
+			<status>TESTING</status>
+			<modeInt>10244</modeInt>
+			<mode>FM</mode>
+			<mode>MOTOTRBO</mode>
+			<mode>C4FM</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">439.400000</qrg>
+			<qrg type="tx">431.800000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Gliwice]]></qth>
+			<location>
+				<locator>JO90HH</locator>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<operator>SQ9IWI</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9PJD</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045784</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9RSR</qra>
+			<id>9045077</id>
+			<hash></hash>
+			<created>2019-02-18 18:32:46</created>
+			<updated>2019-02-18 18:32:47</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.737500</qrg>
+			<qrg type="tx">438.337500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Rybnik]]></qth>
+			<location>
+				<locator>JO90GC</locator>
+				<latitude>50.087687</latitude>
+				<longitude>18.534451</longitude>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>10.00</trxPower>
+			<operator>SQ9PRL</operator>
+			<remarks><![CDATA[CC 1
+TS1 260
+TS2 26091, 26098]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9RSR</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045077</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9SC</qra>
+			<id>9043615</id>
+			<hash></hash>
+			<created>2016-11-15 18:27:25</created>
+			<updated>2023-07-25 11:46:32</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>2052</modeInt>
+			<mode>FM</mode>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.362500</qrg>
+			<qrg type="tx">438.962500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Cieszyn]]></qth>
+			<location>
+				<locator>JN99HR</locator>
+				<latitude>49.736501</latitude>
+				<longitude>18.634977</longitude>
+				<altitudeOverSea>348</altitudeOverSea>
+				<altitudeOverGround>14</altitudeOverGround>
+			</location>
+			<activationInt>256</activationInt>
+
+			<activation>CTCSS</activation>
+			<ctcss type="rx">67.0</ctcss>
+			<ctcss type="tx">67.0</ctcss>
+			<trxPower>15.00</trxPower>
+			<operator>SQ9NOO</operator>
+			<operator>SP9WZO</operator>
+			<remarks><![CDATA[Kathrein 720-880]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9SC</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9043615</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9TR</qra>
+			<id>8997505</id>
+			<hash>43737ca1a024cb7d3404c9308e70fa0c</hash>
+			<created>2013-03-08 10:57:46</created>
+			<updated>2021-10-20 16:31:43</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2018-03-12</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.575000</qrg>
+			<qrg type="tx">439.175000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Tarnów]]></qth>
+			<location>
+				<locator>KO00MA</locator>
+				<latitude>50.025090</latitude>
+				<longitude>21.007561</longitude>
+				<altitudeOverSea>476</altitudeOverSea>
+				<altitudeOverGround>40</altitudeOverGround>
+			</location>
+			<activationInt>16777216</activationInt>
+
+			<activation>UNKNOWN</activation>
+			<trxPower>10.00</trxPower>
+			<operator>SQ9PCH</operator>
+			<operator>SQ9OL</operator>
+			<operator>SQ9MUR</operator>
+			<remarks><![CDATA[Slot 1:
+Wszystkie z BM
+Slot 2 BM:
+TG 9 mapowany na TG 5 (ustaw w radiu)
+TG 26092(TASR), TG260015(EMCOM)
+Slot2 HBlink:
+TG8 - HBLINK siec
+TG 9 HBLINK lokalny(linkowany lokalnie w hblink serwer Tarnow)
+ColorCode - 1
+
+Motorola GM360 2X
+Płytka MMDVM SP8NTH+ARDUINO]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9TR</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/8997505</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9TRZ</qra>
+			<id>9044937</id>
+			<hash></hash>
+			<created>2017-10-07 10:23:56</created>
+			<updated>2020-09-02 22:07:28</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2022-06-28</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.975000</qrg>
+			<qrg type="tx">438.575000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Trzebinia]]></qth>
+			<location>
+				<locator>JO90RE</locator>
+				<latitude>50.173858</latitude>
+				<longitude>19.472398</longitude>
+				<altitudeOverSea>343</altitudeOverSea>
+				<altitudeOverGround>10</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>10.00</trxPower>
+			<operator>SQ9NFN</operator>
+			<operator>SQ9GIN</operator>
+			<operator>SP9UVG</operator>
+			<remarks><![CDATA[CC1]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9TRZ</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9044937</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9UCZ</qra>
+			<id>9006146</id>
+			<hash></hash>
+			<created>2015-06-29 09:43:01</created>
+			<updated>2022-11-25 20:11:27</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2025-04-29</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.487500</qrg>
+			<qrg type="tx">439.087500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Częstochowa]]></qth>
+			<location>
+				<locator>JO90NU</locator>
+				<latitude>50.843583</latitude>
+				<longitude>19.133441</longitude>
+				<altitudeOverSea>279</altitudeOverSea>
+				<altitudeOverGround>25</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ9KFZ</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9UCZ</link>
+			<link>http://www.36fm.pl</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9006146</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9UPZ</qra>
+			<id>9044969</id>
+			<hash></hash>
+			<created>2018-06-16 13:09:01</created>
+			<updated>2023-04-12 22:29:16</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.987500</qrg>
+			<qrg type="tx">438.587500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Klęczany]]></qth>
+			<location>
+				<locator>KN09HQ</locator>
+				<latitude>49.678767</latitude>
+				<longitude>20.626436</longitude>
+				<altitudeOverSea>573</altitudeOverSea>
+				<altitudeOverGround>12</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ9OKT</operator>
+			<remarks><![CDATA[D-ORIGINAL X-200]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9UPZ</link>
+			<link>https://radioklub.pl/sr9upz</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9044969</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9US</qra>
+			<id>9045762</id>
+			<hash>2aa12e543d5f767f3611a6e93d4552c3</hash>
+			<created>2022-08-24 21:54:54</created>
+			<updated>2023-11-21 21:57:01</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.525000</qrg>
+			<qrg type="tx">438.125000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Góra Czantoria]]></qth>
+			<location>
+				<locator>JN99JQ</locator>
+				<altitudeOverSea>851</altitudeOverSea>
+				<altitudeOverGround>8</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP9GM</operator>
+			<operator>SP9EP</operator>
+			<remarks><![CDATA[CC9
+Statycznie
+Slot 1 : 2609
+Slot 2 : 260998 lokalnie, 260999 Gorlice, 26077 SierraEcho
+Reszta dynamicznie wedle przeznaczenia na nr slotu.]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9US</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9045762</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9UVL</qra>
+			<id>9043658</id>
+			<hash></hash>
+			<created>2016-12-01 16:33:22</created>
+			<updated>2023-12-02 14:27:22</updated>
+			<statusInt>2</statusInt>
+			<status>DISABLED</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.762500</qrg>
+			<qrg type="tx">438.362500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Luboń Wlk.]]></qth>
+			<location>
+				<locator>JN99XP</locator>
+				<latitude>49.653614</latitude>
+				<longitude>19.991663</longitude>
+				<altitudeOverSea>1009</altitudeOverSea>
+				<altitudeOverGround>10</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP9XWY</operator>
+			<operator>SQ9OKR</operator>
+			<operator>SP9SVH</operator>
+			<remarks><![CDATA[DMR Id: 260916 CC9 Hytera RD625]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9UVL</link>
+			<link>http://www.kpgk.pl</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9043658</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9UVM</qra>
+			<id>8996903</id>
+			<hash>87d4ae82452fa844481022951357df27</hash>
+			<created>2012-02-15 23:20:23</created>
+			<updated>2020-06-25 14:35:58</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.800000</qrg>
+			<qrg type="tx">439.400000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Kraków - RTCN Chorągwica EMITEL]]></qth>
+			<location>
+				<locator>KN09AX</locator>
+				<latitude>49.958656</latitude>
+				<longitude>20.081999</longitude>
+				<altitudeOverSea>423</altitudeOverSea>
+				<altitudeOverGround>25</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>10.00</trxPower>
+			<operator>SQ9OZE</operator>
+			<operator>SP9SVH</operator>
+			<remarks><![CDATA[Hytera RD625; DMRId: 260912 CC: 9]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9UVM</link>
+			<link>http://www.kpgk.pl</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/8996903</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9UVO</qra>
+			<id>9043659</id>
+			<hash></hash>
+			<created>2016-12-01 16:34:34</created>
+			<updated>2020-06-25 14:37:56</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2021-10-31</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.725000</qrg>
+			<qrg type="tx">439.325000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Kochanów]]></qth>
+			<location>
+				<locator>JO90UC</locator>
+				<latitude>50.115185</latitude>
+				<longitude>19.748343</longitude>
+				<altitudeOverSea>246</altitudeOverSea>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ9OKR</operator>
+			<operator>SP9SVH</operator>
+			<remarks><![CDATA[MMDVM; DMR Id 260913 ; CC9]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9UVO</link>
+			<link>http://www.kpgk.pl</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9043659</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9UVR</qra>
+			<id>9006113</id>
+			<hash>0b4b562454f9d6426119f287bac20ae4</hash>
+			<created>2015-02-09 18:10:04</created>
+			<updated>2021-02-22 10:13:28</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.700000</qrg>
+			<qrg type="tx">439.300000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Kraków - Centrum]]></qth>
+			<location>
+				<locator>JO90XB</locator>
+				<latitude>50.065500</latitude>
+				<longitude>19.940600</longitude>
+				<altitudeOverSea>250</altitudeOverSea>
+				<altitudeOverGround>40</altitudeOverGround>
+			</location>
+			<activationInt>16777220</activationInt>
+
+			<activation>CARRIER</activation>
+			<activation>UNKNOWN</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP9SVH</operator>
+			<operator>SP9SVE</operator>
+			<operator>SP9ZAY</operator>
+			<remarks><![CDATA[DMR ID: 260910 CC9 - BM TS1: TG260, TS2: TG26093; HBL TS2: TG 7,8,50-55, 1260 (260 HBL)]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9UVR</link>
+			<link>http://www.kpgk.pl</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9006113</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9UVT</qra>
+			<id>9022333</id>
+			<hash>bdc05f3cb51b690301e72d8ad6edb29b</hash>
+			<created>2015-10-14 15:31:06</created>
+			<updated>2022-11-14 12:19:34</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2025-06-22</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.637500</qrg>
+			<qrg type="tx">439.237500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Góra Koskowa POLKOMTEL]]></qth>
+			<location>
+				<locator>JN99VS</locator>
+				<latitude>49.753300</latitude>
+				<longitude>19.782200</longitude>
+				<altitudeOverSea>874</altitudeOverSea>
+				<altitudeOverGround>10</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ9OKR</operator>
+			<operator>SP9SVH</operator>
+			<operator>SP9XWY</operator>
+			<remarks><![CDATA[DMR ID: 260911  CC9   MMDVM]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9UVT</link>
+			<link>http://www.kpgk.pl</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9022333</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9UW</qra>
+			<id>7229426</id>
+			<hash>5b526ce7afce0b390e0cde267e5e963e</hash>
+			<created>2011-01-03 20:01:27</created>
+			<updated>2020-07-13 14:10:38</updated>
+			<statusInt>8</statusInt>
+			<status>TESTING</status>
+			<licenseExpiryDate>2024-05-09</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.450000</qrg>
+			<qrg type="tx">439.050000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Katowice]]></qth>
+			<location>
+				<locator>JO90MG</locator>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SP9UVG</operator>
+			<operator>SQ9GIN</operator>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9UW</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/7229426</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9VDM</qra>
+			<id>9002806</id>
+			<hash>4055a1e4194a0581b579a94ad1c32ae3</hash>
+			<created>2013-12-22 20:27:01</created>
+			<updated>2019-02-27 17:11:01</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.600000</qrg>
+			<qrg type="tx">438.200000</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Lichwin]]></qth>
+			<location>
+				<locator>KN09LV</locator>
+				<latitude>49.891714</latitude>
+				<longitude>20.928624</longitude>
+				<altitudeOverSea>476</altitudeOverSea>
+				<altitudeOverGround>40</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>10.00</trxPower>
+			<operator>SQ9JTI</operator>
+			<operator>SQ9PCH</operator>
+			<operator>SQ9MUR</operator>
+			<remarks><![CDATA[Antena Diamond BC-205
+Kabel Andrew LDF-4-50A - 50mb
+Kathrein 8-Komorowy + Multicoupler + Combiner
+Hytera RD625  ID 260901 CC1 sieć BM
+TS1 TG260  
+TS2 TG2 9 oraz 26092
+Internet dostarcza Firma INFO-NET s.c. http://www.in.net.pl/]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9VDM</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9002806</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9VJK</qra>
+			<id>9044945</id>
+			<hash>00b18b3cc7cd6291e2bbb1366868d75b</hash>
+			<created>2017-11-10 08:24:15</created>
+			<updated>2018-01-31 12:55:06</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2022-11-28</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">430.712500</qrg>
+			<qrg type="tx">438.312500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Jaworzyna Krynicka]]></qth>
+			<location>
+				<locator>KN09KK</locator>
+				<latitude>49.417328</latitude>
+				<longitude>20.895254</longitude>
+				<altitudeOverSea>1102</altitudeOverSea>
+				<altitudeOverGround>15</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>10.00</trxPower>
+			<operator>SP9WTC</operator>
+			<operator>SP9SVH</operator>
+			<remarks><![CDATA[Docelowa lokalizacja - Jaworzyna Krynicka]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9VJK</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9044945</feedback>
+		</repeater>
+		<repeater>
+			<qra>SR9VRJ</qra>
+			<id>9044889</id>
+			<hash>b00d0eb5ae9b518aa65f5ec3984f7742</hash>
+			<created>2017-04-12 13:34:18</created>
+			<updated>2022-11-02 10:02:44</updated>
+			<statusInt>1</statusInt>
+			<status>WORKING</status>
+			<licenseExpiryDate>2022-03-22</licenseExpiryDate>
+			<modeInt>2048</modeInt>
+			<mode>MOTOTRBO</mode>
+			<bandInt>16384</bandInt>
+			<band>70CM</band>
+			<qrg type="rx">431.112500</qrg>
+			<qrg type="tx">438.712500</qrg>
+			<country>pl</country>
+			<qth><![CDATA[Góra Gubałówka EMITEL]]></qth>
+			<location>
+				<locator>JN99XH</locator>
+				<latitude>49.307959</latitude>
+				<longitude>19.936232</longitude>
+				<altitudeOverSea>1123</altitudeOverSea>
+				<altitudeOverGround>15</altitudeOverGround>
+			</location>
+			<activationInt>4</activationInt>
+
+			<activation>CARRIER</activation>
+			<trxPower>15.00</trxPower>
+			<operator>SQ9OKR</operator>
+			<operator>SP9SVH</operator>
+			<operator>SP9SVE</operator>
+			<remarks><![CDATA[DMRId-260917 CC:9]]></remarks>
+			<link>http://przemienniki.net/przemienniki/70cm/SR9VRJ</link>
+			<link>http://www.kpgk.pl</link>
+			<source>przemienniki.net</source>
+			<feedback>http://przemienniki.net/zglos/9044889</feedback>
+		</repeater>
+	</repeaters>
+</rxf>

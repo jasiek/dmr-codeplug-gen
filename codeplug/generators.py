@@ -1,6 +1,6 @@
 import json
 from lxml import etree
-from models import Contact, GroupList, AnalogChannel
+from models import Contact, GroupList, AnalogChannel, DigitalChannel
 
 
 class BrandmeisterTGContactGenerator:
@@ -48,6 +48,40 @@ class ChannelCombinator:
             yield chan
         for chan in self.gen2.channels():
             yield chan
+
+
+class DigitalChannelGeneratorFromBrandmeister:
+    def __init__(self, filename, power):
+        self.devices = json.load(open(filename))
+
+    def channels(self):
+        i = 1
+        for dev in self.devices:
+            if dev["rx"] == dev["tx"] or dev["pep"] == 1 or dev["statusText"] == "DMO":
+                # Hotspot
+                continue
+
+            tx_offset = float(dev["tx"]) - float(dev["rx"])
+
+            if tx_offset == 10:
+                continue
+
+            yield DigitalChannel(
+                internal_id=1,
+                name=dev["callsign"],
+                rx_freq=float(dev["rx"]),
+                tx_freq_or_offset=tx_offset,
+                tx_power="High",
+                scanlist_id="-",
+                tot="-",
+                rx_only="-",
+                admit_crit="Free",
+                color=dev["colorcode"],
+                slot=2,
+                rx_grouplist_id="-",
+                tx_contact_id="-",
+            )
+            i += 1
 
 
 class AnalogChannelGeneratorFromPrzemienniki:

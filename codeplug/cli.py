@@ -6,6 +6,7 @@ from generators import (
     CountryGroupListGenerator,
     ChannelCombinator,
     AnalogChannelGeneratorFromPrzemienniki,
+    DigitalChannelGeneratorFromBrandmeister,
 )
 
 if __name__ == "__main__":
@@ -19,4 +20,5 @@ if __name__ == "__main__":
             AnalogChannelGeneratorFromPrzemienniki("data/pl_2m_fm.xml", "High"),
             AnalogChannelGeneratorFromPrzemienniki("data/pl_70cm_fm.xml", "High"),
         ),
+        DigitalChannelGeneratorFromBrandmeister("data/bm_2602.json", "High"),
     ).generate(sys.stdout)

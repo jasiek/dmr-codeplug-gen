@@ -6,8 +6,6 @@ CONTACT_NAME_MAX = 16  # https://github.com/OpenRTX/dmrconfig/blob/master/d868uv
 
 # TODO:
 #
-# Digital channels
-# Analog channels
 # Zones
 # Scanlists (low prio)
 # Messages (low prio)
@@ -15,12 +13,21 @@ CONTACT_NAME_MAX = 16  # https://github.com/OpenRTX/dmrconfig/blob/master/d868uv
 
 
 class Codeplug:
-    def __init__(self, contact_gen, grouplist_gen, dmr_id, callsign, analog_chan_gen):
+    def __init__(
+        self,
+        contact_gen,
+        grouplist_gen,
+        dmr_id,
+        callsign,
+        analog_chan_gen,
+        digital_chan_gen,
+    ):
         self.contact_gen = contact_gen
         self.grouplist_gen = grouplist_gen
         self.dmr_id = dmr_id
         self.callsign = callsign
         self.analog_chan_gen = analog_chan_gen
+        self.digital_chan_gen = digital_chan_gen
 
     def generate(self, where):
         self.write_radio(where)
@@ -28,6 +35,7 @@ class Codeplug:
         self.write_grouplists(where)
         self.write_uid_and_name(where)
         self.write_analog_channels(where)
+        self.write_digital_channels(where)
 
     def write_radio(self, where):
         print("Radio: Anytone AT-D878UV", file=where)
@@ -75,9 +83,9 @@ class Codeplug:
             "Digital Name             Receive   Transmit Power Scan TOT RO Admit  Color Slot RxGL TxContact",
             file=where,
         )
-        for chan in self.digi_chan_gen.generate():
+        for chan in self.digital_chan_gen.channels():
             print(
-                "%5d   %s %3.4f %+1.4f %-5s %-4d %-3s %-2s %-5s"
+                "%5d   %-16s %3.4f  %+1.4f  %-5s %-4s %-3s %-2s %-5s  %-5d %-4s %-4s %-9s"
                 % (
                     chan.internal_id,
                     chan.name,
@@ -85,12 +93,17 @@ class Codeplug:
                     chan.tx_freq_or_offset,
                     chan.tx_power,
                     chan.scanlist_id,
-                    "-",
+                    chan.tot,
                     chan.rx_only,
                     chan.admit_crit,
+                    chan.color,
+                    chan.slot,
+                    chan.rx_grouplist_id,
+                    chan.tx_contact_id,
                 ),
                 file=where,
             )
+        print("", file=where)
 
     def write_analog_channels(self, where):
         print(

@@ -8,6 +8,24 @@ GroupList = create_class_with_attributes(
     {"internal_id": int, "name": str, "contact_ids": list}
 )
 
+DigitalChannel = create_class_with_attributes(
+    {
+        "internal_id": int,
+        "name": str,
+        "rx_freq": float,
+        "tx_freq_or_offset": float,
+        "tx_power": str,
+        "scanlist_id": str,
+        "tot": str,
+        "rx_only": str,
+        "admit_crit": str,
+        "color": int,
+        "slot": int,
+        "rx_grouplist_id": str,
+        "tx_contact_id": str,
+    }
+)
+
 AnalogChannel = create_class_with_attributes(
     {
         "internal_id": int,

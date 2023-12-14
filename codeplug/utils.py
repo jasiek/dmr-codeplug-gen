@@ -8,7 +8,9 @@ class TypeChecked:
 
     def __set__(self, instance, value):
         if not isinstance(value, self.expected_type):
-            raise TypeError(f"Expected {self.expected_type}, got {type(value)}")
+            raise TypeError(
+                f"{self.name} Expected {self.expected_type}, got {type(value)}"
+            )
         instance.__dict__[self.name] = value
 
 
@@ -19,7 +21,7 @@ def create_class_with_attributes(attribute_dict):
                 if name in kwargs:
                     value = kwargs[name]
                     if not isinstance(value, type_):
-                        raise TypeError(f"Expected {type_}, got {type(value)}")
+                        raise TypeError(f"{name}: Expected {type_}, got {type(value)}")
                     setattr(self, name, value)
                 else:
                     setattr(self, name, None)

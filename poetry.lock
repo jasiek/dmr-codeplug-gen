@@ -179,6 +179,20 @@ htmlsoup = ["BeautifulSoup4"]
 source = ["Cython (>=0.29.35)"]
 
 [[package]]
+name = "maidenhead"
+version = "1.7.0"
+description = "Maidenhead Locator, Lat Lon coordinate convertor"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "maidenhead-1.7.0.tar.gz", hash = "sha256:36415dce8f630927e59232c88d08135218d3281950b3d3eb5d7caa04a7623f74"},
+]
+
+[package.extras]
+lint = ["flake8", "flake8-blind-except", "flake8-bugbear", "flake8-builtins", "mypy"]
+tests = ["pytest"]
+
+[[package]]
 name = "mypy-extensions"
 version = "1.0.0"
 description = "Type system extensions for programs checked with the mypy type checker."
@@ -262,4 +276,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "3e875ba888e5563f57529afb928ada2bc2f703f27db025dbfb0301f1f656a1e4"
+content-hash = "2ee0670557e31d9305abbd88f6eff0ed6eb6a9109c6a62c2ea2b354e81cd2b09"

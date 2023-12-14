@@ -23,6 +23,10 @@ DigitalChannel = create_class_with_attributes(
         "slot": int,
         "rx_grouplist_id": str,
         "tx_contact_id": str,
+        # Used for grouping
+        "lat": float,
+        "lng": float,
+        "locator": str,
     }
 )
 
@@ -41,5 +45,9 @@ AnalogChannel = create_class_with_attributes(
         "rx_tone": str,
         "tx_tone": str,
         "width": float,
+        # Used for grouping
+        "lat": float,
+        "lng": float,
+        "locator": str,
     }
 )

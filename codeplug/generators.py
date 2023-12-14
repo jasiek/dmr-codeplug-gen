@@ -1,4 +1,5 @@
 import json
+import maidenhead as mh
 from lxml import etree
 from models import Contact, GroupList, AnalogChannel, DigitalChannel
 
@@ -80,6 +81,9 @@ class DigitalChannelGeneratorFromBrandmeister:
                 slot=2,
                 rx_grouplist_id="-",
                 tx_contact_id="-",
+                lat=float(dev["lat"]),
+                lng=float(dev["lng"]),
+                locator=mh.to_maiden(dev["lat"], dev["lng"], 3),
             )
             i += 1
 
@@ -120,6 +124,17 @@ class AnalogChannelGeneratorFromPrzemienniki:
                 if len(tx_tone_node) > 0:
                     tx_tone = str(float(tx_tone_node[0].text))
 
+            lat = 0.0
+            lng = 0.0
+            locator = ""
+            if node.find("location") is not None:
+                try:
+                    lat = float(node.find("latitude").text)
+                    lng = float(node.find("longitude").text)
+                    locator = node.find("locator").text
+                except AttributeError:
+                    pass
+
             yield AnalogChannel(
                 internal_id=i,
                 name=node.find("qra").text,
@@ -134,5 +149,8 @@ class AnalogChannelGeneratorFromPrzemienniki:
                 rx_tone=rx_tone,
                 tx_tone=tx_tone,
                 width=12.5,
+                lat=lat,
+                lng=lng,
+                locator=locator,
             )
             i += 1

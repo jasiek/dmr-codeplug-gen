@@ -14,3 +14,9 @@ data/pl_70cm_fm.xml:
 
 data/bm_2602.json:
 	curl -o data/bm_2602.json "https://api.brandmeister.network/v2/device/byMaster/2602"
+
+d878uv.conf: all
+	python codeplug/cli.py > d878uv.conf
+
+validate: d878uv.conf
+	dmrconfig -z d878uv.conf

@@ -38,6 +38,18 @@ class CountryGroupListGenerator:
         yield GroupList(internal_id=i, name="Poland", contact_ids=matching_ids)
 
 
+class ChannelCombinator:
+    def __init__(self, gen1, gen2):
+        self.gen1 = gen1
+        self.gen2 = gen2
+
+    def channels(self):
+        for chan in self.gen1.channels():
+            yield chan
+        for chan in self.gen2.channels():
+            yield chan
+
+
 class AnalogChannelGeneratorFromPrzemienniki:
     def __init__(self, filename, power):
         root = etree.parse(filename)

@@ -20,3 +20,6 @@ d878uv.conf: all
 
 validate: d878uv.conf
 	dmrconfig -z d878uv.conf
+
+program: validate
+	dmrconfig -c d878uv.conf

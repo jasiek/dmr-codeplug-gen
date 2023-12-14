@@ -7,7 +7,7 @@ CONTACT_NAME_MAX = 16  # https://github.com/OpenRTX/dmrconfig/blob/master/d868uv
 # TODO:
 #
 # Zones
-# Scanlists (low prio)
+# Scanlists
 # Messages (low prio)
 # Intro lines (low prio)
 

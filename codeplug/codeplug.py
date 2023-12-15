@@ -1,16 +1,21 @@
-import sys
-import json
+import yaml
+
 from unidecode import unidecode
+
 from generators import ChannelSequence, ZoneFromLocatorGenerator
 
 CONTACT_NAME_MAX = 16  # https://github.com/OpenRTX/dmrconfig/blob/master/d868uv.c#L317
 
 # TODO:
 #
-# Zones
 # Scanlists
 # Messages (low prio)
 # Intro lines (low prio)
+
+
+class IndentDumper(yaml.Dumper):
+    def increase_indent(self, flow=False, indentless=False):
+        return super(IndentDumper, self).increase_indent(flow, False)
 
 
 class Codeplug:
@@ -32,152 +37,148 @@ class Codeplug:
         self.sequence = ChannelSequence()
         self.zone_gen = ZoneFromLocatorGenerator(analog_chan_gen, digital_chan_gen)
 
-    def generate(self, where):
-        self.write_radio(where)
-        self.write_contacts(where)
-        self.write_grouplists(where)
-        self.write_uid_and_name(where)
-        self.write_analog_channels(where)
-        self.write_digital_channels(where)
-        self.write_zones(where)
+    def generate(self, file):
+        codeplug = {
+            "settings": {
+                "micLevel": 6,
+                "speech": False,
+                "squelch": 1,
+                "vox": 0,
+                "power": "High",
+            },
+            "radioIDs": [],
+            "contacts": [],
+            "groupLists": [],
+            "channels": [],
+            "zones": [],
+            "scanLists": [],
+        }
 
-    def write_radio(self, where):
-        print("Radio: Anytone AT-D878UV", file=where)
-        print("", file=where)
+        codeplug["radioIDs"] += [
+            {
+                "dmr": {
+                    "id": "pl",
+                    "name": "HF2J",
+                    "number": 2601823,
+                }
+            }
+        ]
 
-    def write_uid_and_name(self, where):
-        print(f"ID: {self.dmr_id}", file=where)
-        print(f"Name: {self.callsign}", file=where)
-        print("", file=where)
+        self.generate_contacts(codeplug)
+        self.generate_grouplists(codeplug)
+        self.generate_analog_channels(codeplug)
+        self.generate_digital_channels(codeplug)
+        self.generate_zones(codeplug)
 
-    def write_contacts(self, where):
-        print("Contact Name             Type    ID       RxTone", file=where)
+        codeplug["version"] = "0.11.3"
+        file.write(
+            yaml.dump(
+                codeplug,
+                explicit_start=True,
+                explicit_end=True,
+                sort_keys=False,
+                Dumper=IndentDumper,
+                version=(1, 2),
+            )
+        )
+        file.close()
+
+    def generate_contacts(self, codeplug):
+        contacts = []
         for contact in self.contact_gen.contacts():
-            print(
-                "%5d   %s %-7s %-8d %s"
-                % (
-                    contact.internal_id,
-                    self._format_contact_name(contact.name),
-                    "Group",
-                    contact.calling_id,
-                    "-",
-                ),
-                file=where,
+            contacts.append(
+                {
+                    "dmr": {
+                        "id": f"contact{contact.internal_id}",
+                        "name": self._format_contact_name(contact.name),
+                        "type": "GroupCall",
+                        "number": contact.calling_id,
+                        "ring": False,
+                    }
+                }
+            )
+        codeplug["contacts"] = contacts
+
+    def generate_grouplists(self, codeplug):
+        grouplists = []
+        for gpl in self.grouplist_gen.grouplists():
+            grouplists.append(
+                {
+                    "id": f"grouplist{gpl.internal_id}",
+                    "name": self._format_contact_name(gpl.name),
+                    "contacts": [f"contact{id}" for id in gpl.contact_ids],
+                }
             )
 
-        print("", file=where)
+        codeplug["groupLists"] = grouplists
 
-    def write_grouplists(self, where):
-        print("Grouplist Name                              Contacts", file=where)
-        for grouplist in self.grouplist_gen.grouplists():
-            print(
-                "%5d   %s %s"
-                % (
-                    grouplist.internal_id,
-                    self._format_contact_name(grouplist.name),
-                    self._format_contact_ids(grouplist.contact_ids),
-                ),
-                file=where,
-            )
-
-        print("", file=where)
-
-    def write_digital_channels(self, where):
-        print(
-            "Digital Name             Receive   Transmit Power Scan TOT RO Admit  Color Slot RxGL TxContact",
-            file=where,
-        )
-        for chan in self.digital_chan_gen.channels(self.sequence):
-            print(
-                "%5d   %-16s %3.4f  %+1.4f  %-5s %-4s %-3s %-2s %-5s  %-5d %-4s %-4s %-9s"
-                % (
-                    chan.internal_id,
-                    chan.name,
-                    chan.rx_freq,
-                    chan.tx_freq_or_offset,
-                    chan.tx_power,
-                    chan.scanlist_id,
-                    chan.tot,
-                    chan.rx_only,
-                    chan.admit_crit,
-                    chan.color,
-                    chan.slot,
-                    chan.rx_grouplist_id,
-                    chan.tx_contact_id,
-                ),
-                file=where,
-            )
-        print("", file=where)
-
-    def write_analog_channels(self, where):
-        print(
-            "Analog  Name             Receive   Transmit Power Scan TOT RO Admit  Squelch RxTone TxTone Width",
-            file=where,
-        )
+    def generate_analog_channels(self, codeplug):
+        channels = []
         for chan in self.analog_chan_gen.channels(self.sequence):
-            print(
-                "%5d   %-16s %3.4f  %+1.4f  %-5s %-4s %-3s %-2s %-6s %-7s %-6s %-6s %-5s"
-                % (
-                    chan.internal_id,
-                    chan.name,
-                    chan.rx_freq,
-                    chan.tx_freq_or_offset,
-                    chan.tx_power,
-                    chan.scanlist_id,
-                    chan.tot,
-                    chan.rx_only,
-                    chan.admit_crit,
-                    chan.squelch,
-                    chan.rx_tone,
-                    chan.tx_tone,
-                    chan.width,
-                ),
-                file=where,
-            )
-        print("", file=where)
+            ch = {
+                "analog": {
+                    "id": f"ch{chan.internal_id}",
+                    "name": chan.name,
+                    "rxFrequency": chan.rx_freq,
+                    "txFrequency": chan.tx_freq,
+                    "power": chan.tx_power,
+                    "timeout": 0,
+                    # "rxOnly": False,
+                    # "vox": False,
+                    "scanList": chan.scanlist_id,
+                    "admit": chan.admit_crit,
+                    "squelch": 1,
+                    "bandwidth": "Narrow",
+                }
+            }
 
-    def write_zones(self, where):
-        print("Zone    Name             Channels", file=where)
-        for zone in self.zone_gen.zones():
-            print(
-                "%5d   %-16s %s"
-                % (
-                    zone.internal_id,
-                    zone.name,
-                    self._format_contact_ids(zone.channels),
-                ),
-                file=where,
-            )
-        print("", file=where)
+            if chan.rx_tone:
+                ch["analog"]["rxTone"] = chan.rx_tone
 
-    # private
+            if chan.tx_tone:
+                ch["analog"]["txTone"] = chan.tx_tone
+
+            channels.append(ch)
+        codeplug["channels"] += channels
+
+    def generate_digital_channels(self, codeplug):
+        channels = []
+        for chan in self.digital_chan_gen.channels(self.sequence):
+            ch = {
+                "digital": {
+                    "id": f"ch{chan.internal_id}",
+                    "name": chan.name,
+                    "rxFrequency": chan.rx_freq,
+                    "txFrequency": chan.tx_freq,
+                    "power": chan.tx_power,
+                    "timeout": 0,
+                    # "rxOnly": False,
+                    # "vox": False,
+                    "scanList": chan.scanlist_id,
+                    "admit": chan.admit_crit,
+                    "colorCode": chan.color,
+                    "timeSlot": f"TS{chan.slot}",
+                }
+            }
+
+            channels.append(ch)
+        codeplug["channels"] += channels
+
+    def generate_zones(self, codeplug):
+        zones = []
+        for z in self.zone_gen.zones():
+            zones.append(
+                {
+                    "id": f"zone{z.internal_id}",
+                    "name": z.name,
+                    "A": [f"ch{id}" for id in z.channels],
+                }
+            )
+        codeplug["zones"] = zones
 
     def _format_contact_name(self, name):
-        # NOTE: 13/06/2023 (jps): Max size of contact name
-        name = name[:CONTACT_NAME_MAX]
         # NOTE: 13/06/2023 (jps): Only ascii characters are permitted
         name = unidecode(name)
-        return name.ljust(CONTACT_NAME_MAX).replace(" ", "_")
-
-    def _format_contact_ids(self, contact_ids):
-        ranges = []
-        start = contact_ids[0]
-        end = contact_ids[0]
-
-        for i in range(1, len(contact_ids)):
-            if contact_ids[i] - contact_ids[i - 1] == 1:
-                end = contact_ids[i]
-            else:
-                if start == end:
-                    ranges.append(str(start))
-                else:
-                    ranges.append(str(start) + "-" + str(end))
-                start = contact_ids[i]
-                end = contact_ids[i]
-
-        if start == end:
-            ranges.append(str(start))
-        else:
-            ranges.append(str(start) + "-" + str(end))
-
-        return ",".join(ranges)
+        # NOTE: 13/06/2023 (jps): Max size of contact name
+        name = name[:CONTACT_NAME_MAX]
+        return name.replace(" ", "_").ljust(CONTACT_NAME_MAX)

@@ -91,16 +91,11 @@ class DigitalChannelGeneratorFromBrandmeister:
                 # Hotspot
                 continue
 
-            tx_offset = float(dev["tx"]) - float(dev["rx"])
-
-            if tx_offset == 10:
-                continue
-
             yield DigitalChannel(
                 internal_id=sequence.next(),
                 name=dev["callsign"],
                 rx_freq=float(dev["rx"]),
-                tx_freq_or_offset=tx_offset,
+                tx_freq=float(dev["tx"]),
                 tx_power="High",
                 scanlist_id="-",
                 tot="-",
@@ -166,7 +161,7 @@ class AnalogChannelGeneratorFromPrzemienniki:
                 internal_id=sequence.next(),
                 name=node.find("qra").text,
                 rx_freq=rpt_output,
-                tx_freq_or_offset=tx_offset,
+                tx_freq=rpt_input,
                 tx_power="High",
                 scanlist_id="-",
                 tot="-",

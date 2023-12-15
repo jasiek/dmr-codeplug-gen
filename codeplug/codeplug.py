@@ -1,6 +1,7 @@
 import sys
 import json
 from unidecode import unidecode
+from generators import ChannelSequence
 
 CONTACT_NAME_MAX = 16  # https://github.com/OpenRTX/dmrconfig/blob/master/d868uv.c#L317
 
@@ -28,6 +29,7 @@ class Codeplug:
         self.callsign = callsign
         self.analog_chan_gen = analog_chan_gen
         self.digital_chan_gen = digital_chan_gen
+        self.sequence = ChannelSequence()
 
     def generate(self, where):
         self.write_radio(where)
@@ -83,7 +85,7 @@ class Codeplug:
             "Digital Name             Receive   Transmit Power Scan TOT RO Admit  Color Slot RxGL TxContact",
             file=where,
         )
-        for chan in self.digital_chan_gen.channels():
+        for chan in self.digital_chan_gen.channels(self.sequence):
             print(
                 "%5d   %-16s %3.4f  %+1.4f  %-5s %-4s %-3s %-2s %-5s  %-5d %-4s %-4s %-9s"
                 % (
@@ -110,7 +112,7 @@ class Codeplug:
             "Analog  Name             Receive   Transmit Power Scan TOT RO Admit  Squelch RxTone TxTone Width",
             file=where,
         )
-        for chan in self.analog_chan_gen.channels():
+        for chan in self.analog_chan_gen.channels(self.sequence):
             print(
                 "%5d   %-16s %3.4f  %+1.4f  %-5s %-4s %-3s %-2s %-6s %-7s %-6s %-6s %-5s"
                 % (

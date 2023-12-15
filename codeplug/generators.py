@@ -39,15 +39,24 @@ class CountryGroupListGenerator:
         yield GroupList(internal_id=i, name="Poland", contact_ids=matching_ids)
 
 
+class ChannelSequence:
+    def __init__(self, start=0):
+        self.i = start
+
+    def next(self):
+        self.i += 1
+        return self.i
+
+
 class ChannelCombinator:
     def __init__(self, gen1, gen2):
         self.gen1 = gen1
         self.gen2 = gen2
 
-    def channels(self):
-        for chan in self.gen1.channels():
+    def channels(self, sequence):
+        for chan in self.gen1.channels(sequence):
             yield chan
-        for chan in self.gen2.channels():
+        for chan in self.gen2.channels(sequence):
             yield chan
 
 
@@ -55,8 +64,7 @@ class DigitalChannelGeneratorFromBrandmeister:
     def __init__(self, filename, power):
         self.devices = json.load(open(filename))
 
-    def channels(self):
-        i = 1
+    def channels(self, sequence):
         for dev in self.devices:
             if dev["rx"] == dev["tx"] or dev["pep"] == 1 or dev["statusText"] == "DMO":
                 # Hotspot
@@ -68,7 +76,7 @@ class DigitalChannelGeneratorFromBrandmeister:
                 continue
 
             yield DigitalChannel(
-                internal_id=1,
+                internal_id=sequence.next(),
                 name=dev["callsign"],
                 rx_freq=float(dev["rx"]),
                 tx_freq_or_offset=tx_offset,
@@ -85,7 +93,6 @@ class DigitalChannelGeneratorFromBrandmeister:
                 lng=float(dev["lng"]),
                 locator=mh.to_maiden(dev["lat"], dev["lng"], 3),
             )
-            i += 1
 
 
 class AnalogChannelGeneratorFromPrzemienniki:
@@ -94,8 +101,7 @@ class AnalogChannelGeneratorFromPrzemienniki:
         self._repeaters = root.findall("//repeater")
         self.power = power
 
-    def channels(self):
-        i = 1
+    def channels(self, sequence):
         for node in self._repeaters:
             if node.find("status").text != "WORKING":
                 continue
@@ -136,7 +142,7 @@ class AnalogChannelGeneratorFromPrzemienniki:
                     pass
 
             yield AnalogChannel(
-                internal_id=i,
+                internal_id=sequence.next(),
                 name=node.find("qra").text,
                 rx_freq=rpt_output,
                 tx_freq_or_offset=tx_offset,
@@ -153,4 +159,3 @@ class AnalogChannelGeneratorFromPrzemienniki:
                 lng=lng,
                 locator=locator,
             )
-            i += 1

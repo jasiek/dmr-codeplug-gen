@@ -1,7 +1,7 @@
 import sys
 import json
 from unidecode import unidecode
-from generators import ChannelSequence
+from generators import ChannelSequence, ZoneFromLocatorGenerator
 
 CONTACT_NAME_MAX = 16  # https://github.com/OpenRTX/dmrconfig/blob/master/d868uv.c#L317
 
@@ -30,6 +30,7 @@ class Codeplug:
         self.analog_chan_gen = analog_chan_gen
         self.digital_chan_gen = digital_chan_gen
         self.sequence = ChannelSequence()
+        self.zone_gen = ZoneFromLocatorGenerator(analog_chan_gen, digital_chan_gen)
 
     def generate(self, where):
         self.write_radio(where)
@@ -38,6 +39,7 @@ class Codeplug:
         self.write_uid_and_name(where)
         self.write_analog_channels(where)
         self.write_digital_channels(where)
+        self.write_zones(where)
 
     def write_radio(self, where):
         print("Radio: Anytone AT-D878UV", file=where)
@@ -129,6 +131,20 @@ class Codeplug:
                     chan.rx_tone,
                     chan.tx_tone,
                     chan.width,
+                ),
+                file=where,
+            )
+        print("", file=where)
+
+    def write_zones(self, where):
+        print("Zone    Name             Channels", file=where)
+        for zone in self.zone_gen.zones():
+            print(
+                "%5d   %-16s %s"
+                % (
+                    zone.internal_id,
+                    zone.name,
+                    self._format_contact_ids(zone.channels),
                 ),
                 file=where,
             )

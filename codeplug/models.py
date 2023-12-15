@@ -51,3 +51,11 @@ AnalogChannel = create_class_with_attributes(
         "locator": str,
     }
 )
+
+Zone = create_class_with_attributes(
+    {
+        "internal_id": int,
+        "name": str,
+        "channels": list,
+    }
+)

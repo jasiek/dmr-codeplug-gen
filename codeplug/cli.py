@@ -10,6 +10,10 @@ from generators import (
 )
 
 if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("missing output file name")
+        exit(1)
+
     contact_gen = BrandmeisterTGContactGenerator()
     Codeplug(
         contact_gen,
@@ -21,4 +25,4 @@ if __name__ == "__main__":
             AnalogChannelGeneratorFromPrzemienniki("data/pl_70cm_fm.xml", "High"),
         ),
         DigitalChannelGeneratorFromBrandmeister("data/bm_2602.json", "High"),
-    ).generate(sys.stdout)
+    ).generate(open(sys.argv[1], "wt"))

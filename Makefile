@@ -19,7 +19,7 @@ data/rptrs.json:
 	curl -o data/rptrs.json https://radioid.net/static/rptrs.json
 
 d878uv.conf: all
-	python codeplug/cli.py > d878uv.conf
+	python codeplug/cli.py d878uv.conf
 
 validate: d878uv.conf
 	dmrconfig -z d878uv.conf

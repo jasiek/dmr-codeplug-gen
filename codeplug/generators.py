@@ -1,7 +1,8 @@
 import json
 import maidenhead as mh
+from collections import defaultdict
 from lxml import etree
-from models import Contact, GroupList, AnalogChannel, DigitalChannel
+from models import Contact, GroupList, AnalogChannel, DigitalChannel, Zone
 
 
 class BrandmeisterTGContactGenerator:
@@ -37,6 +38,26 @@ class CountryGroupListGenerator:
         ]
         i = 1
         yield GroupList(internal_id=i, name="Poland", contact_ids=matching_ids)
+
+
+class ZoneFromLocatorGenerator:
+    def __init__(self, *chan_gens):
+        self.chan_gens = chan_gens
+        self.locators_to_channels = defaultdict(lambda: [])
+
+    def zones(self):
+        s = ChannelSequence()
+        for chan_gen in self.chan_gens:
+            for chan in chan_gen.channels(s):
+                if chan.locator is None or chan.locator == "":
+                    continue
+                locator = chan.locator[0:4]
+                self.locators_to_channels[locator] += [chan.internal_id]
+
+        zs = ChannelSequence()
+        for key in self.locators_to_channels.keys():
+            value = sorted(self.locators_to_channels[key])
+            yield Zone(internal_id=zs.next(), name=key, channels=value)
 
 
 class ChannelSequence:

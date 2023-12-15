@@ -1,3 +1,4 @@
+import json
 import yaml
 
 from unidecode import unidecode
@@ -38,31 +39,8 @@ class Codeplug:
         self.zone_gen = ZoneFromLocatorGenerator(analog_chan_gen, digital_chan_gen)
 
     def generate(self, file):
-        codeplug = {
-            "settings": {
-                "micLevel": 6,
-                "speech": False,
-                "squelch": 1,
-                "vox": 0,
-                "power": "High",
-            },
-            "radioIDs": [],
-            "contacts": [],
-            "groupLists": [],
-            "channels": [],
-            "zones": [],
-            "scanLists": [],
-        }
-
-        codeplug["radioIDs"] += [
-            {
-                "dmr": {
-                    "id": "pl",
-                    "name": "HF2J",
-                    "number": 2601823,
-                }
-            }
-        ]
+        codeplug = yaml.load(open("blank_radio/uv878_base.yml"), Loader=yaml.Loader)
+        codeplug["channels"] = []
 
         self.generate_contacts(codeplug)
         self.generate_grouplists(codeplug)
@@ -70,7 +48,6 @@ class Codeplug:
         self.generate_digital_channels(codeplug)
         self.generate_zones(codeplug)
 
-        codeplug["version"] = "0.11.3"
         file.write(
             yaml.dump(
                 codeplug,

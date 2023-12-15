@@ -1,0 +1,201 @@
+---
+version: 0.11.3
+settings:
+  introLine1: " HF2J  M0NIT"
+  introLine2: ""
+  micLevel: 7
+  speech: false
+  power: High
+  squelch: 1
+  vox: 0
+  tot: 120
+  anytone:
+    subChannel: false
+    selectedVFO: A
+    modeA: Memory
+    modeB: Memory
+    vfoScanType: Time
+    minVFOScanFrequencyUHF: 433 MHz
+    maxVFOScanFrequencyUHF: 434.6 MHz
+    minVFOScanFrequencyVHF: 145.2 MHz
+    maxVFOScanFrequencyVHF: 145.8 MHz
+    keepLastCaller: false
+    vfoStep: 20 kHz
+    steType: Off
+    steFrequency: 0
+    steDuration: 260 ms
+    tbstFrequency: 1750 Hz
+    proMode: true
+    maintainCallChannel: false
+    bootSettings:
+      bootDisplay: CustomText
+      bootPasswordEnabled: false
+      bootPassword: ""
+      defaultChannel: false
+      priorityZoneA: zone1
+      priorityZoneB: zone1
+      gpsCheck: false
+      reset: true
+    powerSaveSettings:
+      autoShutdown: 0
+      resetAutoShutdownOnCall: false
+      powerSave: Save50
+      atpc: true
+    keySettings:
+      funcKey1Short: Monitor
+      funcKey1Long: APRSSend
+      funcKey2Short: Reverse
+      funcKey2Long: Off
+      funcKey3Short: ToggleVFO
+      funcKey3Long: Off
+      funcKey4Short: Repeater
+      funcKey4Long: SMS
+      funcKey5Short: Reverse
+      funcKey5Long: Dial
+      funcKey6Short: Encryption
+      funcKey6Long: Off
+      funcKeyAShort: Off
+      funcKeyALong: Encryption
+      funcKeyBShort: Voltage
+      funcKeyBLong: Call
+      funcKeyCShort: Power
+      funcKeyCLong: VOX
+      funcKeyDShort: Off
+      funcKeyDLong: Off
+      longPressDuration: 1 s
+      autoKeyLock: false
+      knobLock: false
+      keypadLock: false
+      sideKeysLock: false
+      forcedKeyLock: false
+    toneSettings:
+      keyTone: false
+      keyToneLevel: 0
+      smsAlert: false
+      callAlert: false
+      dmrTalkPermit: false
+      dmrReset: false
+      fmTalkPermit: false
+      dmrIdle: false
+      fmIdle: false
+      startup: false
+      tot: true
+      callMelody:
+        bpm: 100
+        melody: f'16
+      idleMelody:
+        bpm: 100
+        melody: fis''16 d'
+      resetMelody:
+        bpm: 100
+        melody: ais''16 g'
+      callEndMelody:
+        bpm: 100
+        melody: d''16 g'
+    displaySettings:
+      displayFrequency: false
+      brightness: 0
+      backlightDuration: 10 s
+      backlightDurationTX: 0
+      backlightDurationRX: 0
+      customChannelBackground: false
+      volumeChangePrompt: false
+      callEndPrompt: false
+      showClock: false
+      showCall: false
+      showContact: false
+      showChannelNumber: false
+      showColorCode: true
+      showTimeSlot: true
+      showChannelType: true
+      showLastHeard: false
+      lastCallerDisplay: Off
+      callColor: White
+      standbyTextColor: White
+      standbyBackgroundColor: Black
+      channelNameColor: White
+      channelBNameColor: White
+      zoneNameColor: White
+      zoneBNameColor: White
+      language: English
+      dateFormat: YearFirst
+    audioSettings:
+      voxDelay: 0
+      voxSource: Both
+      recording: false
+      enhance: false
+      muteDelay: 1 min
+      maxVolume: 6
+      maxHeadPhoneVolume: 3
+      enableFMMicGain: true
+      fmMicGain: 6
+    menuSettings:
+      duration: 30 s
+      separator: true
+    autoRepeaterSettings:
+      directionA: Negative
+      directionB: Off
+      vhfMin: 136 MHz
+      vhfMax: 174 MHz
+      uhfMin: 400 MHz
+      uhfMax: 480 MHz
+      vhf2Min: 146 MHz
+      vhf2Max: 164 MHz
+      uhf2Min: 410 MHz
+      uhf2Max: 470 MHz
+      vhf2: off1
+      uhf2: off2
+      offsets:
+        - id: off1
+          name: 600 kHz offset
+          offset: 600 kHz
+        - id: off2
+          name: 5000 kHz offset
+          offset: 5000 kHz
+    dmrSettings:
+      groupCallHangTime: 32 s
+      manualGroupCallHangTime: 6 s
+      privateCallHangTime: 32 s
+      manualPrivateCallHangTime: 6 s
+      preWaveDelay: 100 ms
+      wakeHeadPeriod: 100 ms
+      filterOwnID: false
+      monitorSlotMatch: Off
+      monitorColorCodeMatch: false
+      monitorIDMatch: false
+      monitorTimeSlotHold: false
+      smsFormat: Motorola
+      sendTalkerAlias: true
+      talkerAliasSource: Off
+      talkerAliasEncoding: ISO8
+      encryption: AES
+    gpsSettings:
+      units: Metric
+      timeZone: UTC-01
+      reportPosition: false
+      updatePeriod: 5 s
+      mode: GPS
+    roamingSettings:
+      autoRoam: false
+      autoRoamPeriod: 0
+      autoRoamDelay: 0
+      roamStart: Periodic
+      roamReturn: Periodic
+      rangeCheck: false
+      checkInterval: 25 s
+      retryCount: 2
+      outOfRangeAlert: None
+      notification: true
+      notificationCount: 2
+      gpsRoaming: false
+    bluetoothSettings:
+      pttLatch: false
+      pttSleepTimer: 0
+    simplexRepeaterSettings:
+      enabled: false
+      monitor: false
+      timeSlot: Channel
+  defaultID: id1
+radioIDs:
+  - dmr: {id: id1, name: HF2J, number: 2601823}
+  - dmr: {id: id2, name: M0NIT, number: 2352954}

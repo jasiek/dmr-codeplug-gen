@@ -69,7 +69,7 @@ class Sequence:
         return self.i
 
 
-class ChannelCombinator:
+class ChannelAggregator:
     def __init__(self, gen1, gen2):
         self.gen1 = gen1
         self.gen2 = gen2

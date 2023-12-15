@@ -4,7 +4,7 @@ from codeplug import Codeplug
 from generators import (
     BrandmeisterTGContactGenerator,
     CountryGroupListGenerator,
-    ChannelCombinator,
+    ChannelAggregator,
     AnalogChannelGeneratorFromPrzemienniki,
     DigitalChannelGeneratorFromBrandmeister,
 )
@@ -20,7 +20,7 @@ if __name__ == "__main__":
         CountryGroupListGenerator(contact_gen.contacts(), 260),
         31337,
         "LOLCALL",
-        ChannelCombinator(
+        ChannelAggregator(
             AnalogChannelGeneratorFromPrzemienniki("data/pl_2m_fm.xml", "High"),
             AnalogChannelGeneratorFromPrzemienniki("data/pl_70cm_fm.xml", "High"),
         ),

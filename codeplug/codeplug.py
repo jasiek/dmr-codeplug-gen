@@ -3,7 +3,7 @@ import yaml
 
 from unidecode import unidecode
 
-from generators import ChannelSequence, ZoneFromLocatorGenerator
+from generators import Sequence, ZoneFromLocatorGenerator
 
 CONTACT_NAME_MAX = 16  # https://github.com/OpenRTX/dmrconfig/blob/master/d868uv.c#L317
 
@@ -35,7 +35,7 @@ class Codeplug:
         self.callsign = callsign
         self.analog_chan_gen = analog_chan_gen
         self.digital_chan_gen = digital_chan_gen
-        self.sequence = ChannelSequence()
+        self.sequence = Sequence()
         self.zone_gen = ZoneFromLocatorGenerator(analog_chan_gen, digital_chan_gen)
 
     def generate(self, file):

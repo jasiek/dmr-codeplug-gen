@@ -3,7 +3,8 @@ import yaml
 
 from unidecode import unidecode
 
-from generators import Sequence, ZoneFromLocatorGenerator
+from generators import Sequence
+from generators.zones import ZoneFromLocatorGenerator
 
 CONTACT_NAME_MAX = 16  # https://github.com/OpenRTX/dmrconfig/blob/master/d868uv.c#L317
 

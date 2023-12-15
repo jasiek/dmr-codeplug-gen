@@ -1,84 +1,9 @@
 import json
-import maidenhead as mh
-from collections import defaultdict
+
 from lxml import etree
-from models import Contact, GroupList, AnalogChannel, DigitalChannel, Zone
+import maidenhead as mh
 
-
-class BrandmeisterTGContactGenerator:
-    def __init__(self):
-        self._contacts = json.load(open("data/brandmeister_talkgroups.json"))
-
-    def contacts(self):
-        i = 1
-        for key in self._contacts:
-            yield Contact(
-                internal_id=i,
-                name=self._sanitize_contact(self._contacts[key]),
-                calling_id=int(key),
-            )
-            i += 1
-
-    def _sanitize_contact(self, name):
-        # NOTE: 13/06/2023 (jps): Some contact names contain newlines (!)
-        return name.strip("\r\n")
-
-
-class CountryGroupListGenerator:
-    # Group groups by country, if possible
-    def __init__(self, contacts, country_id):
-        self._contacts = contacts
-        self._country_id = str(country_id)
-
-    def grouplists(self):
-        matching_ids = [
-            contact.internal_id
-            for contact in self._contacts
-            if str(contact.calling_id).startswith(self._country_id)
-        ]
-        i = 1
-        yield GroupList(internal_id=i, name="Poland", contact_ids=matching_ids)
-
-
-class ZoneFromLocatorGenerator:
-    def __init__(self, *chan_gens):
-        self.chan_gens = chan_gens
-        self.locators_to_channels = defaultdict(lambda: [])
-
-    def zones(self):
-        s = Sequence()
-        for chan_gen in self.chan_gens:
-            for chan in chan_gen.channels(s):
-                if chan.locator is None or chan.locator == "":
-                    continue
-                locator = chan.locator[0:4]
-                self.locators_to_channels[locator] += [chan.internal_id]
-
-        zs = Sequence()
-        for key in self.locators_to_channels.keys():
-            value = sorted(self.locators_to_channels[key])
-            yield Zone(internal_id=zs.next(), name=key, channels=value)
-
-
-class Sequence:
-    def __init__(self, start=0):
-        self.i = start
-
-    def next(self):
-        self.i += 1
-        return self.i
-
-
-class ChannelAggregator:
-    def __init__(self, gen1, gen2):
-        self.gen1 = gen1
-        self.gen2 = gen2
-
-    def channels(self, sequence):
-        for chan in self.gen1.channels(sequence):
-            yield chan
-        for chan in self.gen2.channels(sequence):
-            yield chan
+from models import DigitalChannel, AnalogChannel
 
 
 class DigitalChannelGeneratorFromBrandmeister:

@@ -1,13 +1,14 @@
 import sys
 
 from codeplug import Codeplug
-from generators import (
-    BrandmeisterTGContactGenerator,
-    CountryGroupListGenerator,
-    ChannelAggregator,
+
+from generators.grouplists import CountryGroupListGenerator
+from generators.contacts import BrandmeisterTGContactGenerator
+from generators.channels import (
     AnalogChannelGeneratorFromPrzemienniki,
     DigitalChannelGeneratorFromBrandmeister,
 )
+from aggregators import ChannelAggregator
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:

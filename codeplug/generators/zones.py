@@ -1,7 +1,7 @@
 from collections import defaultdict
 
 from generators import Sequence
-from models import Zone
+from models import Zone, DigitalChannel
 
 
 class ZoneFromLocatorGenerator:
@@ -21,10 +21,15 @@ class ZoneFromLocatorGenerator:
                     continue
 
                 locator = chan.locator[0:4]
+                if isinstance(chan, DigitalChannel):
+                    locator_label = f"Digital {locator}"
+                else:
+                    locator_label = f"Analog {locator}"
+
                 if chan.locator == "":
                     self.locators_to_channels["No locator"] += [chan.internal_id]
                 else:
-                    self.locators_to_channels[locator] += [chan.internal_id]
+                    self.locators_to_channels[locator_label] += [chan.internal_id]
 
         zs = Sequence()
         for key in sorted(self.locators_to_channels.keys()):

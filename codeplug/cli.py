@@ -7,6 +7,7 @@ from generators.contacts import BrandmeisterTGContactGenerator
 from generators.channels import (
     AnalogChannelGeneratorFromPrzemienniki,
     DigitalChannelGeneratorFromBrandmeister,
+    HotspotDigitalChannelGenerator,
 )
 from aggregators import ChannelAggregator
 
@@ -25,5 +26,8 @@ if __name__ == "__main__":
             AnalogChannelGeneratorFromPrzemienniki("data/pl_2m_fm.xml", "High"),
             AnalogChannelGeneratorFromPrzemienniki("data/pl_70cm_fm.xml", "High"),
         ),
-        DigitalChannelGeneratorFromBrandmeister("data/bm_2602.json", "High"),
+        ChannelAggregator(
+            HotspotDigitalChannelGenerator(contact_gen.prefixed_contacts("260")),
+            DigitalChannelGeneratorFromBrandmeister("data/bm_2602.json", "High"),
+        ),
     ).generate(open(sys.argv[1], "wt"))

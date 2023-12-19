@@ -1,4 +1,4 @@
-default: plug.yml
+default: plug.yaml
 all: data/radiod_users.json data/brandmeister_talkgroups.json data/pl_2m_fm.xml data/pl_70cm_fm.xml data/bm_2602.json data/rptrs.json
 
 data/radiod_users.json:
@@ -19,5 +19,5 @@ data/bm_2602.json:
 data/rptrs.json:
 	curl -o data/rptrs.json https://radioid.net/static/rptrs.json
 
-plug.yml: all $(wildcard codeplug/*.py)
-	python codeplug/cli.py plug.yml
+plug.yaml: all $(wildcard codeplug/*.py)
+	python codeplug/cli.py plug.yaml

@@ -6,6 +6,38 @@ import maidenhead as mh
 from models import DigitalChannel, AnalogChannel
 
 
+class HotspotDigitalChannelGenerator:
+    def __init__(self, talkgroups, ts=2, f=480.800, color=2):
+        self.f = f
+        self.ts = ts
+        self.color = color
+        self.talkgroups = talkgroups
+
+    def channels(self, sequence):
+        for tg in self.talkgroups:
+            yield DigitalChannel(
+                internal_id=sequence.next(),
+                name=self._format(f"HS {tg.calling_id} {tg.name}"),
+                rx_freq=self.f,
+                tx_freq=self.f,
+                tx_power="Low",
+                scanlist_id="-",
+                tot="-",
+                rx_only="-",
+                admit_crit="Free",
+                color=self.color,
+                slot=self.ts,
+                rx_grouplist_id="-",
+                tx_contact_id=str(tg.internal_id),
+                lat=0.0,
+                lng=0.0,
+                locator="",
+            )
+
+    def _format(self, string):
+        return string[0:16]
+
+
 class DigitalChannelGeneratorFromBrandmeister:
     def __init__(self, filename, power):
         self.devices = json.load(open(filename))

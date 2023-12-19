@@ -4,6 +4,11 @@ from lxml import etree
 import maidenhead as mh
 
 from models import DigitalChannel, AnalogChannel
+from datasources.brandmeister import API
+
+
+def format_channel(string):
+    return string[0:16]
 
 
 class HotspotDigitalChannelGenerator:
@@ -24,7 +29,7 @@ class HotspotDigitalChannelGenerator:
             self._channels.append(
                 DigitalChannel(
                     internal_id=sequence.next(),
-                    name=self._format(f"HS {tg.calling_id} {tg.name}"),
+                    name=format_channel(f"HS {tg.calling_id} {tg.name}"),
                     rx_freq=self.f,
                     tx_freq=self.f,
                     tx_power="Low",
@@ -42,14 +47,12 @@ class HotspotDigitalChannelGenerator:
                 )
             )
 
-    def _format(self, string):
-        return string[0:16]
-
 
 class DigitalChannelGeneratorFromBrandmeister:
-    def __init__(self, filename, power):
+    def __init__(self, filename, power, talkgroups):
         self.devices = json.load(open(filename))
         self._channels = []
+        self.talkgroups = talkgroups
 
     def channels(self, sequence):
         if len(self._channels) == 0:
@@ -58,30 +61,41 @@ class DigitalChannelGeneratorFromBrandmeister:
 
     def generate_channels(self, sequence):
         for dev in self.devices:
+            if not dev["callsign"].startswith("SR"):
+                continue
+
             if dev["rx"] == dev["tx"] or dev["pep"] == 1 or dev["statusText"] == "DMO":
                 # Hotspot
                 continue
 
-            self._channels.append(
-                DigitalChannel(
-                    internal_id=sequence.next(),
-                    name=dev["callsign"],
-                    rx_freq=float(dev["rx"]),
-                    tx_freq=float(dev["tx"]),
-                    tx_power="High",
-                    scanlist_id="-",
-                    tot="-",
-                    rx_only="-",
-                    admit_crit="Free",
-                    color=dev["colorcode"],
-                    slot=2,
-                    rx_grouplist_id="-",
-                    tx_contact_id="-",
-                    lat=float(dev["lat"]),
-                    lng=float(dev["lng"]),
-                    locator=mh.to_maiden(dev["lat"], dev["lng"], 3),
-                )
-            )
+            for tg_id, slot in API().static_talkgroups(dev["id"]):
+                for tg in self.talkgroups:
+                    if tg.calling_id == tg_id:
+                        # We were passed a TG definition
+
+                        name = format_channel(
+                            " ".join([dev["callsign"], str(tg.calling_id)])
+                        )
+                        self._channels.append(
+                            DigitalChannel(
+                                internal_id=sequence.next(),
+                                name=name,
+                                rx_freq=float(dev["rx"]),
+                                tx_freq=float(dev["tx"]),
+                                tx_power="High",
+                                scanlist_id="-",
+                                tot="-",
+                                rx_only="-",
+                                admit_crit="Free",
+                                color=dev["colorcode"],
+                                slot=slot,
+                                rx_grouplist_id="-",
+                                tx_contact_id=str(tg.internal_id),
+                                lat=float(dev["lat"]),
+                                lng=float(dev["lng"]),
+                                locator=mh.to_maiden(dev["lat"], dev["lng"], 3),
+                            )
+                        )
 
 
 class AnalogChannelGeneratorFromPrzemienniki:

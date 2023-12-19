@@ -17,6 +17,8 @@ if __name__ == "__main__":
         exit(1)
 
     contact_gen = BrandmeisterTGContactGenerator()
+    polish_tgs = contact_gen.matched_contacts("^260")
+
     Codeplug(
         contact_gen,
         CountryGroupListGenerator(contact_gen.contacts(), 260),
@@ -27,7 +29,9 @@ if __name__ == "__main__":
             AnalogChannelGeneratorFromPrzemienniki("data/pl_70cm_fm.xml", "High"),
         ),
         ChannelAggregator(
-            HotspotDigitalChannelGenerator(contact_gen.prefixed_contacts("260")),
-            DigitalChannelGeneratorFromBrandmeister("data/bm_2602.json", "High"),
+            HotspotDigitalChannelGenerator(polish_tgs),
+            DigitalChannelGeneratorFromBrandmeister(
+                "data/bm_2602.json", "High", polish_tgs
+            ),
         ),
     ).generate(open(sys.argv[1], "wt"))

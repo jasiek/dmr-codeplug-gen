@@ -138,6 +138,8 @@ class Codeplug:
                     "timeSlot": f"TS{chan.slot}",
                 }
             }
+            if chan.tx_contact_id != "-":
+                ch["digital"]["contact"] = f"contact{chan.tx_contact_id}"
 
             channels.append(ch)
         codeplug["channels"] += channels

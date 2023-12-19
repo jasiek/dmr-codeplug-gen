@@ -7,7 +7,7 @@ from models import DigitalChannel, AnalogChannel
 
 
 class HotspotDigitalChannelGenerator:
-    def __init__(self, talkgroups, ts=2, f=480.800, color=2):
+    def __init__(self, talkgroups, ts=2, f=438.800, color=1):
         self.f = f
         self.ts = ts
         self.color = color

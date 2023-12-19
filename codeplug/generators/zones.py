@@ -13,12 +13,20 @@ class ZoneFromLocatorGenerator:
         s = Sequence()
         for chan_gen in self.chan_gens:
             for chan in chan_gen.channels(s):
-                if chan.locator is None or chan.locator == "":
+                if chan.is_hotspot():
+                    self.locators_to_channels["Hotspot"] += [chan.internal_id]
                     continue
+
+                if chan.locator is None:
+                    continue
+
                 locator = chan.locator[0:4]
-                self.locators_to_channels[locator] += [chan.internal_id]
+                if chan.locator == "":
+                    self.locators_to_channels["No locator"] += [chan.internal_id]
+                else:
+                    self.locators_to_channels[locator] += [chan.internal_id]
 
         zs = Sequence()
-        for key in self.locators_to_channels.keys():
+        for key in sorted(self.locators_to_channels.keys()):
             value = sorted(self.locators_to_channels[key])
             yield Zone(internal_id=zs.next(), name=key, channels=value)

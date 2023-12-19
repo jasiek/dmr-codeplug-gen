@@ -20,8 +20,8 @@ if __name__ == "__main__":
     Codeplug(
         contact_gen,
         CountryGroupListGenerator(contact_gen.contacts(), 260),
-        31337,
-        "LOLCALL",
+        None,  # radio ID
+        None,  # callsign
         ChannelAggregator(
             AnalogChannelGeneratorFromPrzemienniki("data/pl_2m_fm.xml", "High"),
             AnalogChannelGeneratorFromPrzemienniki("data/pl_70cm_fm.xml", "High"),

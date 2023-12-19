@@ -8,12 +8,6 @@ from generators.zones import ZoneFromLocatorGenerator
 
 CONTACT_NAME_MAX = 16  # https://github.com/OpenRTX/dmrconfig/blob/master/d868uv.c#L317
 
-# TODO:
-#
-# Scanlists
-# Messages (low prio)
-# Intro lines (low prio)
-
 
 class IndentDumper(yaml.Dumper):
     def increase_indent(self, flow=False, indentless=False):

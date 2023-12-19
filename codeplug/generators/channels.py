@@ -12,26 +12,34 @@ class HotspotDigitalChannelGenerator:
         self.ts = ts
         self.color = color
         self.talkgroups = talkgroups
+        self._channels = []
 
     def channels(self, sequence):
+        if len(self._channels) == 0:
+            self.generate_channels(sequence)
+        return self._channels
+
+    def generate_channels(self, sequence):
         for tg in self.talkgroups:
-            yield DigitalChannel(
-                internal_id=sequence.next(),
-                name=self._format(f"HS {tg.calling_id} {tg.name}"),
-                rx_freq=self.f,
-                tx_freq=self.f,
-                tx_power="Low",
-                scanlist_id="-",
-                tot="-",
-                rx_only="-",
-                admit_crit="Free",
-                color=self.color,
-                slot=self.ts,
-                rx_grouplist_id="-",
-                tx_contact_id=str(tg.internal_id),
-                lat=0.0,
-                lng=0.0,
-                locator="",
+            self._channels.append(
+                DigitalChannel(
+                    internal_id=sequence.next(),
+                    name=self._format(f"HS {tg.calling_id} {tg.name}"),
+                    rx_freq=self.f,
+                    tx_freq=self.f,
+                    tx_power="Low",
+                    scanlist_id="-",
+                    tot="-",
+                    rx_only="-",
+                    admit_crit="Free",
+                    color=self.color,
+                    slot=self.ts,
+                    rx_grouplist_id="-",
+                    tx_contact_id=str(tg.internal_id),
+                    lat=0.0,
+                    lng=0.0,
+                    locator="",
+                )
             )
 
     def _format(self, string):
@@ -41,30 +49,38 @@ class HotspotDigitalChannelGenerator:
 class DigitalChannelGeneratorFromBrandmeister:
     def __init__(self, filename, power):
         self.devices = json.load(open(filename))
+        self._channels = []
 
     def channels(self, sequence):
+        if len(self._channels) == 0:
+            self.generate_channels(sequence)
+        return self._channels
+
+    def generate_channels(self, sequence):
         for dev in self.devices:
             if dev["rx"] == dev["tx"] or dev["pep"] == 1 or dev["statusText"] == "DMO":
                 # Hotspot
                 continue
 
-            yield DigitalChannel(
-                internal_id=sequence.next(),
-                name=dev["callsign"],
-                rx_freq=float(dev["rx"]),
-                tx_freq=float(dev["tx"]),
-                tx_power="High",
-                scanlist_id="-",
-                tot="-",
-                rx_only="-",
-                admit_crit="Free",
-                color=dev["colorcode"],
-                slot=2,
-                rx_grouplist_id="-",
-                tx_contact_id="-",
-                lat=float(dev["lat"]),
-                lng=float(dev["lng"]),
-                locator=mh.to_maiden(dev["lat"], dev["lng"], 3),
+            self._channels.append(
+                DigitalChannel(
+                    internal_id=sequence.next(),
+                    name=dev["callsign"],
+                    rx_freq=float(dev["rx"]),
+                    tx_freq=float(dev["tx"]),
+                    tx_power="High",
+                    scanlist_id="-",
+                    tot="-",
+                    rx_only="-",
+                    admit_crit="Free",
+                    color=dev["colorcode"],
+                    slot=2,
+                    rx_grouplist_id="-",
+                    tx_contact_id="-",
+                    lat=float(dev["lat"]),
+                    lng=float(dev["lng"]),
+                    locator=mh.to_maiden(dev["lat"], dev["lng"], 3),
+                )
             )
 
 
@@ -73,8 +89,14 @@ class AnalogChannelGeneratorFromPrzemienniki:
         root = etree.parse(filename)
         self._repeaters = root.findall("//repeater")
         self.power = power
+        self._channels = []
 
     def channels(self, sequence):
+        if len(self._channels) == 0:
+            self.generate_channels(sequence)
+        return self._channels
+
+    def generate_channels(self, sequence):
         for node in self._repeaters:
             if node.find("status").text != "WORKING":
                 continue
@@ -114,21 +136,23 @@ class AnalogChannelGeneratorFromPrzemienniki:
                 except AttributeError:
                     pass
 
-            yield AnalogChannel(
-                internal_id=sequence.next(),
-                name=node.find("qra").text,
-                rx_freq=rpt_output,
-                tx_freq=rpt_input,
-                tx_power="High",
-                scanlist_id="-",
-                tot="-",
-                rx_only="-",
-                admit_crit="Free",
-                squelch="Normal",
-                rx_tone=rx_tone,
-                tx_tone=tx_tone,
-                width=12.5,
-                lat=lat,
-                lng=lng,
-                locator=locator,
+            self._channels.append(
+                AnalogChannel(
+                    internal_id=sequence.next(),
+                    name=node.find("qra").text,
+                    rx_freq=rpt_output,
+                    tx_freq=rpt_input,
+                    tx_power="High",
+                    scanlist_id="-",
+                    tot="-",
+                    rx_only="-",
+                    admit_crit="Free",
+                    squelch="Normal",
+                    rx_tone=rx_tone,
+                    tx_tone=tx_tone,
+                    width=12.5,
+                    lat=lat,
+                    lng=lng,
+                    locator=locator,
+                )
             )

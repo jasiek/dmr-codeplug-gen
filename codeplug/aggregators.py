@@ -3,9 +3,10 @@ class ChannelAggregator:
         self.generators = chan_generators
 
     def channels(self, sequence):
+        channels = []
         for gen in self.generators:
-            for chan in gen.channels(sequence):
-                yield chan
+            channels += gen.channels(sequence)
+        return channels
 
 
 class ZoneAggregator:
@@ -13,6 +14,7 @@ class ZoneAggregator:
         self.generators = zone_generators
 
     def zones(self, sequence):
+        zones = []
         for gen in self.generators:
-            for zone in gen.zones():
-                yield chan
+            zones += gen.zones()
+        return zones

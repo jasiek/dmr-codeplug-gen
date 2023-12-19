@@ -8,7 +8,7 @@ GroupList = create_class_with_attributes(
     {"internal_id": int, "name": str, "contact_ids": list}
 )
 
-DigitalChannel = create_class_with_attributes(
+BaseDigitalChannel = create_class_with_attributes(
     {
         "internal_id": int,
         "name": str,
@@ -30,7 +30,13 @@ DigitalChannel = create_class_with_attributes(
     }
 )
 
-AnalogChannel = create_class_with_attributes(
+
+class DigitalChannel(BaseDigitalChannel):
+    def is_hotspot(self):
+        return self.name.startswith("HS")
+
+
+BaseAnalogChannel = create_class_with_attributes(
     {
         "internal_id": int,
         "name": str,
@@ -51,6 +57,12 @@ AnalogChannel = create_class_with_attributes(
         "locator": str,
     }
 )
+
+
+class AnalogChannel(BaseAnalogChannel):
+    def is_hotspot(self):
+        return False
+
 
 Zone = create_class_with_attributes(
     {

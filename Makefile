@@ -20,4 +20,5 @@ data/rptrs.json:
 	curl -o data/rptrs.json https://radioid.net/static/rptrs.json
 
 plug.yaml: all $(wildcard codeplug/*.py)
+	black .
 	python codeplug/cli.py plug.yaml

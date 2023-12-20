@@ -69,6 +69,8 @@ class DigitalChannelGeneratorFromBrandmeister:
                 continue
 
             for tg_id, slot in API().static_talkgroups(dev["id"]):
+                if slot == 0:
+                    continue
                 for tg in self.talkgroups:
                     if tg.calling_id == tg_id:
                         # We were passed a TG definition

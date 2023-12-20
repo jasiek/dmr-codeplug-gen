@@ -82,8 +82,8 @@ class DigitalChannelGeneratorFromBrandmeister:
                             DigitalChannel(
                                 internal_id=sequence.next(),
                                 name=name,
-                                rx_freq=float(dev["rx"]),
-                                tx_freq=float(dev["tx"]),
+                                rx_freq=float(dev["tx"]),
+                                tx_freq=float(dev["rx"]),
                                 tx_power="High",
                                 scanlist_id="-",
                                 tot="-",

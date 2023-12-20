@@ -3,9 +3,6 @@ import yaml
 
 from unidecode import unidecode
 
-from generators import Sequence
-from generators.zones import ZoneFromLocatorGenerator
-
 CONTACT_NAME_MAX = 16  # https://github.com/OpenRTX/dmrconfig/blob/master/d868uv.c#L317
 
 
@@ -21,17 +18,17 @@ class Codeplug:
         grouplist_gen,
         dmr_id,
         callsign,
-        analog_chan_gen,
-        digital_chan_gen,
+        analog_channels,
+        digital_channels,
+        zones,
     ):
         self.contact_gen = contact_gen
         self.grouplist_gen = grouplist_gen
         self.dmr_id = dmr_id
         self.callsign = callsign
-        self.analog_chan_gen = analog_chan_gen
-        self.digital_chan_gen = digital_chan_gen
-        self.sequence = Sequence()
-        self.zone_gen = ZoneFromLocatorGenerator(analog_chan_gen, digital_chan_gen)
+        self.analog_channels = analog_channels
+        self.digital_channels = digital_channels
+        self.zones = zones
 
     def generate(self, file):
         codeplug = yaml.load(open("blank_radio/uv878_base.yml"), Loader=yaml.Loader)
@@ -86,7 +83,7 @@ class Codeplug:
 
     def generate_analog_channels(self, codeplug):
         channels = []
-        for chan in self.analog_chan_gen.channels(self.sequence):
+        for chan in self.analog_channels:
             ch = {
                 "analog": {
                     "id": f"ch{chan.internal_id}",
@@ -115,7 +112,7 @@ class Codeplug:
 
     def generate_digital_channels(self, codeplug):
         channels = []
-        for chan in self.digital_chan_gen.channels(self.sequence):
+        for chan in self.digital_channels:
             ch = {
                 "digital": {
                     "id": f"ch{chan.internal_id}",
@@ -140,7 +137,7 @@ class Codeplug:
 
     def generate_zones(self, codeplug):
         zones = []
-        for z in self.zone_gen.zones():
+        for z in self.zones:
             zones.append(
                 {
                     "id": f"zone{z.internal_id}",

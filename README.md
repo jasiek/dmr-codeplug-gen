@@ -1,16 +1,17 @@
 ## dmr-codeplug-gen
 
-Script for generating a codeplug for the AnyTone AT-D878UV.
+Script for generating a codeplug for the AnyTone AT-D878UV and other radios supported by [qdmr](https://github.com/hmatuschek/qdmr).
 
 ### How to use?
 
-* Run `make validate` to build the codeplug. This will pull all data files and build a codeplug into `d878uv.conf` and validate it.
-* To program into your radio, run `make program`.
+* `poetry install`
+* `poetry shell`
+* Run `make` to build the codeplug. This will pull all data files and build a codeplug into `plug.yml`.
 
 ### Dependencies
 
 * python 3.11
-* [dmrconfig](https://github.com/OpenRTX/dmrconfig)
+* [qdmr](https://github.com/hmatuschek/qdmr)
 
 ### TODO
 

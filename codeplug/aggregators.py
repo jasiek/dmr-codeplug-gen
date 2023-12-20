@@ -16,5 +16,5 @@ class ZoneAggregator:
     def zones(self, sequence):
         zones = []
         for gen in self.generators:
-            zones += gen.zones()
+            zones += gen.zones(sequence)
         return zones

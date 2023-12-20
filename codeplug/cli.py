@@ -10,8 +10,8 @@ from generators.channels import (
     DigitalChannelGeneratorFromBrandmeister,
     HotspotDigitalChannelGenerator,
 )
-from generators.zones import ZoneFromCallsignGenerator
-from aggregators import ChannelAggregator
+from generators.zones import ZoneFromCallsignGenerator, HotspotZoneGenerator
+from aggregators import ChannelAggregator, ZoneAggregator
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
@@ -20,20 +20,23 @@ if __name__ == "__main__":
 
     contact_gen = BrandmeisterTGContactGenerator()
     polish_tgs = contact_gen.matched_contacts("^260")
-    seq = Sequence()
+    chan_seq = Sequence()
     digital_channels = ChannelAggregator(
         HotspotDigitalChannelGenerator(polish_tgs),
         DigitalChannelGeneratorFromBrandmeister(
             "data/bm_2602.json", "High", polish_tgs
         ),
-    ).channels(seq)
+    ).channels(chan_seq)
     analog_channels = ChannelAggregator(
         AnalogChannelGeneratorFromPrzemienniki("data/pl_2m_fm.xml", "High"),
         AnalogChannelGeneratorFromPrzemienniki("data/pl_70cm_fm.xml", "High"),
-    ).channels(seq)
-    zones = ZoneFromCallsignGenerator(digital_channels + analog_channels).zones(
-        Sequence()
-    )
+    ).channels(chan_seq)
+
+    zone_seq = Sequence()
+    zones = ZoneAggregator(
+        HotspotZoneGenerator(digital_channels),
+        ZoneFromCallsignGenerator(digital_channels + analog_channels),
+    ).zones(zone_seq)
 
     Codeplug(
         contact_gen,

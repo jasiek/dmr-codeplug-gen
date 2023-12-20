@@ -12,10 +12,6 @@ class ZoneFromLocatorGenerator:
     def zones(self, seq):
         locators_to_channels = defaultdict(lambda: [])
         for chan in self.channels:
-            if chan.is_hotspot():
-                locators_to_channels["Hotspot"] += [chan.internal_id]
-                continue
-
             if chan.locator is None:
                 continue
 
@@ -44,8 +40,27 @@ class ZoneFromCallsignGenerator:
         for chan in self.channels:
             if m := re.match("^([A-Z]{2}[0-9])", chan.name):
                 prefix = m.groups()[0]
-                prefix_to_channels[prefix] += [chan.internal_id]
+                if isinstance(chan, DigitalChannel):
+                    label = f"{prefix} Digital"
+                else:
+                    label = f"{prefix} Analog"
+                prefix_to_channels[label] += [chan.internal_id]
 
+        output = []
         for key in sorted(prefix_to_channels.keys()):
             value = sorted(prefix_to_channels[key])
-            yield Zone(internal_id=seq.next(), name=key, channels=value)
+            output.append(Zone(internal_id=seq.next(), name=key, channels=value))
+        return output
+
+
+class HotspotZoneGenerator:
+    def __init__(self, channels):
+        self.channels = channels
+
+    def zones(self, seq):
+        hotspot_channels = []
+        for chan in self.channels:
+            if chan.is_hotspot():
+                hotspot_channels.append(chan.internal_id)
+
+        return [Zone(internal_id=seq.next(), name="Hotspot", channels=hotspot_channels)]

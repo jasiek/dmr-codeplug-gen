@@ -1,39 +1,37 @@
 ---
 version: 0.11.3
 settings:
-  introLine1: " HF2J  M0NIT"
+  introLine1: ""
   introLine2: ""
-  micLevel: 7
+  micLevel: 2
   speech: false
   power: High
-  squelch: 1
+  squelch: 2
   vox: 0
-  tot: 120
+  tot: 0
   anytone:
     subChannel: false
     selectedVFO: A
     modeA: Memory
     modeB: Memory
     vfoScanType: Time
-    minVFOScanFrequencyUHF: 433 MHz
-    maxVFOScanFrequencyUHF: 434.6 MHz
-    minVFOScanFrequencyVHF: 145.2 MHz
-    maxVFOScanFrequencyVHF: 145.8 MHz
+    minVFOScanFrequencyUHF: 400 MHz
+    maxVFOScanFrequencyUHF: 480 MHz
+    minVFOScanFrequencyVHF: 136 MHz
+    maxVFOScanFrequencyVHF: 174 MHz
     keepLastCaller: false
-    vfoStep: 20 kHz
-    steType: Off
+    vfoStep: 2500 Hz
+    steType: "Off"
     steFrequency: 0
     steDuration: 260 ms
     tbstFrequency: 1750 Hz
-    proMode: true
+    proMode: false
     maintainCallChannel: false
     bootSettings:
-      bootDisplay: CustomText
+      bootDisplay: Default
       bootPasswordEnabled: false
       bootPassword: ""
       defaultChannel: false
-      priorityZoneA: zone1
-      priorityZoneB: zone1
       gpsCheck: false
       reset: true
     powerSaveSettings:
@@ -42,26 +40,26 @@ settings:
       powerSave: Save50
       atpc: true
     keySettings:
-      funcKey1Short: Monitor
-      funcKey1Long: APRSSend
+      funcKey1Short: Repeater
+      funcKey1Long: ToggleVFO
       funcKey2Short: Reverse
-      funcKey2Long: Off
-      funcKey3Short: ToggleVFO
-      funcKey3Long: Off
+      funcKey2Long: "Off"
+      funcKey3Short: Power
+      funcKey3Long: VOX
       funcKey4Short: Repeater
       funcKey4Long: SMS
       funcKey5Short: Reverse
       funcKey5Long: Dial
       funcKey6Short: Encryption
-      funcKey6Long: Off
-      funcKeyAShort: Off
+      funcKey6Long: "Off"
+      funcKeyAShort: "Off"
       funcKeyALong: Encryption
       funcKeyBShort: Voltage
       funcKeyBLong: Call
       funcKeyCShort: Power
       funcKeyCLong: VOX
-      funcKeyDShort: Off
-      funcKeyDLong: Off
+      funcKeyDShort: "Off"
+      funcKeyDLong: "Off"
       longPressDuration: 1 s
       autoKeyLock: false
       knobLock: false
@@ -71,8 +69,8 @@ settings:
     toneSettings:
       keyTone: false
       keyToneLevel: 0
-      smsAlert: false
-      callAlert: false
+      smsAlert: true
+      callAlert: true
       dmrTalkPermit: false
       dmrReset: false
       fmTalkPermit: false
@@ -82,16 +80,16 @@ settings:
       tot: true
       callMelody:
         bpm: 100
-        melody: f'16
+        melody: b'16 r b' r b'
       idleMelody:
         bpm: 100
-        melody: fis''16 d'
+        melody: b''16 r b'' r b''
       resetMelody:
         bpm: 100
-        melody: ais''16 g'
+        melody: fis'''16 r fis''' r fis'''
       callEndMelody:
         bpm: 100
-        melody: d''16 g'
+        melody: fis'''16 r fis''' r fis'''
     displaySettings:
       displayFrequency: false
       brightness: 0
@@ -101,22 +99,22 @@ settings:
       customChannelBackground: false
       volumeChangePrompt: false
       callEndPrompt: false
-      showClock: false
+      showClock: true
       showCall: false
-      showContact: false
+      showContact: true
       showChannelNumber: false
       showColorCode: true
       showTimeSlot: true
       showChannelType: true
       showLastHeard: false
-      lastCallerDisplay: Off
-      callColor: White
+      lastCallerDisplay: Both
+      callColor: Orange
       standbyTextColor: White
       standbyBackgroundColor: Black
-      channelNameColor: White
-      channelBNameColor: White
-      zoneNameColor: White
-      zoneBNameColor: White
+      channelNameColor: Yellow
+      channelBNameColor: Yellow
+      zoneNameColor: Green
+      zoneBNameColor: Green
       language: English
       dateFormat: YearFirst
     audioSettings:
@@ -131,10 +129,10 @@ settings:
       fmMicGain: 6
     menuSettings:
       duration: 30 s
-      separator: true
+      separator: false
     autoRepeaterSettings:
-      directionA: Negative
-      directionB: Off
+      directionA: "Off"
+      directionB: "Off"
       vhfMin: 136 MHz
       vhfMax: 174 MHz
       uhfMin: 400 MHz
@@ -143,38 +141,31 @@ settings:
       vhf2Max: 164 MHz
       uhf2Min: 410 MHz
       uhf2Max: 470 MHz
-      vhf2: off1
-      uhf2: off2
       offsets:
-        - id: off1
-          name: 600 kHz offset
-          offset: 600 kHz
-        - id: off2
-          name: 5000 kHz offset
-          offset: 5000 kHz
+        []
     dmrSettings:
-      groupCallHangTime: 32 s
+      groupCallHangTime: 5 s
       manualGroupCallHangTime: 6 s
-      privateCallHangTime: 32 s
+      privateCallHangTime: 5 s
       manualPrivateCallHangTime: 6 s
       preWaveDelay: 100 ms
       wakeHeadPeriod: 100 ms
-      filterOwnID: false
-      monitorSlotMatch: Off
+      filterOwnID: true
+      monitorSlotMatch: Both
       monitorColorCodeMatch: false
       monitorIDMatch: false
       monitorTimeSlotHold: false
       smsFormat: Motorola
-      sendTalkerAlias: true
-      talkerAliasSource: Off
+      sendTalkerAlias: false
+      talkerAliasSource: UserDB
       talkerAliasEncoding: ISO8
-      encryption: AES
+      encryption: DMR
     gpsSettings:
       units: Metric
-      timeZone: UTC-01
+      timeZone: UTC-12
       reportPosition: false
       updatePeriod: 5 s
-      mode: GPS
+      mode: GPS_Beidou
     roamingSettings:
       autoRoam: false
       autoRoamPeriod: 0
@@ -182,15 +173,15 @@ settings:
       roamStart: Periodic
       roamReturn: Periodic
       rangeCheck: false
-      checkInterval: 25 s
-      retryCount: 2
+      checkInterval: 0
+      retryCount: 0
       outOfRangeAlert: None
-      notification: true
-      notificationCount: 2
-      gpsRoaming: false
+      notification: false
+      notificationCount: 0
+      gpsRoaming: true
     bluetoothSettings:
       pttLatch: false
-      pttSleepTimer: 0
+      pttSleepTimer: 1 min
     simplexRepeaterSettings:
       enabled: false
       monitor: false
@@ -198,4 +189,3 @@ settings:
   defaultID: id1
 radioIDs:
   - dmr: {id: id1, name: HF2J, number: 2601823}
-  - dmr: {id: id2, name: M0NIT, number: 2352954}

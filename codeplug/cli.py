@@ -23,9 +23,7 @@ if __name__ == "__main__":
     chan_seq = Sequence()
     digital_channels = ChannelAggregator(
         HotspotDigitalChannelGenerator(polish_tgs),
-        DigitalChannelGeneratorFromBrandmeister(
-            "data/bm_2602.json", "High", polish_tgs
-        ),
+        DigitalChannelGeneratorFromBrandmeister("High", polish_tgs),
     ).channels(chan_seq)
     analog_channels = ChannelAggregator(
         AnalogChannelGeneratorFromPrzemienniki("data/pl_2m_fm.xml", "High"),

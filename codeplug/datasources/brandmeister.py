@@ -1,11 +1,27 @@
 import os.path
 import json
+from datetime import datetime, timedelta
+
 import requests
 
 ContactDB = json.load(open("data/brandmeister_talkgroups.json"))
 
 
-class API:
+class DeviceDB:
+    def __init__(self):
+        self.devices = json.load(open("data/bm_2602.json"))
+
+    def devices_active_within1month(self):
+        return [
+            d
+            for d in self.devices
+            if d["last_seen"]
+            and datetime.now() - datetime.fromisoformat(d["last_seen"])
+            < timedelta(days=30)
+        ]
+
+
+class TalkgroupAPI:
     def static_talkgroups(self, device_id):
         response_json = self.cached(device_id)
         if response_json is None:

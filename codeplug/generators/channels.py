@@ -4,7 +4,7 @@ from lxml import etree
 import maidenhead as mh
 
 from models import DigitalChannel, AnalogChannel
-from datasources.brandmeister import API
+from datasources import brandmeister
 
 
 def format_channel(string):
@@ -49,8 +49,8 @@ class HotspotDigitalChannelGenerator:
 
 
 class DigitalChannelGeneratorFromBrandmeister:
-    def __init__(self, filename, power, talkgroups):
-        self.devices = json.load(open(filename))
+    def __init__(self, power, talkgroups):
+        self.devices = brandmeister.DeviceDB().devices_active_within1month()
         self._channels = []
         self.talkgroups = talkgroups
 
@@ -68,7 +68,7 @@ class DigitalChannelGeneratorFromBrandmeister:
                 # Hotspot
                 continue
 
-            for tg_id, slot in API().static_talkgroups(dev["id"]):
+            for tg_id, slot in brandmeister.TalkgroupAPI().static_talkgroups(dev["id"]):
                 if slot == 0:
                     continue
                 for tg in self.talkgroups:

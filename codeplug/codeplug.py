@@ -127,6 +127,10 @@ class Codeplug:
                     "admit": chan.admit_crit,
                     "colorCode": chan.color,
                     "timeSlot": f"TS{chan.slot}",
+                    "anytone": {
+                        "sms": True,
+                        "smsConfirm": True,
+                    },
                 }
             }
             if chan.tx_contact_id != "-":
@@ -152,4 +156,4 @@ class Codeplug:
         name = unidecode(name)
         # NOTE: 13/06/2023 (jps): Max size of contact name
         name = name[:CONTACT_NAME_MAX]
-        return name.replace(" ", "_").ljust(CONTACT_NAME_MAX)
+        return name.replace(" ", "_")

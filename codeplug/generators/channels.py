@@ -127,7 +127,7 @@ class AnalogChannelGeneratorFromPrzemienniki:
             rpt_input = float(node.xpath('./qrg[@type="tx"]')[0].text)
             tx_offset = rpt_input - rpt_output
 
-            if tx_offset < 0.0001:
+            if abs(tx_offset) < 0.0001:
                 continue
 
             rx_tone = "-"

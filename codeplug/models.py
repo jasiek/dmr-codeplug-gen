@@ -48,8 +48,8 @@ BaseAnalogChannel = create_class_with_attributes(
         "rx_only": str,
         "admit_crit": str,
         "squelch": str,
-        "rx_tone": str,
-        "tx_tone": str,
+        "rx_tone": float,
+        "tx_tone": float,
         "width": float,
         # Used for grouping
         "lat": float,

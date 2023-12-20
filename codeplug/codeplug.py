@@ -101,11 +101,11 @@ class Codeplug:
                 }
             }
 
-            if chan.rx_tone:
-                ch["analog"]["rxTone"] = chan.rx_tone
+            if chan.rx_tone and chan.rx_tone > 0.0:
+                ch["analog"]["rxTone"] = {"ctcss": chan.rx_tone}
 
-            if chan.tx_tone:
-                ch["analog"]["txTone"] = chan.tx_tone
+            if chan.tx_tone and chan.tx_tone > 0.0:
+                ch["analog"]["txTone"] = {"ctcss": chan.tx_tone}
 
             channels.append(ch)
         codeplug["channels"] += channels

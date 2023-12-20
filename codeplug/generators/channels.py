@@ -123,23 +123,23 @@ class AnalogChannelGeneratorFromPrzemienniki:
             if len(node.findall("qrg")) > 2:
                 continue
 
-            rpt_output = float(node.xpath('./qrg[@type="rx"]')[0].text)
-            rpt_input = float(node.xpath('./qrg[@type="tx"]')[0].text)
+            rpt_output = float(node.xpath('./qrg[@type="tx"]')[0].text)
+            rpt_input = float(node.xpath('./qrg[@type="rx"]')[0].text)
             tx_offset = rpt_input - rpt_output
 
             if abs(tx_offset) < 0.0001:
                 continue
 
-            rx_tone = "-"
-            tx_tone = "-"
+            rx_tone = 0.0
+            tx_tone = 0.0
             if node.find("ctcss") is not None:
                 rx_tone_node = node.xpath('./ctcss[@type="tx"]')
                 if len(rx_tone_node) > 0:
-                    rx_tone = str(float(rx_tone_node[0].text))
+                    rx_tone = float(rx_tone_node[0].text)
 
                 tx_tone_node = node.xpath('./ctcss[@type="rx"]')
                 if len(tx_tone_node) > 0:
-                    tx_tone = str(float(tx_tone_node[0].text))
+                    tx_tone = float(tx_tone_node[0].text)
 
             lat = 0.0
             lng = 0.0

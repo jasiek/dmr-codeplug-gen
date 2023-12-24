@@ -2,7 +2,7 @@ import re
 from collections import defaultdict
 
 from generators import Sequence
-from models import Zone, DigitalChannel
+from models import Zone, DigitalChannel, is_hotspot
 
 
 class ZoneFromLocatorGenerator:
@@ -60,7 +60,7 @@ class HotspotZoneGenerator:
     def zones(self, seq):
         hotspot_channels = []
         for chan in self.channels:
-            if chan.is_hotspot():
+            if is_hotspot(chan):
                 hotspot_channels.append(chan.internal_id)
 
         return [Zone(internal_id=seq.next(), name="Hotspot", channels=hotspot_channels)]

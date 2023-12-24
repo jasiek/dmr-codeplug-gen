@@ -1,73 +1,78 @@
-from utils import create_class_with_attributes
+from typing import List, Optional, NewType
+from dataclasses import dataclass
 
-Contact = create_class_with_attributes(
-    {"internal_id": int, "name": str, "calling_id": int}
-)
+# type definitions
 
-GroupList = create_class_with_attributes(
-    {"internal_id": int, "name": str, "contact_ids": list}
-)
+InternalID = NewType("InternalID", int)
 
-BaseDigitalChannel = create_class_with_attributes(
-    {
-        "internal_id": int,
-        "name": str,
-        "rx_freq": float,
-        "tx_freq": float,
-        "tx_power": str,
-        "scanlist_id": str,
-        "tot": str,
-        "rx_only": str,
-        "admit_crit": str,
-        "color": int,
-        "slot": int,
-        "rx_grouplist_id": str,
-        "tx_contact_id": str,
-        # Used for grouping
-        "lat": float,
-        "lng": float,
-        "locator": str,
-    }
-)
+ContactID = InternalID
+OptionalContactID = Optional[ContactID]
+
+ChannelID = InternalID
+
+# model definitions
 
 
-class DigitalChannel(BaseDigitalChannel):
-    def is_hotspot(self):
-        return self.name.startswith("HS")
+@dataclass
+class Contact:
+    internal_id: ContactID
+    name: str
+    calling_id: int
 
 
-BaseAnalogChannel = create_class_with_attributes(
-    {
-        "internal_id": int,
-        "name": str,
-        "rx_freq": float,
-        "tx_freq": float,
-        "tx_power": str,
-        "scanlist_id": str,
-        "tot": str,
-        "rx_only": str,
-        "admit_crit": str,
-        "squelch": str,
-        "rx_tone": float,
-        "tx_tone": float,
-        "width": float,
-        # Used for grouping
-        "lat": float,
-        "lng": float,
-        "locator": str,
-    }
-)
+@dataclass
+class GroupList:
+    internal_id: int
+    name: str
+    contact_ids: List[ContactID]
 
 
-class AnalogChannel(BaseAnalogChannel):
-    def is_hotspot(self):
-        return False
+@dataclass
+class DigitalChannel:
+    internal_id: ChannelID
+    name: str
+    rx_freq: float
+    tx_freq: float
+    tx_power: str  # Literal
+    scanlist_id: str  # optional id
+    tot: str  # literal
+    rx_only: str  # bool
+    admit_crit: str  # literal
+    color: int
+    slot: int  # enum
+    rx_grouplist_id: str  # optional id
+    tx_contact_id: OptionalContactID
+    lat: float  # optional float
+    lng: float  # optional float
+    locator: str  # optional str
 
 
-Zone = create_class_with_attributes(
-    {
-        "internal_id": int,
-        "name": str,
-        "channels": list,
-    }
-)
+def is_hotspot(chan):
+    return chan.name.startswith("HS")
+
+
+@dataclass
+class AnalogChannel:
+    internal_id: ChannelID
+    name: str
+    rx_freq: float
+    tx_freq: float
+    tx_power: str  # Literal
+    scanlist_id: str  # optional id
+    tot: str  # literal
+    rx_only: str  # bool
+    admit_crit: str  # literal
+    squelch: str  # Literal
+    rx_tone: float  # optional float
+    tx_tone: float  # optional float
+    width: float  # enum
+    lat: float  # opt float
+    lng: float  # opt float
+    locator: str  # opt lcoator
+
+
+@dataclass
+class Zone:
+    internal_id: int
+    name: str
+    channels: List[ChannelID]

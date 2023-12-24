@@ -133,7 +133,7 @@ class Codeplug:
                     },
                 }
             }
-            if chan.tx_contact_id != "-":
+            if chan.tx_contact_id:
                 ch["digital"]["contact"] = f"contact{chan.tx_contact_id}"
 
             channels.append(ch)

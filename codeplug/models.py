@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import Enum, StrEnum
 from typing import List, Optional, NewType, Union, Literal
 from dataclasses import dataclass
 
@@ -19,7 +19,7 @@ Locator = Optional[str]
 Squelch = Union[*([Literal[n] for n in range(1, 11)] + [Literal["Open"]])]
 
 
-class TxPower(Enum):
+class TxPower(StrEnum):
     Min = "Min"
     Low = "Low"
     Mid = "Mid"
@@ -27,9 +27,9 @@ class TxPower(Enum):
     Max = "Max"
 
 
-class ChannelWidth(Enum):
-    Narrow = 12.5
-    Wide = 25
+class ChannelWidth(StrEnum):
+    Narrow = "Narrow"  # 12.5
+    Wide = "Wide"  # 25
 
 
 # model definitions

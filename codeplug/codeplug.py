@@ -88,14 +88,14 @@ class Codeplug:
                     "name": chan.name,
                     "rxFrequency": chan.rx_freq,
                     "txFrequency": chan.tx_freq,
-                    "power": chan.tx_power,
+                    "power": chan.tx_power.value,
                     "timeout": 0,
                     # "rxOnly": False,
                     # "vox": False,
                     "scanList": chan.scanlist_id,
                     "admit": chan.admit_crit,
                     "squelch": 1,
-                    "bandwidth": "Narrow",
+                    "bandwidth": chan.width.value,
                 }
             }
 
@@ -117,7 +117,7 @@ class Codeplug:
                     "name": chan.name,
                     "rxFrequency": chan.rx_freq,
                     "txFrequency": chan.tx_freq,
-                    "power": chan.tx_power,
+                    "power": chan.tx_power.value,
                     "timeout": 0,
                     # "rxOnly": False,
                     # "vox": False,

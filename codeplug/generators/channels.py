@@ -7,8 +7,8 @@ from models import DigitalChannel, AnalogChannel, TxPower, ChannelWidth
 from datasources import brandmeister
 
 
-def format_channel(string):
-    return string[0:16]
+def format_channel(s):
+    return s
 
 
 class HotspotDigitalChannelGenerator:
@@ -25,6 +25,28 @@ class HotspotDigitalChannelGenerator:
         return self._channels
 
     def generate_channels(self, sequence):
+        for slot in [1, 2]:
+            self._channels.append(
+                DigitalChannel(
+                    internal_id=sequence.next(),
+                    name=f"HS TS{slot}",
+                    rx_freq=self.f,
+                    tx_freq=self.f,
+                    tx_power=TxPower.Min,
+                    scanlist_id="-",
+                    tot="-",
+                    rx_only="-",
+                    admit_crit="Free",
+                    color=self.color,
+                    slot=slot,
+                    rx_grouplist_id="-",
+                    tx_contact_id=None,
+                    lat=None,
+                    lng=None,
+                    locator=None,
+                )
+            )
+
         for tg in self.talkgroups:
             self._channels.append(
                 DigitalChannel(
@@ -40,7 +62,7 @@ class HotspotDigitalChannelGenerator:
                     color=self.color,
                     slot=self.ts,
                     rx_grouplist_id="-",
-                    tx_contact_id=str(tg.internal_id),
+                    tx_contact_id=tg.internal_id,
                     lat=None,
                     lng=None,
                     locator=None,
@@ -68,11 +90,9 @@ class DigitalChannelGeneratorFromBrandmeister:
                 # Hotspot
                 continue
 
-            slots_used = set()
             for tg_id, slot in brandmeister.TalkgroupAPI().static_talkgroups(dev["id"]):
                 if slot == 0:
                     continue
-                slots_used.add(slot)
                 for tg in self.talkgroups:
                     if tg.calling_id == tg_id:
                         # We were passed a TG definition
@@ -101,40 +121,36 @@ class DigitalChannelGeneratorFromBrandmeister:
                             )
                         )
 
-            all_slots = {1, 2}
-            # Generate an entry for a slot with dynamic TGs, with no contact set
-            if slots_used != all_slots:
-                unused_slots = all_slots.difference(slots_used)
-                for slot in unused_slots:
-                    name = format_channel(
-                        " ".join(
-                            [
-                                dev["callsign"],
-                                f"TS{slot}",
-                            ]
-                        )
+            for slot in [1, 2]:
+                name = format_channel(
+                    " ".join(
+                        [
+                            dev["callsign"],
+                            f"TS{slot}",
+                        ]
                     )
+                )
 
-                    self._channels.append(
-                        DigitalChannel(
-                            internal_id=sequence.next(),
-                            name=name,
-                            rx_freq=float(dev["tx"]),
-                            tx_freq=float(dev["rx"]),
-                            tx_power=TxPower.High,
-                            scanlist_id="-",
-                            tot="-",
-                            rx_only="-",
-                            admit_crit="Free",
-                            color=dev["colorcode"],
-                            slot=slot,
-                            rx_grouplist_id="-",
-                            tx_contact_id=None,
-                            lat=float(dev["lat"]),
-                            lng=float(dev["lng"]),
-                            locator=mh.to_maiden(dev["lat"], dev["lng"], 3),
-                        )
+                self._channels.append(
+                    DigitalChannel(
+                        internal_id=sequence.next(),
+                        name=name,
+                        rx_freq=float(dev["tx"]),
+                        tx_freq=float(dev["rx"]),
+                        tx_power=TxPower.High,
+                        scanlist_id="-",
+                        tot="-",
+                        rx_only="-",
+                        admit_crit="Free",
+                        color=dev["colorcode"],
+                        slot=slot,
+                        rx_grouplist_id="-",
+                        tx_contact_id=None,
+                        lat=float(dev["lat"]),
+                        lng=float(dev["lng"]),
+                        locator=mh.to_maiden(dev["lat"], dev["lng"], 3),
                     )
+                )
 
 
 class AnalogChannelGeneratorFromPrzemienniki:

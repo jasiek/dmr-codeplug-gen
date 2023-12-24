@@ -3,8 +3,6 @@ import yaml
 
 from unidecode import unidecode
 
-CONTACT_NAME_MAX = 16  # https://github.com/OpenRTX/dmrconfig/blob/master/d868uv.c#L317
-
 
 class IndentDumper(yaml.Dumper):
     def increase_indent(self, flow=False, indentless=False):
@@ -153,7 +151,4 @@ class Codeplug:
 
     def _format_contact_name(self, name):
         # NOTE: 13/06/2023 (jps): Only ascii characters are permitted
-        name = unidecode(name)
-        # NOTE: 13/06/2023 (jps): Max size of contact name
-        name = name[:CONTACT_NAME_MAX]
-        return name.replace(" ", "_")
+        return unidecode(name)

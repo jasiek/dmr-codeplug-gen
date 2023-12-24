@@ -21,7 +21,7 @@ class BrandmeisterTGContactGenerator:
             self._contacts.append(
                 Contact(
                     internal_id=i,
-                    name=self._sanitize_contact(self._contactdb[key]),
+                    name=self._contactdb[key],
                     calling_id=int(key),
                 )
             )

@@ -41,9 +41,9 @@ class HotspotDigitalChannelGenerator:
                     slot=self.ts,
                     rx_grouplist_id="-",
                     tx_contact_id=str(tg.internal_id),
-                    lat=0.0,
-                    lng=0.0,
-                    locator="",
+                    lat=None,
+                    lng=None,
+                    locator=None,
                 )
             )
 

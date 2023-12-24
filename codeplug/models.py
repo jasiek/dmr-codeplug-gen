@@ -10,8 +10,12 @@ DMRID = NewType("DMRID", int)
 ContactID = InternalID
 GroupListID = InternalID
 ChannelID = InternalID
+ScanListID = InternalID
 
-OptionalContactID = Optional[ContactID]
+Slot = Union[Literal[1], Literal[2]]
+Latitude = Optional[float]
+Longitude = Optional[float]
+Locator = Optional[str]
 
 
 class TxPower(Enum):
@@ -46,17 +50,17 @@ class DigitalChannel:
     rx_freq: float
     tx_freq: float
     tx_power: TxPower
-    scanlist_id: str  # optional id
+    scanlist_id: Optional[ScanListID]
     tot: str  # literal
     rx_only: str  # bool
     admit_crit: str  # literal
     color: int
-    slot: int  # enum
-    rx_grouplist_id: str  # optional id
-    tx_contact_id: OptionalContactID
-    lat: float  # optional float
-    lng: float  # optional float
-    locator: str  # optional str
+    slot: Slot
+    rx_grouplist_id: Optional[GroupListID]
+    tx_contact_id: Optional[ContactID]
+    lat: Latitude
+    lng: Longitude
+    locator: Locator
 
 
 def is_hotspot(chan):
@@ -70,7 +74,7 @@ class AnalogChannel:
     rx_freq: float
     tx_freq: float
     tx_power: TxPower
-    scanlist_id: str  # optional id
+    scanlist_id: Optional[ScanListID]
     tot: str  # literal
     rx_only: str  # bool
     admit_crit: str  # literal
@@ -78,9 +82,9 @@ class AnalogChannel:
     rx_tone: float  # optional float
     tx_tone: float  # optional float
     width: float  # enum
-    lat: float  # opt float
-    lng: float  # opt float
-    locator: str  # opt lcoator
+    lat: Latitude
+    lng: Longitude
+    locator: Locator
 
 
 @dataclass

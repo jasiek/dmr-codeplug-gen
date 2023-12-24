@@ -1,14 +1,26 @@
-from typing import List, Optional, NewType
+from enum import Enum
+from typing import List, Optional, NewType, Union, Literal
 from dataclasses import dataclass
 
 # type definitions
 
 InternalID = NewType("InternalID", int)
+DMRID = NewType("DMRID", int)
 
 ContactID = InternalID
+GroupListID = InternalID
+ChannelID = InternalID
+
 OptionalContactID = Optional[ContactID]
 
-ChannelID = InternalID
+
+class TxPower(Enum):
+    Min = "Min"
+    Low = "Low"
+    Mid = "Mid"
+    High = "High"
+    Max = "Max"
+
 
 # model definitions
 
@@ -17,12 +29,12 @@ ChannelID = InternalID
 class Contact:
     internal_id: ContactID
     name: str
-    calling_id: int
+    calling_id: DMRID
 
 
 @dataclass
 class GroupList:
-    internal_id: int
+    internal_id: GroupListID
     name: str
     contact_ids: List[ContactID]
 
@@ -33,7 +45,7 @@ class DigitalChannel:
     name: str
     rx_freq: float
     tx_freq: float
-    tx_power: str  # Literal
+    tx_power: TxPower
     scanlist_id: str  # optional id
     tot: str  # literal
     rx_only: str  # bool
@@ -57,7 +69,7 @@ class AnalogChannel:
     name: str
     rx_freq: float
     tx_freq: float
-    tx_power: str  # Literal
+    tx_power: TxPower
     scanlist_id: str  # optional id
     tot: str  # literal
     rx_only: str  # bool

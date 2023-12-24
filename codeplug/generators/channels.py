@@ -3,7 +3,7 @@ import json
 from lxml import etree
 import maidenhead as mh
 
-from models import DigitalChannel, AnalogChannel
+from models import DigitalChannel, AnalogChannel, TxPower
 from datasources import brandmeister
 
 
@@ -32,7 +32,7 @@ class HotspotDigitalChannelGenerator:
                     name=format_channel(f"HS {tg.calling_id} {tg.name}"),
                     rx_freq=self.f,
                     tx_freq=self.f,
-                    tx_power="Low",
+                    tx_power=TxPower.Min,
                     scanlist_id="-",
                     tot="-",
                     rx_only="-",
@@ -86,7 +86,7 @@ class DigitalChannelGeneratorFromBrandmeister:
                                 name=name,
                                 rx_freq=float(dev["tx"]),
                                 tx_freq=float(dev["rx"]),
-                                tx_power="High",
+                                tx_power=TxPower.High,
                                 scanlist_id="-",
                                 tot="-",
                                 rx_only="-",
@@ -121,7 +121,7 @@ class DigitalChannelGeneratorFromBrandmeister:
                             name=name,
                             rx_freq=float(dev["tx"]),
                             tx_freq=float(dev["rx"]),
-                            tx_power="High",
+                            tx_power=TxPower.High,
                             scanlist_id="-",
                             tot="-",
                             rx_only="-",
@@ -195,7 +195,7 @@ class AnalogChannelGeneratorFromPrzemienniki:
                     name=node.find("qra").text,
                     rx_freq=rpt_output,
                     tx_freq=rpt_input,
-                    tx_power="High",
+                    tx_power=TxPower.High,
                     scanlist_id="-",
                     tot="-",
                     rx_only="-",

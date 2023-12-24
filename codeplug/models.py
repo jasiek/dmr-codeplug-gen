@@ -16,6 +16,7 @@ Slot = Union[Literal[1], Literal[2]]
 Latitude = Optional[float]
 Longitude = Optional[float]
 Locator = Optional[str]
+Squelch = Union[*([Literal[n] for n in range(1, 11)] + [Literal["Open"]])]
 
 
 class TxPower(Enum):
@@ -24,6 +25,11 @@ class TxPower(Enum):
     Mid = "Mid"
     High = "High"
     Max = "Max"
+
+
+class ChannelWidth(Enum):
+    Narrow = 12.5
+    Wide = 25
 
 
 # model definitions
@@ -78,10 +84,10 @@ class AnalogChannel:
     tot: str  # literal
     rx_only: str  # bool
     admit_crit: str  # literal
-    squelch: str  # Literal
-    rx_tone: float  # optional float
-    tx_tone: float  # optional float
-    width: float  # enum
+    squelch: Squelch
+    rx_tone: Optional[float]
+    tx_tone: Optional[float]
+    width: ChannelWidth
     lat: Latitude
     lng: Longitude
     locator: Locator

@@ -3,7 +3,7 @@ import json
 from lxml import etree
 import maidenhead as mh
 
-from models import DigitalChannel, AnalogChannel, TxPower
+from models import DigitalChannel, AnalogChannel, TxPower, ChannelWidth
 from datasources import brandmeister
 
 
@@ -167,8 +167,8 @@ class AnalogChannelGeneratorFromPrzemienniki:
             if abs(tx_offset) < 0.0001:
                 continue
 
-            rx_tone = 0.0
-            tx_tone = 0.0
+            rx_tone = None
+            tx_tone = None
             if node.find("ctcss") is not None:
                 rx_tone_node = node.xpath('./ctcss[@type="tx"]')
                 if len(rx_tone_node) > 0:
@@ -178,9 +178,9 @@ class AnalogChannelGeneratorFromPrzemienniki:
                 if len(tx_tone_node) > 0:
                     tx_tone = float(tx_tone_node[0].text)
 
-            lat = 0.0
-            lng = 0.0
-            locator = ""
+            lat = None
+            lng = None
+            locator = None
             if node.find("location") is not None:
                 try:
                     lat = float(node.find("latitude").text)
@@ -200,10 +200,10 @@ class AnalogChannelGeneratorFromPrzemienniki:
                     tot="-",
                     rx_only="-",
                     admit_crit="Free",
-                    squelch="Normal",
+                    squelch=1,
                     rx_tone=rx_tone,
                     tx_tone=tx_tone,
-                    width=12.5,
+                    width=ChannelWidth.Narrow,
                     lat=lat,
                     lng=lng,
                     locator=locator,

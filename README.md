@@ -17,7 +17,7 @@ Script for generating a codeplug for the AnyTone AT-D878UV and other radios supp
 
 * ~~generate a set of digital channels for use with hotspots, given a set of TGs~~
 * generate zones of digital repeaters and cluster by locator
-* generate zones of digital repeaters and cluster by prefix
-* generate zones of analog repeaters clustered by prefix
+* ~~generate zones of digital repeaters and cluster by prefix~~
+* ~~generate zones of analog repeaters clustered by prefix~~
 * generate a scanlist of analog repeaters clustered by prefix
 * generate a scanlist of digital repeaters clustered by prefix

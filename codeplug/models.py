@@ -20,6 +20,12 @@ Locator = Optional[str]
 Squelch = Union[*([Literal[n] for n in range(1, 11)] + [Literal["Open"]])]
 
 
+class ContactType(StrEnum):
+    GroupCall = "GroupCall"
+    PrivateCall = "PrivateCall"
+    AllCall = "AllCall"
+
+
 class TxPower(StrEnum):
     Min = "Min"
     Low = "Low"
@@ -40,6 +46,7 @@ class ChannelWidth(StrEnum):
 class Contact:
     internal_id: ContactID
     name: str
+    type: ContactType
     calling_id: DMRID
 
 

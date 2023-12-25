@@ -4,8 +4,12 @@ from codeplug import Codeplug
 
 from generators import Sequence
 from generators.grouplists import CountryGroupListGenerator
-from generators.contacts import BrandmeisterTGContactGenerator
+from generators.contacts import (
+    BrandmeisterTGContactGenerator,
+    BrandmeisterSpecialContactGenerator,
+)
 from generators.channels import (
+    AnalogPMR446ChannelGenerator,
     AnalogChannelGeneratorFromPrzemienniki,
     DigitalChannelGeneratorFromBrandmeister,
     HotspotDigitalChannelGenerator,
@@ -15,21 +19,27 @@ from generators.roaming import (
     RoamingChannelGeneratorFromBrandmeister,
     RoamingZoneFromCallsignGenerator,
 )
-from aggregators import ChannelAggregator, ZoneAggregator
+from aggregators import ChannelAggregator, ZoneAggregator, ContactAggregator
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("missing output file name")
         exit(1)
 
-    contact_gen = BrandmeisterTGContactGenerator()
-    polish_tgs = contact_gen.matched_contacts("^260")
+    contact_seq = Sequence()
+    brandmeister_contact_gen = BrandmeisterTGContactGenerator()
+    contacts = ContactAggregator(
+        BrandmeisterSpecialContactGenerator(), brandmeister_contact_gen
+    ).contacts(contact_seq)
+
+    polish_tgs = brandmeister_contact_gen.matched_contacts("^260")
     chan_seq = Sequence()
     digital_channels = ChannelAggregator(
         HotspotDigitalChannelGenerator(polish_tgs),
         DigitalChannelGeneratorFromBrandmeister("High", polish_tgs),
     ).channels(chan_seq)
     analog_channels = ChannelAggregator(
+        AnalogPMR446ChannelGenerator(),
         AnalogChannelGeneratorFromPrzemienniki("data/pl_2m_fm.xml", "High"),
         AnalogChannelGeneratorFromPrzemienniki("data/pl_70cm_fm.xml", "High"),
     ).channels(chan_seq)
@@ -47,8 +57,8 @@ if __name__ == "__main__":
     roaming_zones = RoamingZoneFromCallsignGenerator(roaming_channels).zones(Sequence())
 
     Codeplug(
-        contact_gen,
-        CountryGroupListGenerator(contact_gen.contacts(), 260),
+        contacts,
+        CountryGroupListGenerator(contacts, 260).grouplists(Sequence()),
         None,  # radio ID
         None,  # callsign
         analog_channels,

@@ -12,8 +12,8 @@ class IndentDumper(yaml.Dumper):
 class Codeplug:
     def __init__(
         self,
-        contact_gen,
-        grouplist_gen,
+        contacts,
+        grouplists,
         dmr_id,
         callsign,
         analog_channels,
@@ -22,8 +22,8 @@ class Codeplug:
         roaming_channels,
         roaming_zones,
     ):
-        self.contact_gen = contact_gen
-        self.grouplist_gen = grouplist_gen
+        self.contacts = contacts
+        self.grouplists = grouplists
         self.dmr_id = dmr_id
         self.callsign = callsign
         self.analog_channels = analog_channels
@@ -58,13 +58,13 @@ class Codeplug:
 
     def generate_contacts(self, codeplug):
         contacts = []
-        for contact in self.contact_gen.contacts():
+        for contact in self.contacts:
             contacts.append(
                 {
                     "dmr": {
                         "id": f"contact{contact.internal_id}",
                         "name": self._format_contact_name(contact.name),
-                        "type": "GroupCall",
+                        "type": contact.type.value,
                         "number": contact.calling_id,
                         "ring": False,
                     }
@@ -74,7 +74,7 @@ class Codeplug:
 
     def generate_grouplists(self, codeplug):
         grouplists = []
-        for gpl in self.grouplist_gen.grouplists():
+        for gpl in self.grouplists:
             grouplists.append(
                 {
                     "id": f"grouplist{gpl.internal_id}",

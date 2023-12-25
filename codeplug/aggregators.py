@@ -1,3 +1,14 @@
+class ContactAggregator:
+    def __init__(self, *contact_generators):
+        self.generators = contact_generators
+
+    def contacts(self, sequence):
+        contacts = []
+        for gen in self.generators:
+            contacts += gen.contacts(sequence)
+        return contacts
+
+
 class ChannelAggregator:
     def __init__(self, *chan_generators):
         self.generators = chan_generators

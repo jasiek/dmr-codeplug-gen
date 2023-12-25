@@ -153,6 +153,38 @@ class DigitalChannelGeneratorFromBrandmeister:
                 )
 
 
+class AnalogPMR446ChannelGenerator:
+    def __init__(self):
+        self._channels = []
+
+    def channels(self, sequence):
+        f = 446.00625
+        for chan_num in range(1, 17):
+            chan_freq = f + (chan_num - 1) * 0.0125
+            self._channels.append(
+                AnalogChannel(
+                    internal_id=sequence.next(),
+                    name=f"PMR {chan_num}",
+                    rx_freq=chan_freq,
+                    tx_freq=chan_freq,
+                    tx_power=TxPower.Min,
+                    scanlist_id="-",
+                    tot="-",
+                    rx_only="-",
+                    admit_crit="Free",
+                    squelch=1,
+                    rx_tone=110.9,
+                    tx_tone=110.9,
+                    width=ChannelWidth.Narrow,
+                    lat=None,
+                    lng=None,
+                    locator=None,
+                )
+            )
+            f += 0.0125  # rounding problem here?
+        return self._channels
+
+
 class AnalogChannelGeneratorFromPrzemienniki:
     def __init__(self, filename, power):
         root = etree.parse(filename)

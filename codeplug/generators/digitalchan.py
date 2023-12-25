@@ -150,3 +150,35 @@ class DigitalChannelGeneratorFromBrandmeister:
                         locator=mh.to_maiden(dev["lat"], dev["lng"], 3),
                     )
                 )
+
+
+class DigitalPMR446ChannelGenerator:
+    def __init__(self):
+        self._channels = []
+
+    def channels(self, seq):
+        f = 446.003125
+        for channum in range(1, 33):
+            chan_freq = f + (channum - 1) * 0.00625
+            name = f"dPMR {channum}"
+            self._channels.append(
+                DigitalChannel(
+                    internal_id=seq.next(),
+                    name=name,
+                    rx_freq=chan_freq,
+                    tx_freq=chan_freq,
+                    tx_power=TxPower.Low,
+                    scanlist_id="-",
+                    tot="-",
+                    rx_only="-",
+                    admit_crit="Free",
+                    color=int(64 * (chan_freq % 0.4)),  # per TS 102 658
+                    slot=2,
+                    rx_grouplist_id="-",
+                    tx_contact_id=None,
+                    lat=None,
+                    lng=None,
+                    locator=None,
+                )
+            )
+        return self._channels

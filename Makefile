@@ -1,4 +1,4 @@
-default: plug.yaml
+default: validate
 all: data/radiod_users.json data/brandmeister_talkgroups.json data/pl_2m_fm.xml data/pl_70cm_fm.xml data/bm_2602.json data/rptrs.json
 
 data/radiod_users.json:
@@ -22,3 +22,9 @@ data/rptrs.json:
 plug.yaml: all $(wildcard codeplug/*.py)
 	black .
 	python codeplug/cli.py plug.yaml
+
+validate: plug.yaml
+	dmrconf -y verify plug.yaml
+
+program: validate
+	dmrconf -y write plug.yaml

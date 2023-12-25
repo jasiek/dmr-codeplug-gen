@@ -163,3 +163,4 @@ cython_debug/
 \#*
 *.img
 *.conf
+plug.yaml

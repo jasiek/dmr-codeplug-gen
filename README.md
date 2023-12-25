@@ -6,7 +6,7 @@ Script for generating a codeplug for the AnyTone AT-D878UV and other radios supp
 
 * `poetry install`
 * `poetry shell`
-* Run `make` to build the codeplug. This will pull all data files and build a codeplug into `plug.yml`.
+* Run `make` to build the codeplug. This will pull all data files and build a codeplug into `plug.yaml`.
 
 ### Dependencies
 

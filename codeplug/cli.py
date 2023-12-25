@@ -11,6 +11,10 @@ from generators.channels import (
     HotspotDigitalChannelGenerator,
 )
 from generators.zones import ZoneFromCallsignGenerator, HotspotZoneGenerator
+from generators.roaming import (
+    RoamingChannelGeneratorFromBrandmeister,
+    RoamingZoneFromCallsignGenerator,
+)
 from aggregators import ChannelAggregator, ZoneAggregator
 
 if __name__ == "__main__":
@@ -36,6 +40,12 @@ if __name__ == "__main__":
         ZoneFromCallsignGenerator(digital_channels + analog_channels),
     ).zones(zone_seq)
 
+    rch_seq = Sequence()
+    roaming_channels = RoamingChannelGeneratorFromBrandmeister(polish_tgs).channels(
+        rch_seq
+    )
+    roaming_zones = RoamingZoneFromCallsignGenerator(roaming_channels).zones(Sequence())
+
     Codeplug(
         contact_gen,
         CountryGroupListGenerator(contact_gen.contacts(), 260),
@@ -44,4 +54,6 @@ if __name__ == "__main__":
         analog_channels,
         digital_channels,
         zones,
+        roaming_channels,
+        roaming_zones,
     ).generate(open(sys.argv[1], "wt"))

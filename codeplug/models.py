@@ -11,6 +11,7 @@ ContactID = InternalID
 GroupListID = InternalID
 ChannelID = InternalID
 ScanListID = InternalID
+ZoneID = InternalID
 
 Slot = Union[Literal[1], Literal[2]]
 Latitude = Optional[float]
@@ -95,6 +96,23 @@ class AnalogChannel:
 
 @dataclass
 class Zone:
-    internal_id: int
+    internal_id: ZoneID
+    name: str
+    channels: List[ChannelID]
+
+
+@dataclass
+class DigitalRoamingChannel:
+    internal_id: ChannelID
+    name: str
+    tx_freq: float
+    rx_freq: float
+    color: int
+    slot: Slot
+
+
+@dataclass
+class DigitalRoamingZone:
+    internal_id: ZoneID
     name: str
     channels: List[ChannelID]

@@ -19,6 +19,8 @@ class Codeplug:
         analog_channels,
         digital_channels,
         zones,
+        roaming_channels,
+        roaming_zones,
     ):
         self.contact_gen = contact_gen
         self.grouplist_gen = grouplist_gen
@@ -27,6 +29,8 @@ class Codeplug:
         self.analog_channels = analog_channels
         self.digital_channels = digital_channels
         self.zones = zones
+        self.roaming_channels = roaming_channels
+        self.roaming_zones = roaming_zones
 
     def generate(self, file):
         codeplug = yaml.load(open("blank_radio/uv878_base.yml"), Loader=yaml.Loader)
@@ -37,6 +41,8 @@ class Codeplug:
         self.generate_analog_channels(codeplug)
         self.generate_digital_channels(codeplug)
         self.generate_zones(codeplug)
+        self.generate_roaming_channels(codeplug)
+        self.generate_roaming_zones(codeplug)
 
         file.write(
             yaml.dump(
@@ -148,6 +154,31 @@ class Codeplug:
                 }
             )
         codeplug["zones"] = zones
+
+    def generate_roaming_channels(self, codeplug):
+        roaming_channels = []
+        for ch in self.roaming_channels:
+            channel = {
+                "id": f"roamingchan{ch.internal_id}",
+                "name": ch.name,
+                "rxFrequency": ch.rx_freq,
+                "txFrequency": ch.tx_freq,
+                "colorCode": ch.color,
+                "timeSlot": f"TS{ch.slot}",
+            }
+            roaming_channels.append(channel)
+        codeplug["roamingChannels"] = roaming_channels
+
+    def generate_roaming_zones(self, codeplug):
+        roaming_zones = []
+        for z in self.roaming_zones:
+            zone = {
+                "id": f"roamingzone{z.internal_id}",
+                "name": z.name,
+                "channels": [f"roamingchan{c}" for c in z.channels],
+            }
+            roaming_zones.append(zone)
+        codeplug["roamingZones"] = roaming_zones
 
     def _format_contact_name(self, name):
         # NOTE: 13/06/2023 (jps): Only ascii characters are permitted

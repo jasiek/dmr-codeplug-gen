@@ -25,17 +25,22 @@ class RoamingChannelGeneratorFromBrandmeister:
                 # Hotspot
                 continue
 
-            for tg_id, slot in brandmeister.TalkgroupAPI().static_talkgroups(dev["id"]):
+            generated = set()
+            for _, slot in brandmeister.TalkgroupAPI().static_talkgroups(dev["id"]):
+                channel_name = f'{dev["callsign"]} TS{slot}'
+                if channel_name in generated:
+                    continue
                 self._channels.append(
                     DigitalRoamingChannel(
                         internal_id=sequence.next(),
-                        name=f'{dev["callsign"]} TS{slot}',
+                        name=channel_name,
                         tx_freq=float(dev["tx"]),
                         rx_freq=float(dev["rx"]),
                         color=dev["colorcode"],
                         slot=slot,
                     )
                 )
+                generated.add(channel_name)
 
 
 class RoamingZoneFromCallsignGenerator:

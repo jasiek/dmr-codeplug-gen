@@ -1,6 +1,6 @@
 import sys
 
-from codeplug import Codeplug
+from codeplug import AT878UVCodeplugForQDMR
 
 from generators import Sequence
 from generators.grouplists import CountryGroupListGenerator
@@ -58,7 +58,7 @@ if __name__ == "__main__":
     )
     roaming_zones = RoamingZoneFromCallsignGenerator(roaming_channels).zones(Sequence())
 
-    Codeplug(
+    AT878UVCodeplugForQDMR(
         contacts,
         CountryGroupListGenerator(contacts, 260).grouplists(Sequence()),
         None,  # radio ID

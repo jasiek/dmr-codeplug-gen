@@ -9,7 +9,7 @@ class IndentDumper(yaml.Dumper):
         return super(IndentDumper, self).increase_indent(flow, False)
 
 
-class Codeplug:
+class AT878UVCodeplugForQDMR:
     def __init__(
         self,
         contacts,

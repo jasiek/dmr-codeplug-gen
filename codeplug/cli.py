@@ -1,7 +1,5 @@
 import sys
 
-from codeplug import AT878UVCodeplugForQDMR
-
 from generators import Sequence
 from generators.grouplists import CountryGroupListGenerator
 from generators.contacts import (
@@ -22,6 +20,9 @@ from generators.roaming import (
     RoamingZoneFromCallsignGenerator,
 )
 from aggregators import ChannelAggregator, ZoneAggregator, ContactAggregator
+
+from anytone import AT878UV
+from writers import QDMRWriter
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
@@ -58,14 +59,14 @@ if __name__ == "__main__":
     )
     roaming_zones = RoamingZoneFromCallsignGenerator(roaming_channels).zones(Sequence())
 
-    AT878UVCodeplugForQDMR(
+    AT878UV(
+        None,
+        None,
         contacts,
         CountryGroupListGenerator(contacts, 260).grouplists(Sequence()),
-        None,  # radio ID
-        None,  # callsign
         analog_channels,
         digital_channels,
         zones,
         roaming_channels,
         roaming_zones,
-    ).generate(open(sys.argv[1], "wt"))
+    ).generate(QDMRWriter(open(sys.argv[1], "wt")))

@@ -1,7 +1,4 @@
-import json
 import yaml
-
-from unidecode import unidecode
 
 
 class IndentDumper(yaml.Dumper):
@@ -9,85 +6,49 @@ class IndentDumper(yaml.Dumper):
         return super(IndentDumper, self).increase_indent(flow, False)
 
 
-class AT878UVCodeplugForQDMR:
-    def __init__(
-        self,
-        contacts,
-        grouplists,
-        dmr_id,
-        callsign,
-        analog_channels,
-        digital_channels,
-        zones,
-        roaming_channels,
-        roaming_zones,
-    ):
-        self.contacts = contacts
-        self.grouplists = grouplists
-        self.dmr_id = dmr_id
-        self.callsign = callsign
-        self.analog_channels = analog_channels
-        self.digital_channels = digital_channels
-        self.zones = zones
-        self.roaming_channels = roaming_channels
-        self.roaming_zones = roaming_zones
+class QDMRWriter:
+    # NOTE: 25/12/2023 (jps): This decides how to write the sections.
+    def __init__(self, file):
+        self.file = file
 
-    def generate(self, file):
-        codeplug = yaml.load(open("blank_radio/uv878_base.yml"), Loader=yaml.Loader)
-        codeplug["channels"] = []
-
-        self.generate_contacts(codeplug)
-        self.generate_grouplists(codeplug)
-        self.generate_analog_channels(codeplug)
-        self.generate_digital_channels(codeplug)
-        self.generate_zones(codeplug)
-        self.generate_roaming_channels(codeplug)
-        self.generate_roaming_zones(codeplug)
-
-        file.write(
-            yaml.dump(
-                codeplug,
-                explicit_start=True,
-                explicit_end=True,
-                sort_keys=False,
-                Dumper=IndentDumper,
-                version=(1, 2),
-            )
+    def start(self):
+        self.codeplug = yaml.load(
+            open("blank_radio/uv878_base.yml"), Loader=yaml.Loader
         )
-        file.close()
+        self.codeplug["channels"] = []
 
-    def generate_contacts(self, codeplug):
-        contacts = []
-        for contact in self.contacts:
-            contacts.append(
+    def write_radio_config(self, dmr_id, callsign):
+        pass
+
+    def write_contacts(self, contacts):
+        self.codeplug["contacts"] = []
+        for contact in contacts:
+            self.codeplug["contacts"].append(
                 {
                     "dmr": {
                         "id": f"contact{contact.internal_id}",
-                        "name": self._format_contact_name(contact.name),
+                        "name": contact.name,
                         "type": contact.type.value,
                         "number": contact.calling_id,
                         "ring": False,
                     }
                 }
             )
-        codeplug["contacts"] = contacts
 
-    def generate_grouplists(self, codeplug):
-        grouplists = []
-        for gpl in self.grouplists:
-            grouplists.append(
+    def write_grouplists(self, grouplists):
+        self.codeplug["groupLists"] = []
+        for gpl in grouplists:
+            self.codeplug["groupLists"].append(
                 {
                     "id": f"grouplist{gpl.internal_id}",
-                    "name": self._format_contact_name(gpl.name),
+                    "name": gpl.name,
                     "contacts": [f"contact{id}" for id in gpl.contact_ids],
                 }
             )
 
-        codeplug["groupLists"] = grouplists
-
-    def generate_analog_channels(self, codeplug):
-        channels = []
-        for chan in self.analog_channels:
+    def write_analog_channels(self, channels):
+        codeplug_channels = []
+        for chan in channels:
             ch = {
                 "analog": {
                     "id": f"ch{chan.internal_id}",
@@ -111,12 +72,12 @@ class AT878UVCodeplugForQDMR:
             if chan.tx_tone:
                 ch["analog"]["txTone"] = {"ctcss": chan.tx_tone}
 
-            channels.append(ch)
-        codeplug["channels"] += channels
+            codeplug_channels.append(ch)
+        self.codeplug["channels"] += codeplug_channels
 
-    def generate_digital_channels(self, codeplug):
-        channels = []
-        for chan in self.digital_channels:
+    def write_digital_channels(self, channels):
+        codeplug_channels = []
+        for chan in channels:
             ch = {
                 "digital": {
                     "id": f"ch{chan.internal_id}",
@@ -140,24 +101,23 @@ class AT878UVCodeplugForQDMR:
             if chan.tx_contact_id:
                 ch["digital"]["contact"] = f"contact{chan.tx_contact_id}"
 
-            channels.append(ch)
-        codeplug["channels"] += channels
+            codeplug_channels.append(ch)
+        self.codeplug["channels"] += codeplug_channels
 
-    def generate_zones(self, codeplug):
-        zones = []
-        for z in self.zones:
-            zones.append(
+    def write_zones(self, zones):
+        self.codeplug["zones"] = []
+        for z in zones:
+            self.codeplug["zones"].append(
                 {
                     "id": f"zone{z.internal_id}",
                     "name": z.name,
                     "A": [f"ch{id}" for id in z.channels],
                 }
             )
-        codeplug["zones"] = zones
 
-    def generate_roaming_channels(self, codeplug):
-        roaming_channels = []
-        for ch in self.roaming_channels:
+    def write_roaming_channels(self, channels):
+        self.codeplug["roamingChannels"] = []
+        for ch in channels:
             channel = {
                 "id": f"roamingchan{ch.internal_id}",
                 "name": ch.name,
@@ -166,20 +126,27 @@ class AT878UVCodeplugForQDMR:
                 "colorCode": ch.color,
                 "timeSlot": f"TS{ch.slot}",
             }
-            roaming_channels.append(channel)
-        codeplug["roamingChannels"] = roaming_channels
+            self.codeplug["roamingChannels"].append(channel)
 
-    def generate_roaming_zones(self, codeplug):
-        roaming_zones = []
-        for z in self.roaming_zones:
+    def write_roaming_zones(self, zones):
+        self.codeplug["roamingZones"] = []
+        for z in zones:
             zone = {
                 "id": f"roamingzone{z.internal_id}",
                 "name": z.name,
                 "channels": [f"roamingchan{c}" for c in z.channels],
             }
-            roaming_zones.append(zone)
-        codeplug["roamingZones"] = roaming_zones
+            self.codeplug["roamingZones"].append(zone)
 
-    def _format_contact_name(self, name):
-        # NOTE: 13/06/2023 (jps): Only ascii characters are permitted
-        return unidecode(name)
+    def finish(self):
+        self.file.write(
+            yaml.dump(
+                self.codeplug,
+                explicit_start=True,
+                explicit_end=True,
+                sort_keys=False,
+                Dumper=IndentDumper,
+                version=(1, 2),
+            )
+        )
+        self.file.close()

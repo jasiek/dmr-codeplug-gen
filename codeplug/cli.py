@@ -8,9 +8,11 @@ from generators.contacts import (
     BrandmeisterTGContactGenerator,
     BrandmeisterSpecialContactGenerator,
 )
-from generators.channels import (
+from generators.analogchan import (
     AnalogPMR446ChannelGenerator,
     AnalogChannelGeneratorFromPrzemienniki,
+)
+from generators.digitalchan import (
     DigitalChannelGeneratorFromBrandmeister,
     HotspotDigitalChannelGenerator,
 )

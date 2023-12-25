@@ -18,6 +18,20 @@ Latitude = Optional[float]
 Longitude = Optional[float]
 Locator = Optional[str]
 Squelch = Union[*([Literal[n] for n in range(1, 11)] + [Literal["Open"]])]
+TOT = Optional[int]
+ColorCode = Union[*[Literal[n] for n in range(1, 65)]]
+
+
+class DigitalAdmitCriteria(StrEnum):
+    Always = "Always"
+    Free = "Free"
+    ColorCode = "ColorCode"
+
+
+class AnalogAdmitCriteria(StrEnum):
+    Always = "Always"
+    Free = "Free"
+    Tone = "Tone"
 
 
 class ContactType(StrEnum):
@@ -65,10 +79,10 @@ class DigitalChannel:
     tx_freq: float
     tx_power: TxPower
     scanlist_id: Optional[ScanListID]
-    tot: str  # literal
-    rx_only: str  # bool
-    admit_crit: str  # literal
-    color: int
+    tot: TOT
+    rx_only: bool
+    admit_crit: DigitalAdmitCriteria
+    color: ColorCode
     slot: Slot
     rx_grouplist_id: Optional[GroupListID]
     tx_contact_id: Optional[ContactID]
@@ -89,9 +103,9 @@ class AnalogChannel:
     tx_freq: float
     tx_power: TxPower
     scanlist_id: Optional[ScanListID]
-    tot: str  # literal
-    rx_only: str  # bool
-    admit_crit: str  # literal
+    tot: TOT
+    rx_only: bool
+    admit_crit: AnalogAdmitCriteria
     squelch: Squelch
     rx_tone: Optional[float]
     tx_tone: Optional[float]
@@ -114,7 +128,7 @@ class DigitalRoamingChannel:
     name: str
     tx_freq: float
     rx_freq: float
-    color: int
+    color: ColorCode
     slot: Slot
 
 

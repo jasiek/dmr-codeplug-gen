@@ -86,9 +86,9 @@ class DigitalChannel:
     slot: Slot
     rx_grouplist_id: Optional[GroupListID]
     tx_contact_id: Optional[ContactID]
-    lat: Latitude
-    lng: Longitude
-    locator: Locator
+    _lat: Latitude
+    _lng: Longitude
+    _locator: Locator
     _rpt_callsign: Optional[str]  # Optional repeater callsign, for zone grouping
 
 
@@ -111,9 +111,9 @@ class AnalogChannel:
     rx_tone: Optional[float]
     tx_tone: Optional[float]
     width: ChannelWidth
-    lat: Latitude
-    lng: Longitude
-    locator: Locator
+    _lat: Latitude
+    _lng: Longitude
+    _locator: Locator
     _rpt_callsign: Optional[str]
 
 

@@ -27,9 +27,9 @@ class AnalogPMR446ChannelGenerator:
                     rx_tone=110.9,
                     tx_tone=110.9,
                     width=ChannelWidth.Narrow,
-                    lat=None,
-                    lng=None,
-                    locator=None,
+                    _lat=None,
+                    _lng=None,
+                    _locator=None,
                     _rpt_callsign=None,
                 )
             )
@@ -105,9 +105,9 @@ class AnalogChannelGeneratorFromPrzemienniki:
                     rx_tone=rx_tone,
                     tx_tone=tx_tone,
                     width=ChannelWidth.Narrow,
-                    lat=lat,
-                    lng=lng,
-                    locator=locator,
+                    _lat=lat,
+                    _lng=lng,
+                    _locator=locator,
                     _rpt_callsign=callsign,
                 )
             )

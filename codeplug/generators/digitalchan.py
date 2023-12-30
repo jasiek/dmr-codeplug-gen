@@ -44,9 +44,9 @@ class HotspotDigitalChannelGenerator:
                     slot=slot,
                     rx_grouplist_id="-",
                     tx_contact_id=None,
-                    lat=None,
-                    lng=None,
-                    locator=None,
+                    _lat=None,
+                    _lng=None,
+                    _locator=None,
                     _rpt_callsign=None,
                 )
             )
@@ -67,9 +67,9 @@ class HotspotDigitalChannelGenerator:
                     slot=self.ts,
                     rx_grouplist_id="-",
                     tx_contact_id=tg.internal_id,
-                    lat=None,
-                    lng=None,
-                    locator=None,
+                    _lat=None,
+                    _lng=None,
+                    _locator=None,
                     _rpt_callsign=None,
                 )
             )
@@ -118,9 +118,9 @@ class DigitalChannelGeneratorFromBrandmeister:
                                 slot=slot,
                                 rx_grouplist_id="-",
                                 tx_contact_id=str(tg.internal_id),
-                                lat=float(dev["lat"]),
-                                lng=float(dev["lng"]),
-                                locator=mh.to_maiden(dev["lat"], dev["lng"], 3),
+                                _lat=float(dev["lat"]),
+                                _lng=float(dev["lng"]),
+                                _locator=mh.to_maiden(dev["lat"], dev["lng"], 3),
                                 _rpt_callsign=dev["callsign"],
                             )
                         )
@@ -148,9 +148,9 @@ class DigitalChannelGeneratorFromBrandmeister:
                         slot=slot,
                         rx_grouplist_id="-",
                         tx_contact_id=None,
-                        lat=float(dev["lat"]),
-                        lng=float(dev["lng"]),
-                        locator=mh.to_maiden(dev["lat"], dev["lng"], 3),
+                        _lat=float(dev["lat"]),
+                        _lng=float(dev["lng"]),
+                        _locator=mh.to_maiden(dev["lat"], dev["lng"], 3),
                         _rpt_callsign=dev["callsign"],
                     )
                 )
@@ -180,9 +180,9 @@ class DigitalPMR446ChannelGenerator:
                     slot=2,
                     rx_grouplist_id="-",
                     tx_contact_id=None,
-                    lat=None,
-                    lng=None,
-                    locator=None,
+                    _lat=None,
+                    _lng=None,
+                    _locator=None,
                     _rpt_callsign=None,
                 )
             )

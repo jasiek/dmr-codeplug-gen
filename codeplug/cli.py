@@ -50,7 +50,7 @@ if __name__ == "__main__":
     zone_seq = Sequence()
     zones = ZoneAggregator(
         HotspotZoneGenerator(digital_channels),
-        ZoneFromCallsignGenerator2(digital_channels + analog_channels),
+        ZoneFromCallsignGenerator2(digital_channels),
     ).zones(zone_seq)
 
     rch_seq = Sequence()

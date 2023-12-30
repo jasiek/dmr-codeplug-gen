@@ -17,6 +17,7 @@ Slot = Union[Literal[1], Literal[2]]
 Latitude = Optional[float]
 Longitude = Optional[float]
 Locator = Optional[str]
+QTH = Optional[str]
 Squelch = Union[*([Literal[n] for n in range(1, 11)] + [Literal["Open"]])]
 TOT = Optional[int]
 ColorCode = Union[*[Literal[n] for n in range(1, 65)]]
@@ -90,6 +91,7 @@ class DigitalChannel:
     _lng: Longitude
     _locator: Locator
     _rpt_callsign: Optional[str]  # Optional repeater callsign, for zone grouping
+    _qth: QTH
 
 
 def is_hotspot(chan):
@@ -115,6 +117,7 @@ class AnalogChannel:
     _lng: Longitude
     _locator: Locator
     _rpt_callsign: Optional[str]
+    _qth: Optional[str]
 
 
 @dataclass

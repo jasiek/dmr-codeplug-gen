@@ -48,6 +48,7 @@ class HotspotDigitalChannelGenerator:
                     _lng=None,
                     _locator=None,
                     _rpt_callsign=None,
+                    _qth=None,
                 )
             )
 
@@ -71,6 +72,7 @@ class HotspotDigitalChannelGenerator:
                     _lng=None,
                     _locator=None,
                     _rpt_callsign=None,
+                    _qth=None,
                 )
             )
 
@@ -122,6 +124,7 @@ class DigitalChannelGeneratorFromBrandmeister:
                                 _lng=float(dev["lng"]),
                                 _locator=mh.to_maiden(dev["lat"], dev["lng"], 3),
                                 _rpt_callsign=dev["callsign"],
+                                _qth=dev["city"],
                             )
                         )
 
@@ -152,6 +155,7 @@ class DigitalChannelGeneratorFromBrandmeister:
                         _lng=float(dev["lng"]),
                         _locator=mh.to_maiden(dev["lat"], dev["lng"], 3),
                         _rpt_callsign=dev["callsign"],
+                        _qth=dev["city"],
                     )
                 )
 
@@ -184,6 +188,7 @@ class DigitalPMR446ChannelGenerator:
                     _lng=None,
                     _locator=None,
                     _rpt_callsign=None,
+                    _qth=None,
                 )
             )
         return self._channels

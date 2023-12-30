@@ -31,6 +31,7 @@ class AnalogPMR446ChannelGenerator:
                     _lng=None,
                     _locator=None,
                     _rpt_callsign=None,
+                    _qth=None,
                 )
             )
             f += 0.0125  # rounding problem here?
@@ -90,6 +91,7 @@ class AnalogChannelGeneratorFromPrzemienniki:
                     pass
 
             callsign = node.find("qra").text
+            qth = node.find("qth").text
             self._channels.append(
                 AnalogChannel(
                     internal_id=sequence.next(),
@@ -109,5 +111,6 @@ class AnalogChannelGeneratorFromPrzemienniki:
                     _lng=lng,
                     _locator=locator,
                     _rpt_callsign=callsign,
+                    _qth=qth,
                 )
             )

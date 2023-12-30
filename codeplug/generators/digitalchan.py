@@ -6,8 +6,12 @@ from models import DigitalChannel, AnalogChannel, TxPower, ChannelWidth
 from datasources import brandmeister
 
 
-def format_channel(s):
-    return s
+def channel_label(callsign, tg):
+    return f"{tg.calling_id} {tg.name}"
+
+
+def hotspot_channel_label(contact):
+    return f"HS{contact.calling_id} {contact.name}"
 
 
 class HotspotDigitalChannelGenerator:
@@ -43,6 +47,7 @@ class HotspotDigitalChannelGenerator:
                     lat=None,
                     lng=None,
                     locator=None,
+                    _rpt_callsign=None,
                 )
             )
 
@@ -50,7 +55,7 @@ class HotspotDigitalChannelGenerator:
             self._channels.append(
                 DigitalChannel(
                     internal_id=sequence.next(),
-                    name=format_channel(f"HS {tg.calling_id} {tg.name}"),
+                    name=hotspot_channel_label(tg),
                     rx_freq=self.f,
                     tx_freq=self.f,
                     tx_power=TxPower.Min,
@@ -65,6 +70,7 @@ class HotspotDigitalChannelGenerator:
                     lat=None,
                     lng=None,
                     locator=None,
+                    _rpt_callsign=None,
                 )
             )
 
@@ -96,9 +102,7 @@ class DigitalChannelGeneratorFromBrandmeister:
                     if tg.calling_id == tg_id:
                         # We were passed a TG definition
 
-                        name = format_channel(
-                            " ".join([dev["callsign"], str(tg.calling_id)])
-                        )
+                        name = channel_label(dev["callsign"], tg)
                         self._channels.append(
                             DigitalChannel(
                                 internal_id=sequence.next(),
@@ -117,17 +121,16 @@ class DigitalChannelGeneratorFromBrandmeister:
                                 lat=float(dev["lat"]),
                                 lng=float(dev["lng"]),
                                 locator=mh.to_maiden(dev["lat"], dev["lng"], 3),
+                                _rpt_callsign=dev["callsign"],
                             )
                         )
 
             for slot in [1, 2]:
-                name = format_channel(
-                    " ".join(
-                        [
-                            dev["callsign"],
-                            f"TS{slot}",
-                        ]
-                    )
+                name = " ".join(
+                    [
+                        dev["callsign"],
+                        f"TS{slot}",
+                    ]
                 )
 
                 self._channels.append(
@@ -148,6 +151,7 @@ class DigitalChannelGeneratorFromBrandmeister:
                         lat=float(dev["lat"]),
                         lng=float(dev["lng"]),
                         locator=mh.to_maiden(dev["lat"], dev["lng"], 3),
+                        _rpt_callsign=dev["callsign"],
                     )
                 )
 
@@ -179,6 +183,7 @@ class DigitalPMR446ChannelGenerator:
                     lat=None,
                     lng=None,
                     locator=None,
+                    _rpt_callsign=None,
                 )
             )
         return self._channels

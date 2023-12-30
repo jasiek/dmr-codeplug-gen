@@ -89,6 +89,7 @@ class DigitalChannel:
     lat: Latitude
     lng: Longitude
     locator: Locator
+    _rpt_callsign: Optional[str]  # Optional repeater callsign, for zone grouping
 
 
 def is_hotspot(chan):
@@ -113,6 +114,7 @@ class AnalogChannel:
     lat: Latitude
     lng: Longitude
     locator: Locator
+    _rpt_callsign: Optional[str]
 
 
 @dataclass

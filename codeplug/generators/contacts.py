@@ -51,19 +51,32 @@ class BrandmeisterSpecialContactGenerator:
 
     def contacts(self, sequence):
         if len(self._contacts) == 0:
-            data = [
+            private = [
                 ("WX SMS", 262993),
                 ("RPT SMS", 262994),
                 ("PARROT", 262997),
                 ("APRS", 262999),
             ]
-            self._contacts = [
+            output = [
                 Contact(
                     internal_id=sequence.next(),
                     name=d[0],
                     type=ContactType.PrivateCall,
                     calling_id=d[1],
                 )
-                for d in data
+                for d in private
             ]
-        return self._contacts
+
+            tgs = [
+                ("OARC M0OUK", 2348479),
+            ]
+            output += [
+                Contact(
+                    internal_id=sequence.next(),
+                    name=d[0],
+                    type=ContactType.GroupCall,
+                    calling_id=d[1],
+                )
+                for d in tgs
+            ]
+        return output

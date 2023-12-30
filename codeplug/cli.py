@@ -14,7 +14,7 @@ from generators.digitalchan import (
     DigitalChannelGeneratorFromBrandmeister,
     HotspotDigitalChannelGenerator,
 )
-from generators.zones import ZoneFromCallsignGenerator, HotspotZoneGenerator
+from generators.zones import ZoneFromCallsignGenerator2, HotspotZoneGenerator
 from generators.roaming import (
     RoamingChannelGeneratorFromBrandmeister,
     RoamingZoneFromCallsignGenerator,
@@ -50,7 +50,7 @@ if __name__ == "__main__":
     zone_seq = Sequence()
     zones = ZoneAggregator(
         HotspotZoneGenerator(digital_channels),
-        ZoneFromCallsignGenerator(digital_channels + analog_channels),
+        ZoneFromCallsignGenerator2(digital_channels + analog_channels),
     ).zones(zone_seq)
 
     rch_seq = Sequence()

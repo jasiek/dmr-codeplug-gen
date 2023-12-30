@@ -40,26 +40,16 @@ settings:
       powerSave: Save50
       atpc: true
     keySettings:
-      funcKey1Short: Repeater
+      funcKey1Short: SMS
       funcKey1Long: ToggleVFO
-      funcKey2Short: Reverse
-      funcKey2Long: "Off"
+      funcKey2Short: LastCallReply
+      funcKey2Long: GPS
       funcKey3Short: Power
-      funcKey3Long: VOX
-      funcKey4Short: Repeater
-      funcKey4Long: SMS
-      funcKey5Short: Reverse
-      funcKey5Long: Dial
-      funcKey6Short: Encryption
-      funcKey6Long: "Off"
-      funcKeyAShort: "Off"
-      funcKeyALong: Encryption
-      funcKeyBShort: Voltage
-      funcKeyBLong: Call
-      funcKeyCShort: Power
-      funcKeyCLong: VOX
-      funcKeyDShort: "Off"
-      funcKeyDLong: "Off"
+      funcKey3Long: APRSSend
+      funcKeyAShort: Monitor
+      funcKeyALong: "Off"
+      funcKeyBShort: Dial
+      funcKeyBLong: Scan
       longPressDuration: 1 s
       autoKeyLock: false
       knobLock: false
@@ -92,8 +82,8 @@ settings:
         melody: fis'''16 r fis''' r fis'''
     displaySettings:
       displayFrequency: false
-      brightness: 0
-      backlightDuration: 10 s
+      brightness: 3
+      backlightDuration: 60 s
       backlightDurationTX: 0
       backlightDurationRX: 0
       customChannelBackground: false
@@ -106,7 +96,7 @@ settings:
       showColorCode: true
       showTimeSlot: true
       showChannelType: true
-      showLastHeard: false
+      showLastHeard: true
       lastCallerDisplay: Both
       callColor: Orange
       standbyTextColor: White
@@ -156,13 +146,13 @@ settings:
       monitorIDMatch: false
       monitorTimeSlotHold: false
       smsFormat: Motorola
-      sendTalkerAlias: false
+      sendTalkerAlias: true
       talkerAliasSource: UserDB
-      talkerAliasEncoding: ISO8
+      talkerAliasEncoding: Unicode
       encryption: DMR
     gpsSettings:
       units: Metric
-      timeZone: UTC-12
+      timeZone: UTC+1
       reportPosition: false
       updatePeriod: 5 s
       mode: GPS_Beidou

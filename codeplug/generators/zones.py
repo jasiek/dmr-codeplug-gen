@@ -57,8 +57,9 @@ class ZoneFromCallsignGenerator:
 
 class ZoneFromCallsignGenerator2:
     # NOTE: 26/12/2023 (jps): Per-callsign clustering of channels
-    def __init__(self, channels):
+    def __init__(self, channels, with_qth=True):
         self.channels = channels
+        self.with_qth = with_qth
 
     def zones(self, seq):
         callsign_to_channels = defaultdict(lambda: [])
@@ -72,7 +73,11 @@ class ZoneFromCallsignGenerator2:
         for key in sorted(callsign_to_channels.keys()):
             channels = sorted(callsign_to_channels[key], key=lambda chan: chan.name)
             channel_ids = [chan.internal_id for chan in channels]
-            output.append(Zone(internal_id=seq.next(), name=key, channels=channel_ids))
+            if self.with_qth:
+                name = f"{key} {channels[0]._qth}"
+            else:
+                name = key
+            output.append(Zone(internal_id=seq.next(), name=name, channels=channel_ids))
         return output
 
 

@@ -1,5 +1,7 @@
 import yaml
 
+from formatters import *
+
 
 class IndentDumper(yaml.Dumper):
     def increase_indent(self, flow=False, indentless=False):
@@ -26,7 +28,7 @@ class QDMRWriter:
             self.codeplug["contacts"].append(
                 {
                     "dmr": {
-                        "id": f"contact{contact.internal_id}",
+                        "id": fmt_contact_id(contact.internal_id),
                         "name": contact.name,
                         "type": contact.type.value,
                         "number": contact.calling_id,
@@ -40,9 +42,9 @@ class QDMRWriter:
         for gpl in grouplists:
             self.codeplug["groupLists"].append(
                 {
-                    "id": f"grouplist{gpl.internal_id}",
+                    "id": fmt_grouplist_id(gpl.internal_id),
                     "name": gpl.name,
-                    "contacts": [f"contact{id}" for id in gpl.contact_ids],
+                    "contacts": [fmt_contact_id(id) for id in gpl.contact_ids],
                 }
             )
 
@@ -51,7 +53,7 @@ class QDMRWriter:
         for chan in channels:
             ch = {
                 "analog": {
-                    "id": f"ch{chan.internal_id}",
+                    "id": fmt_chan_id(chan.internal_id),
                     "name": chan.name,
                     "rxFrequency": chan.rx_freq,
                     "txFrequency": chan.tx_freq,
@@ -80,7 +82,7 @@ class QDMRWriter:
         for chan in channels:
             ch = {
                 "digital": {
-                    "id": f"ch{chan.internal_id}",
+                    "id": fmt_chan_id(chan.internal_id),
                     "name": chan.name,
                     "rxFrequency": chan.rx_freq,
                     "txFrequency": chan.tx_freq,
@@ -91,7 +93,7 @@ class QDMRWriter:
                     "scanList": chan.scanlist_id,
                     "admit": chan.admit_crit,
                     "colorCode": chan.color,
-                    "timeSlot": f"TS{chan.slot}",
+                    "timeSlot": fmt_ts(chan.slot),
                     "anytone": {
                         "sms": True,
                         "smsConfirm": True,
@@ -99,7 +101,7 @@ class QDMRWriter:
                 }
             }
             if chan.tx_contact_id:
-                ch["digital"]["contact"] = f"contact{chan.tx_contact_id}"
+                ch["digital"]["contact"] = fmt_contact_id(chan.tx_contact_id)
 
             codeplug_channels.append(ch)
         self.codeplug["channels"] += codeplug_channels
@@ -109,9 +111,9 @@ class QDMRWriter:
         for z in zones:
             self.codeplug["zones"].append(
                 {
-                    "id": f"zone{z.internal_id}",
+                    "id": fmt_zone_id(z.internal_id),
                     "name": z.name,
-                    "A": [f"ch{id}" for id in z.channels],
+                    "A": [fmt_chan_id(id) for id in z.channels],
                 }
             )
 
@@ -119,12 +121,12 @@ class QDMRWriter:
         self.codeplug["roamingChannels"] = []
         for ch in channels:
             channel = {
-                "id": f"roamingchan{ch.internal_id}",
+                "id": fmt_rchan_id(ch.internal_id),
                 "name": ch.name,
                 "rxFrequency": ch.rx_freq,
                 "txFrequency": ch.tx_freq,
                 "colorCode": ch.color,
-                "timeSlot": f"TS{ch.slot}",
+                "timeSlot": fmt_ts(ch.slot),
             }
             self.codeplug["roamingChannels"].append(channel)
 
@@ -132,9 +134,9 @@ class QDMRWriter:
         self.codeplug["roamingZones"] = []
         for z in zones:
             zone = {
-                "id": f"roamingzone{z.internal_id}",
+                "id": fmt_rzone_id(z.internal_id),
                 "name": z.name,
-                "channels": [f"roamingchan{c}" for c in z.channels],
+                "channels": [fmt_rchan_id(cid) for cid in z.channels],
             }
             self.codeplug["roamingZones"].append(zone)
 

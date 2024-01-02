@@ -140,6 +140,25 @@ class QDMRWriter:
             }
             self.codeplug["roamingZones"].append(zone)
 
+    def write_analog_aprs(self, aprs):
+        if "positioning" not in self.codeplug:
+            self.codeplug["positioning"] = []
+
+        self.codeplug["positioning"].append(
+            {
+                "aprs": {
+                    "id": fmt_aprs(aprs.internal_id),
+                    "name": aprs.name,
+                    "period": aprs.period,
+                    "revert": fmt_chan_id(aprs.channel_id),
+                    "message": aprs.message,
+                    "source": aprs.source,
+                    "destination": aprs.destination,
+                    "path": aprs.path,
+                }
+            }
+        )
+
     def finish(self):
         self.file.write(
             yaml.dump(

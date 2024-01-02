@@ -21,6 +21,7 @@ QTH = Optional[str]
 Squelch = Union[*([Literal[n] for n in range(1, 11)] + [Literal["Open"]])]
 TOT = Optional[int]
 ColorCode = Union[*[Literal[n] for n in range(1, 65)]]
+Period10s = Union[*[Literal[10 * n] for n in range(1, 600)]]
 
 
 class DigitalAdmitCriteria(StrEnum):
@@ -142,3 +143,16 @@ class DigitalRoamingZone:
     internal_id: ZoneID
     name: str
     channels: List[ChannelID]
+
+
+@dataclass
+class AnalogAPRSConfig:
+    internal_id: ChannelID
+    name: str
+    channel_id: ChannelID
+    source: str
+    destination: str
+    path: List[str]
+    icon: str
+    period: Period10s
+    message: str

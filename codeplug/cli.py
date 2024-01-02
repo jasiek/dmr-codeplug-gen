@@ -1,6 +1,7 @@
 import sys
 
 from generators import Sequence
+from generators.aprs import AnalogAPRSGenerator
 from generators.grouplists import CountryGroupListGenerator
 from generators.contacts import (
     BrandmeisterTGContactGenerator,
@@ -41,7 +42,10 @@ if __name__ == "__main__":
         HotspotDigitalChannelGenerator(polish_tgs),
         DigitalChannelGeneratorFromBrandmeister("High", polish_tgs),
     ).channels(chan_seq)
+
+    analog_aprs = AnalogAPRSGenerator("HF2J")
     analog_channels = ChannelAggregator(
+        analog_aprs,
         AnalogPMR446ChannelGenerator(),
         AnalogChannelGeneratorFromPrzemienniki("data/pl_2m_fm.xml", "High"),
         AnalogChannelGeneratorFromPrzemienniki("data/pl_70cm_fm.xml", "High"),
@@ -69,4 +73,5 @@ if __name__ == "__main__":
         zones,
         roaming_channels,
         roaming_zones,
+        analog_aprs,
     ).generate(QDMRWriter(open(sys.argv[1], "wt")))

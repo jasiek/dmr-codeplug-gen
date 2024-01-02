@@ -27,3 +27,7 @@ def fmt_rchan_id(id: ChannelID) -> str:
 
 def fmt_ts(ts: Slot) -> str:
     return f"TS{ts}"
+
+
+def fmt_aprs(id: ChannelID) -> str:
+    return f"aprs{id}"

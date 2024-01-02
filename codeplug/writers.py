@@ -155,6 +155,14 @@ class QDMRWriter:
                     "source": aprs.source,
                     "destination": aprs.destination,
                     "path": aprs.path,
+                    "anytone": {
+                        "txDelay": 600,
+                        "preWaveDelay": 600,
+                        "reportPosition": True,
+                        "reportObject": True,
+                        "reportItem": True,
+                        "reportMessage": True,
+                    },
                 }
             }
         )

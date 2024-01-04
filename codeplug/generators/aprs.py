@@ -11,6 +11,7 @@ class AnalogAPRSGenerator:
     def __init__(self, callsign):
         self.source = callsign
         self.aprs_channel = None
+        self.aprs_config = None
 
     def channels(self, seq):
         f = 144.800
@@ -29,6 +30,7 @@ class AnalogAPRSGenerator:
                 rx_only=False,
                 admit_crit=AnalogAdmitCriteria.Free.value,
                 width=ChannelWidth.Narrow,
+                aprs=None,
                 _lat=None,
                 _lng=None,
                 _locator=None,
@@ -40,14 +42,16 @@ class AnalogAPRSGenerator:
     def aprs(self, seq):
         if self.aprs_channel is None:
             raise "Generate channels first"
-        return AnalogAPRSConfig(
-            internal_id=seq.next(),
-            name="Analog APRS",
-            channel_id=self.aprs_channel.internal_id,
-            source=f"{self.source}-7",
-            destination="APAT81-0",
-            path=["WIDE1-1", "WIDE2-1"],
-            period=60,
-            icon="Runner",
-            message=f"{self.source} testing",
-        )
+        if self.aprs_config is None:
+            self.aprs_config = AnalogAPRSConfig(
+                internal_id=seq.next(),
+                name="Analog APRS",
+                channel_id=self.aprs_channel.internal_id,
+                source=f"{self.source}-7",
+                destination="APAT81-0",
+                path=["WIDE1-1", "WIDE2-1"],
+                period=60,
+                icon="Runner",
+                message=f"{self.source} testing",
+            )
+        return self.aprs_config

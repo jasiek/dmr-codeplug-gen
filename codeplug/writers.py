@@ -68,6 +68,9 @@ class QDMRWriter:
                 }
             }
 
+            if chan.aprs:
+                ch["analog"]["aprs"] = fmt_aprs(chan.aprs.internal_id)
+
             if chan.rx_tone:
                 ch["analog"]["rxTone"] = {"ctcss": chan.rx_tone}
 

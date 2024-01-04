@@ -44,11 +44,23 @@ if __name__ == "__main__":
     ).channels(chan_seq)
 
     analog_aprs = AnalogAPRSGenerator("HF2J")
+    _ = analog_aprs.channels(
+        chan_seq
+    )  # This is a bit of a hack, it will pre-generate channels
+    aprs_config = analog_aprs.aprs(Sequence())
     analog_channels = ChannelAggregator(
         analog_aprs,
-        AnalogPMR446ChannelGenerator(),
-        AnalogChannelGeneratorFromPrzemienniki("data/pl_2m_fm.xml", "High"),
-        AnalogChannelGeneratorFromPrzemienniki("data/pl_70cm_fm.xml", "High"),
+        AnalogPMR446ChannelGenerator(aprs=aprs_config),
+        AnalogChannelGeneratorFromPrzemienniki(
+            "data/pl_2m_fm.xml",
+            "High",
+            aprs=aprs_config,
+        ),
+        AnalogChannelGeneratorFromPrzemienniki(
+            "data/pl_70cm_fm.xml",
+            "High",
+            aprs=aprs_config,
+        ),
     ).channels(chan_seq)
 
     zone_seq = Sequence()

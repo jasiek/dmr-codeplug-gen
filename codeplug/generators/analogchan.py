@@ -5,8 +5,9 @@ from models import AnalogChannel, TxPower, ChannelWidth
 
 
 class AnalogPMR446ChannelGenerator:
-    def __init__(self):
+    def __init__(self, *, aprs):
         self._channels = []
+        self.aprs_config = aprs
 
     def channels(self, sequence):
         f = 446.00625
@@ -27,6 +28,7 @@ class AnalogPMR446ChannelGenerator:
                     rx_tone=110.9,
                     tx_tone=110.9,
                     width=ChannelWidth.Narrow,
+                    aprs=self.aprs_config,
                     _lat=None,
                     _lng=None,
                     _locator=None,
@@ -39,11 +41,12 @@ class AnalogPMR446ChannelGenerator:
 
 
 class AnalogChannelGeneratorFromPrzemienniki:
-    def __init__(self, filename, power):
+    def __init__(self, filename, power, *, aprs):
         root = etree.parse(filename)
         self._repeaters = root.findall("//repeater")
         self.power = power
         self._channels = []
+        self.aprs_config = aprs
 
     def channels(self, sequence):
         if len(self._channels) == 0:
@@ -107,6 +110,7 @@ class AnalogChannelGeneratorFromPrzemienniki:
                     rx_tone=rx_tone,
                     tx_tone=tx_tone,
                     width=ChannelWidth.Narrow,
+                    aprs=self.aprs_config,
                     _lat=lat,
                     _lng=lng,
                     _locator=locator,

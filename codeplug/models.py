@@ -100,6 +100,19 @@ def is_hotspot(chan):
 
 
 @dataclass
+class AnalogAPRSConfig:
+    internal_id: ChannelID
+    name: str
+    channel_id: ChannelID
+    source: str
+    destination: str
+    path: List[str]
+    icon: str
+    period: Period10s
+    message: str
+
+
+@dataclass
 class AnalogChannel:
     internal_id: ChannelID
     name: str
@@ -114,6 +127,7 @@ class AnalogChannel:
     rx_tone: Optional[float]
     tx_tone: Optional[float]
     width: ChannelWidth
+    aprs: Optional[AnalogAPRSConfig]
     _lat: Latitude
     _lng: Longitude
     _locator: Locator
@@ -143,16 +157,3 @@ class DigitalRoamingZone:
     internal_id: ZoneID
     name: str
     channels: List[ChannelID]
-
-
-@dataclass
-class AnalogAPRSConfig:
-    internal_id: ChannelID
-    name: str
-    channel_id: ChannelID
-    source: str
-    destination: str
-    path: List[str]
-    icon: str
-    period: Period10s
-    message: str

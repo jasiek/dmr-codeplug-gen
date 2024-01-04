@@ -4,6 +4,7 @@ from models import (
     ChannelWidth,
     AnalogAdmitCriteria,
     AnalogAPRSConfig,
+    DigitalAPRSConfig,
 )
 
 
@@ -53,5 +54,25 @@ class AnalogAPRSGenerator:
                 period=60,
                 icon="Runner",
                 message=f"{self.source} testing",
+            )
+        return self.aprs_config
+
+
+class DigitalAPRSGenerator:
+    def __init__(self, *, aprs_contact):
+        self.aprs_config = None
+        self.aprs_contact = aprs_contact
+
+    # NOTE: 04/01/2024 (jps): Doesn't really apply here.
+    def channels(self, _):
+        return []
+
+    def aprs(self, seq):
+        if self.aprs_config is None:
+            self.aprs_config = DigitalAPRSConfig(
+                internal_id=seq.next(),
+                name="DMR APRS",
+                period=180,
+                contact_id=self.aprs_contact.internal_id,
             )
         return self.aprs_config

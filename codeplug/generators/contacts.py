@@ -55,7 +55,6 @@ class BrandmeisterSpecialContactGenerator:
                 ("WX SMS", 262993),
                 ("RPT SMS", 262994),
                 ("PARROT", 262997),
-                ("APRS", 262999),
             ]
             output = [
                 Contact(
@@ -80,3 +79,20 @@ class BrandmeisterSpecialContactGenerator:
                 for d in tgs
             ]
         return output
+
+
+class APRSContactGenerator:
+    def __init__(self):
+        self._contacts = []
+
+    def contacts(self, seq):
+        if self._contacts == []:
+            self._contacts = [
+                Contact(
+                    internal_id=seq.next(),
+                    name="DMR APRS",
+                    type=ContactType.PrivateCall,
+                    calling_id=262999,
+                )
+            ]
+        return self._contacts

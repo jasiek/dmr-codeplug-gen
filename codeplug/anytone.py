@@ -5,8 +5,11 @@ class AT878UV:
     # NOTE: 25/12/2023 (jps): This decides which sections to write.
     def __init__(
         self,
-        dmr_id,
-        callsign,
+        dmr_id,  # unused atm
+        callsign,  # unused atm
+        *,
+        analog_aprs_config,
+        digital_aprs_config,
         contacts=[],
         grouplists=[],
         analog_channels=[],
@@ -14,7 +17,6 @@ class AT878UV:
         zones=[],
         roaming_channels=[],
         roaming_zones=[],
-        analog_aprs=None,
     ):
         self.dmr_id = dmr_id
         self.callsign = callsign
@@ -26,8 +28,8 @@ class AT878UV:
         self.roaming_channels = roaming_channels
         self.roaming_zones = roaming_zones
 
-        seq = Sequence()
-        self.analog_aprs = analog_aprs.aprs(seq)
+        self.analog_aprs_config = analog_aprs_config
+        self.digital_aprs_config = digital_aprs_config
 
     def generate(self, writer):
         writer.start()
@@ -39,5 +41,6 @@ class AT878UV:
         writer.write_zones(self.zones)
         writer.write_roaming_channels(self.roaming_channels)
         writer.write_roaming_zones(self.roaming_zones)
-        writer.write_analog_aprs(self.analog_aprs)
+        writer.write_analog_aprs(self.analog_aprs_config)
+        writer.write_digital_aprs(self.digital_aprs_config)
         writer.finish()

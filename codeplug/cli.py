@@ -1,9 +1,10 @@
 import sys
 
 from generators import Sequence
-from generators.aprs import AnalogAPRSGenerator
+from generators.aprs import AnalogAPRSGenerator, DigitalAPRSGenerator
 from generators.grouplists import CountryGroupListGenerator
 from generators.contacts import (
+    APRSContactGenerator,
     BrandmeisterTGContactGenerator,
     BrandmeisterSpecialContactGenerator,
 )
@@ -32,34 +33,48 @@ if __name__ == "__main__":
 
     contact_seq = Sequence()
     brandmeister_contact_gen = BrandmeisterTGContactGenerator()
+    aprs_contact_gen = APRSContactGenerator()
+    aprs_contact = aprs_contact_gen.contacts(contact_seq)[0]
+
     contacts = ContactAggregator(
-        BrandmeisterSpecialContactGenerator(), brandmeister_contact_gen
+        aprs_contact_gen,
+        BrandmeisterSpecialContactGenerator(),
+        brandmeister_contact_gen,
     ).contacts(contact_seq)
 
     polish_tgs = brandmeister_contact_gen.matched_contacts("^260")
     chan_seq = Sequence()
-    digital_channels = ChannelAggregator(
-        HotspotDigitalChannelGenerator(polish_tgs),
-        DigitalChannelGeneratorFromBrandmeister("High", polish_tgs),
-    ).channels(chan_seq)
 
+    # APRS
+    aprs_seq = Sequence()
+    digital_aprs_gen = DigitalAPRSGenerator(aprs_contact=aprs_contact)
+    digital_aprs_config = digital_aprs_gen.aprs(aprs_seq)
     analog_aprs = AnalogAPRSGenerator("HF2J")
     _ = analog_aprs.channels(
         chan_seq
     )  # This is a bit of a hack, it will pre-generate channels
-    aprs_config = analog_aprs.aprs(Sequence())
+    analog_aprs_config = analog_aprs.aprs(aprs_seq)
+
+    # Channels
+    digital_channels = ChannelAggregator(
+        HotspotDigitalChannelGenerator(polish_tgs, aprs_config=digital_aprs_config),
+        DigitalChannelGeneratorFromBrandmeister(
+            "High", polish_tgs, aprs_config=digital_aprs_config
+        ),
+    ).channels(chan_seq)
+
     analog_channels = ChannelAggregator(
         analog_aprs,
-        AnalogPMR446ChannelGenerator(aprs=aprs_config),
+        AnalogPMR446ChannelGenerator(aprs=analog_aprs_config),
         AnalogChannelGeneratorFromPrzemienniki(
             "data/pl_2m_fm.xml",
             "High",
-            aprs=aprs_config,
+            aprs=analog_aprs_config,
         ),
         AnalogChannelGeneratorFromPrzemienniki(
             "data/pl_70cm_fm.xml",
             "High",
-            aprs=aprs_config,
+            aprs=analog_aprs_config,
         ),
     ).channels(chan_seq)
 
@@ -78,12 +93,13 @@ if __name__ == "__main__":
     AT878UV(
         None,
         None,
-        contacts,
-        CountryGroupListGenerator(contacts, 260).grouplists(Sequence()),
-        analog_channels,
-        digital_channels,
-        zones,
-        roaming_channels,
-        roaming_zones,
-        analog_aprs,
+        contacts=contacts,
+        grouplists=CountryGroupListGenerator(contacts, 260).grouplists(Sequence()),
+        analog_channels=analog_channels,
+        digital_channels=digital_channels,
+        zones=zones,
+        roaming_channels=roaming_channels,
+        roaming_zones=roaming_zones,
+        analog_aprs_config=analog_aprs_config,
+        digital_aprs_config=digital_aprs_config,
     ).generate(QDMRWriter(open(sys.argv[1], "wt")))

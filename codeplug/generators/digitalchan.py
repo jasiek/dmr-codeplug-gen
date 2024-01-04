@@ -15,12 +15,13 @@ def hotspot_channel_label(contact):
 
 
 class HotspotDigitalChannelGenerator:
-    def __init__(self, talkgroups, ts=2, f=438.800, color=1):
+    def __init__(self, talkgroups, *, aprs_config, ts=2, f=438.800, color=1):
         self.f = f
         self.ts = ts
         self.color = color
         self.talkgroups = talkgroups
         self._channels = []
+        self.aprs_config = aprs_config
 
     def channels(self, sequence):
         if len(self._channels) == 0:
@@ -44,6 +45,7 @@ class HotspotDigitalChannelGenerator:
                     slot=slot,
                     rx_grouplist_id="-",
                     tx_contact_id=None,
+                    aprs=self.aprs_config,
                     _lat=None,
                     _lng=None,
                     _locator=None,
@@ -68,6 +70,7 @@ class HotspotDigitalChannelGenerator:
                     slot=self.ts,
                     rx_grouplist_id="-",
                     tx_contact_id=tg.internal_id,
+                    aprs=self.aprs_config,
                     _lat=None,
                     _lng=None,
                     _locator=None,
@@ -78,10 +81,11 @@ class HotspotDigitalChannelGenerator:
 
 
 class DigitalChannelGeneratorFromBrandmeister:
-    def __init__(self, power, talkgroups):
+    def __init__(self, power, talkgroups, *, aprs_config):
         self.devices = brandmeister.DeviceDB().devices_active_within1month()
         self._channels = []
         self.talkgroups = talkgroups
+        self.aprs_config = aprs_config
 
     def channels(self, sequence):
         if len(self._channels) == 0:
@@ -120,6 +124,7 @@ class DigitalChannelGeneratorFromBrandmeister:
                                 slot=slot,
                                 rx_grouplist_id="-",
                                 tx_contact_id=str(tg.internal_id),
+                                aprs=self.aprs_config,
                                 _lat=float(dev["lat"]),
                                 _lng=float(dev["lng"]),
                                 _locator=mh.to_maiden(dev["lat"], dev["lng"], 3),
@@ -151,6 +156,7 @@ class DigitalChannelGeneratorFromBrandmeister:
                         slot=slot,
                         rx_grouplist_id="-",
                         tx_contact_id=None,
+                        aprs=self.aprs_config,
                         _lat=float(dev["lat"]),
                         _lng=float(dev["lng"]),
                         _locator=mh.to_maiden(dev["lat"], dev["lng"], 3),

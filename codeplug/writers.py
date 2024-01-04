@@ -106,6 +106,9 @@ class QDMRWriter:
             if chan.tx_contact_id:
                 ch["digital"]["contact"] = fmt_contact_id(chan.tx_contact_id)
 
+            if chan.aprs:
+                ch["digital"]["aprs"] = fmt_aprs(chan.aprs.internal_id)
+
             codeplug_channels.append(ch)
         self.codeplug["channels"] += codeplug_channels
 
@@ -166,6 +169,21 @@ class QDMRWriter:
                         "reportItem": True,
                         "reportMessage": True,
                     },
+                }
+            }
+        )
+
+    def write_digital_aprs(self, aprs):
+        if "positioning" not in self.codeplug:
+            self.codeplug["positioning"] = []
+
+        self.codeplug["positioning"].append(
+            {
+                "dmr": {
+                    "id": fmt_aprs(aprs.internal_id),
+                    "name": aprs.name,
+                    "period": aprs.period,
+                    "contact": fmt_contact_id(aprs.contact_id),
                 }
             }
         )

@@ -74,6 +74,14 @@ class GroupList:
 
 
 @dataclass
+class DigitalAPRSConfig:
+    internal_id: ChannelID
+    name: str
+    period: Period10s
+    contact_id: ContactID
+
+
+@dataclass
 class DigitalChannel:
     internal_id: ChannelID
     name: str
@@ -88,6 +96,7 @@ class DigitalChannel:
     slot: Slot
     rx_grouplist_id: Optional[GroupListID]
     tx_contact_id: Optional[ContactID]
+    aprs: Optional[DigitalAPRSConfig]
     _lat: Latitude
     _lng: Longitude
     _locator: Locator

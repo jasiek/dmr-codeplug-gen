@@ -2,7 +2,7 @@ import re
 from collections import defaultdict
 
 from generators import Sequence
-from models import Zone, DigitalChannel, is_hotspot
+from models import Zone, DigitalChannel, is_hotspot, AnalogChannel
 
 
 class ZoneFromLocatorGenerator:
@@ -79,6 +79,32 @@ class ZoneFromCallsignGenerator2:
                 name = key
             output.append(Zone(internal_id=seq.next(), name=name, channels=channel_ids))
         return output
+
+
+class PMRZoneGenerator:
+    def __init__(self, channels):
+        self.channels = channels
+
+    def zones(self, seq):
+        return [
+            Zone(
+                internal_id=seq.next(),
+                name="PMR",
+                channels=[ch.internal_id for ch in self.channels],
+            )
+        ]
+
+
+class AnalogZoneGenerator:
+    def __init__(self, channels):
+        self.channels = channels
+
+    def zones(self, seq):
+        channel_ids = []
+        for chan in self.channels:
+            if isinstance(chan, AnalogChannel):
+                channel_ids.append(chan.internal_id)
+        return [Zone(internal_id=seq.next(), name="Analog", channels=channel_ids)]
 
 
 class HotspotZoneGenerator:

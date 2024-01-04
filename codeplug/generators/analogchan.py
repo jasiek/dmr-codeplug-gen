@@ -10,6 +10,9 @@ class AnalogPMR446ChannelGenerator:
         self.aprs_config = aprs
 
     def channels(self, sequence):
+        if self._channels != []:
+            return self._channels
+
         f = 446.00625
         for chan_num in range(1, 17):
             chan_freq = f + (chan_num - 1) * 0.0125

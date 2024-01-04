@@ -16,7 +16,12 @@ from generators.digitalchan import (
     DigitalChannelGeneratorFromBrandmeister,
     HotspotDigitalChannelGenerator,
 )
-from generators.zones import ZoneFromCallsignGenerator2, HotspotZoneGenerator
+from generators.zones import (
+    ZoneFromCallsignGenerator2,
+    HotspotZoneGenerator,
+    PMRZoneGenerator,
+    AnalogZoneGenerator,
+)
 from generators.roaming import (
     RoamingChannelGeneratorFromBrandmeister,
     RoamingZoneFromCallsignGenerator,
@@ -63,9 +68,10 @@ if __name__ == "__main__":
         ),
     ).channels(chan_seq)
 
+    analog_pmr_chan_gen = AnalogPMR446ChannelGenerator(aprs=analog_aprs_config)
     analog_channels = ChannelAggregator(
         analog_aprs,
-        AnalogPMR446ChannelGenerator(aprs=analog_aprs_config),
+        analog_pmr_chan_gen,
         AnalogChannelGeneratorFromPrzemienniki(
             "data/pl_2m_fm.xml",
             "High",
@@ -82,6 +88,8 @@ if __name__ == "__main__":
     zones = ZoneAggregator(
         HotspotZoneGenerator(digital_channels),
         ZoneFromCallsignGenerator2(digital_channels),
+        PMRZoneGenerator(analog_pmr_chan_gen.channels(None)),
+        AnalogZoneGenerator(analog_channels),
     ).zones(zone_seq)
 
     rch_seq = Sequence()

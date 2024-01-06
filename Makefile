@@ -28,3 +28,7 @@ validate: plug.yaml
 
 program: validate
 	dmrconf -y write plug.yaml
+
+lint: $(wildcard codeplug/*.py)
+	pylint ./codeplug
+

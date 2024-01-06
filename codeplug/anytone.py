@@ -5,6 +5,7 @@ class AT878UV:
     # NOTE: 25/12/2023 (jps): This decides which sections to write.
     def __init__(
         self,
+        *,
         dmr_id,  # unused atm
         callsign,  # unused atm
         analog_aprs_config,

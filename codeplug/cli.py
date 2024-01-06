@@ -34,7 +34,17 @@ from writers import QDMRWriter
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("missing output file name")
+
+    if len(sys.argv) < 3:
+        print("missing callsign")
+
+    if len(sys.argv) < 4:
+        print("missing dmr_id")
         exit(1)
+
+    filename = sys.argv[1]
+    callsign = sys.argv[2]
+    dmr_id = int(sys.argv[3])
 
     contact_seq = Sequence()
     brandmeister_contact_gen = BrandmeisterTGContactGenerator()
@@ -99,8 +109,8 @@ if __name__ == "__main__":
     roaming_zones = RoamingZoneFromCallsignGenerator(roaming_channels).zones(Sequence())
 
     AT878UV(
-        dmr_id=2601823,
-        callsign="HF2J",
+        dmr_id=dmr_id,
+        callsign=callsign,
         contacts=contacts,
         grouplists=CountryGroupListGenerator(contacts, 260).grouplists(Sequence()),
         analog_channels=analog_channels,
@@ -110,4 +120,4 @@ if __name__ == "__main__":
         roaming_zones=roaming_zones,
         analog_aprs_config=analog_aprs_config,
         digital_aprs_config=digital_aprs_config,
-    ).generate(QDMRWriter(open(sys.argv[1], "wt")))
+    ).generate(QDMRWriter(open(filename, "wt")))

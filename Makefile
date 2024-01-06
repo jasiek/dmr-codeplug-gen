@@ -21,7 +21,7 @@ data/rptrs.json:
 
 plug.yaml: all $(wildcard codeplug/*.py)
 	black .
-	python codeplug/cli.py plug.yaml
+	python codeplug/cli.py plug.yaml ${CALLSIGN} ${DMRID}
 
 validate: plug.yaml
 	dmrconf -y verify plug.yaml

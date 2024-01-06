@@ -4,6 +4,8 @@ Script for generating a codeplug for the AnyTone AT-D878UV and other radios supp
 
 ### How to use?
 
+* define the env variable CALLSIGN as your callsign
+* define the env variable DMRID as your DMR ID (radioid.net)
 * `poetry install`
 * `poetry shell`
 * Run `make` to build the codeplug. This will pull all data files and build a codeplug into `plug.yaml`.
@@ -15,9 +17,6 @@ Script for generating a codeplug for the AnyTone AT-D878UV and other radios supp
 
 ### TODO
 
-* ~~generate a set of digital channels for use with hotspots, given a set of TGs~~
-* generate zones of digital repeaters and cluster by locator
-* ~~generate zones of digital repeaters and cluster by prefix~~
-* ~~generate zones of analog repeaters clustered by prefix~~
-* generate a scanlist of analog repeaters clustered by prefix
-* generate a scanlist of digital repeaters clustered by prefix
+- scanlists
+- gps roaming
+- plug for the uk

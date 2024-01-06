@@ -99,8 +99,8 @@ if __name__ == "__main__":
     roaming_zones = RoamingZoneFromCallsignGenerator(roaming_channels).zones(Sequence())
 
     AT878UV(
-        None,
-        None,
+        dmr_id=2601823,
+        callsign="HF2J",
         contacts=contacts,
         grouplists=CountryGroupListGenerator(contacts, 260).grouplists(Sequence()),
         analog_channels=analog_channels,

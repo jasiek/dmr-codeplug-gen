@@ -176,6 +176,4 @@ settings:
       enabled: false
       monitor: false
       timeSlot: Channel
-  defaultID: id1
 radioIDs:
-  - dmr: {id: id1, name: HF2J, number: 2601823}

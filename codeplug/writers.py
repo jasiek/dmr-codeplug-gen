@@ -20,7 +20,15 @@ class QDMRWriter:
         self.codeplug["channels"] = []
 
     def write_radio_config(self, dmr_id, callsign):
-        pass
+        self.codeplug["radioIDs"] = [
+            {
+                "dmr": {
+                    "id": callsign,
+                    "number": dmr_id,
+                }
+            }
+        ]
+        self.codeplug["settings"]["defaultID"] = callsign
 
     def write_contacts(self, contacts):
         self.codeplug["contacts"] = []

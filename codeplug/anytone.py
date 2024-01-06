@@ -7,7 +7,6 @@ class AT878UV:
         self,
         dmr_id,  # unused atm
         callsign,  # unused atm
-        *,
         analog_aprs_config,
         digital_aprs_config,
         contacts=[],

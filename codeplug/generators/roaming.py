@@ -27,6 +27,8 @@ class RoamingChannelGeneratorFromBrandmeister:
 
             generated = set()
             for _, slot in brandmeister.TalkgroupAPI().static_talkgroups(dev["id"]):
+                if slot == 0:
+                    continue
                 channel_name = f'{dev["callsign"]} TS{slot}'
                 if channel_name in generated:
                     continue

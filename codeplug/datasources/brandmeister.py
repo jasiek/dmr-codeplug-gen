@@ -4,12 +4,23 @@ from datetime import datetime, timedelta
 
 import requests
 
+from .cache import FileCache
+
 ContactDB = json.load(open("data/brandmeister_talkgroups.json"))
 
 
-class DeviceDB:
-    def __init__(self):
-        self.devices = json.load(open("data/bm_2602.json"))
+class DeviceDB(FileCache):
+    def __init__(self, master=2602):
+        FileCache.__init__(self, "bm_devices")
+        self.master = 2602
+        self.devices = self.cached(str(self.master))
+        if self.devices is None:
+            response = requests.get(
+                f"https://api.brandmeister.network/v2/device/byMaster/{self.master}"
+            )
+            response_json = response.json()
+            self.write_cache(str(self.master), response_json)
+            self.devices = response_json
 
     def devices_active_within1month(self):
         return [
@@ -21,30 +32,18 @@ class DeviceDB:
         ]
 
 
-class TalkgroupAPI:
+class TalkgroupAPI(FileCache):
+    def __init__(self):
+        FileCache.__init__(self, "static_talkgroups")
+
     def static_talkgroups(self, device_id):
         response_json = self.cached(device_id)
         if response_json is None:
             response = requests.get(
                 f"https://api.brandmeister.network/v2/device/{device_id}/talkgroup"
             )
-            self.write_cache(device_id, response)
             response_json = response.json()
+            self.write_cache(device_id, response_json)
         return [
             (int(entry["talkgroup"]), int(entry["slot"])) for entry in response_json
         ]
-
-    def cached(self, device_id):
-        filename = self.cache_key(device_id)
-        if os.path.isfile(filename):
-            return json.load(open(filename))
-        else:
-            return None
-
-    def write_cache(self, device_id, response):
-        filename = self.cache_key(device_id)
-        with open(filename, "wt") as f:
-            json.dump(response.json(), f)
-
-    def cache_key(self, device_id):
-        return f"cache/static_talkgroups/{device_id}.json"

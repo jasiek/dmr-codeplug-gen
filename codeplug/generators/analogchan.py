@@ -44,9 +44,9 @@ class AnalogPMR446ChannelGenerator:
 
 
 class AnalogChannelGeneratorFromPrzemienniki:
-    def __init__(self, filename, power, *, aprs):
-        root = etree.parse(filename)
-        self._repeaters = root.findall("//repeater")
+    def __init__(self, source, power, *, aprs):
+        root = source
+        self._repeaters = root.findall("repeaters/repeater")
         self.power = power
         self._channels = []
         self.aprs_config = aprs

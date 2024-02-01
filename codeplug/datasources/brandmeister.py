@@ -12,7 +12,7 @@ ContactDB = json.load(open("data/brandmeister_talkgroups.json"))
 class DeviceDB(FileCache):
     def __init__(self, master=2602):
         FileCache.__init__(self, "bm_devices")
-        self.master = 2602
+        self.master = master
         self.devices = self.cached(
             str(self.master),
             f"https://api.brandmeister.network/v2/device/byMaster/{self.master}",

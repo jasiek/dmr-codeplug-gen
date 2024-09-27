@@ -46,7 +46,6 @@ class TxPower(StrEnum):
     Low = "Low"
     Mid = "Mid"
     High = "High"
-    Max = "Max"
 
 
 class ChannelWidth(StrEnum):

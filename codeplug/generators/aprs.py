@@ -22,7 +22,7 @@ class AnalogAPRSGenerator:
                 name="APRS",
                 rx_freq=f,
                 tx_freq=f,
-                tx_power=TxPower.Max,
+                tx_power=TxPower.High,
                 scanlist_id=None,
                 tot=None,
                 squelch=1,

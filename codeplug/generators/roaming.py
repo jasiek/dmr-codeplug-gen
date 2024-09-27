@@ -7,7 +7,7 @@ from datasources import brandmeister
 
 class RoamingChannelGeneratorFromBrandmeister:
     def __init__(self, talkgroups):
-        self.devices = brandmeister.DeviceDB().devices_active_within1month()
+        self.devices = brandmeister.DeviceDB().devices_recently_active()
         self._channels = []
         self.talkgroups = talkgroups
 

@@ -26,6 +26,7 @@ from generators.roaming import (
     RoamingChannelGeneratorFromBrandmeister,
     RoamingZoneFromCallsignGenerator,
 )
+from datasources.przemienniki import PrzemiennikiAPI
 from aggregators import ChannelAggregator, ZoneAggregator, ContactAggregator
 
 
@@ -70,12 +71,12 @@ class Recipe(BaseRecipe):
             analog_aprs,
             analog_pmr_chan_gen,
             AnalogChannelGeneratorFromPrzemienniki(
-                "data/pl_2m_fm.xml",
+                PrzemiennikiAPI().repeaters_2m(),
                 "High",
                 aprs=self.analog_aprs_config,
             ),
             AnalogChannelGeneratorFromPrzemienniki(
-                "data/pl_70cm_fm.xml",
+                PrzemiennikiAPI().repeaters_70cm(),
                 "High",
                 aprs=self.analog_aprs_config,
             ),

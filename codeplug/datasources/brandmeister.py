@@ -10,21 +10,20 @@ ContactDB = json.load(open("data/brandmeister_talkgroups.json"))
 
 
 class DeviceDB(FileCache):
-    def __init__(self, master=2602):
+    def __init__(self):
         FileCache.__init__(self, "bm_devices")
-        self.master = master
         self.devices = self.cached(
-            str(self.master),
-            f"https://api.brandmeister.network/v2/device/byMaster/{self.master}",
+            "repeaters",
+            f"https://api.brandmeister.network/v2/device/?repeater=true",
         )
 
-    def devices_active_within1month(self):
+    def devices_recently_active(self, days=30):
         return [
             d
             for d in self.devices
             if d["last_seen"]
             and datetime.now() - datetime.fromisoformat(d["last_seen"])
-            < timedelta(days=30)
+            < timedelta(days=days)
         ]
 
 

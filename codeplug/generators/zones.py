@@ -104,6 +104,9 @@ class AnalogZoneGenerator:
         for chan in self.channels:
             if isinstance(chan, AnalogChannel):
                 channel_ids.append(chan.internal_id)
+        if len(channel_ids) > 250:
+            print("Too many analog channels for zone, truncating.")
+            channel_ids = channel_ids[:250]
         return [Zone(internal_id=seq.next(), name="Analog", channels=channel_ids)]
 
 

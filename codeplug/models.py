@@ -43,7 +43,6 @@ class ContactType(StrEnum):
 
 
 class TxPower(StrEnum):
-    Min = "Min"
     Low = "Low"
     Mid = "Mid"
     High = "High"

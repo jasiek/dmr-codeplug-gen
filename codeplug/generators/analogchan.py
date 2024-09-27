@@ -22,7 +22,7 @@ class AnalogPMR446ChannelGenerator:
                     name=f"PMR {chan_num}",
                     rx_freq=chan_freq,
                     tx_freq=chan_freq,
-                    tx_power=TxPower.Min,
+                    tx_power=TxPower.Low,
                     scanlist_id="-",
                     tot=None,
                     rx_only=False,

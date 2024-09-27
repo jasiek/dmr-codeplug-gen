@@ -26,6 +26,7 @@ from generators.roaming import (
     RoamingChannelGeneratorFromBrandmeister,
     RoamingZoneFromCallsignGenerator,
 )
+from datasources.przemienniki import PrzemiennikiAPI
 from aggregators import ChannelAggregator, ZoneAggregator, ContactAggregator
 from datasources.przemienniki import PrzemiennikiAPI
 

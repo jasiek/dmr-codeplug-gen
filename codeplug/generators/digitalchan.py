@@ -82,7 +82,7 @@ class HotspotDigitalChannelGenerator:
 
 class DigitalChannelGeneratorFromBrandmeister:
     def __init__(self, power, talkgroups, *, aprs_config):
-        self.devices = brandmeister.DeviceDB().devices_active_within1month()
+        self.devices = brandmeister.DeviceDB().devices
         self._channels = []
         self.talkgroups = talkgroups
         self.aprs_config = aprs_config

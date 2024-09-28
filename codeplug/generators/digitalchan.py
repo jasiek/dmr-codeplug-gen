@@ -15,7 +15,7 @@ def hotspot_channel_label(contact):
 
 
 class HotspotDigitalChannelGenerator:
-    def __init__(self, talkgroups, *, aprs_config, ts=2, f=438.800, color=1):
+    def __init__(self, talkgroups, *, aprs_config, ts=2, f=437.800, color=1):
         self.f = f
         self.ts = ts
         self.color = color

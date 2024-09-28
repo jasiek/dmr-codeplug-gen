@@ -24,6 +24,7 @@ class QDMRWriter:
             {
                 "dmr": {
                     "id": callsign,
+                    "name": callsign,
                     "number": dmr_id,
                 }
             }
@@ -62,7 +63,7 @@ class QDMRWriter:
             ch = {
                 "analog": {
                     "id": fmt_chan_id(chan.internal_id),
-                    "name": chan.name,
+                    "name": chan.name[:16],
                     "rxFrequency": chan.rx_freq,
                     "txFrequency": chan.tx_freq,
                     "power": chan.tx_power.value,
@@ -94,7 +95,7 @@ class QDMRWriter:
             ch = {
                 "digital": {
                     "id": fmt_chan_id(chan.internal_id),
-                    "name": chan.name,
+                    "name": chan.name[:16],
                     "rxFrequency": chan.rx_freq,
                     "txFrequency": chan.tx_freq,
                     "power": chan.tx_power.value,

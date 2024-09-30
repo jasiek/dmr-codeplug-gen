@@ -67,6 +67,7 @@ class BrandmeisterSpecialContactGenerator:
             ]
 
             tgs = [
+                ("Disconnect", 4000),
                 ("OARC M0OUK", 2348479),
             ]
             output += [

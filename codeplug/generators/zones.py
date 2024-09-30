@@ -100,14 +100,24 @@ class AnalogZoneGenerator:
         self.channels = channels
 
     def zones(self, seq):
-        channel_ids = []
+        channels_2m = []
+        channels_70cm = []
         for chan in self.channels:
             if isinstance(chan, AnalogChannel):
-                channel_ids.append(chan.internal_id)
-        if len(channel_ids) > 250:
+                if chan.rx_freq < 146:
+                    channels_2m.append(chan.internal_id)
+                else:
+                    channels_70cm.append(chan.internal_id)
+        if len(channels_2m) > 250:
             print("Too many analog channels for zone, truncating.")
-            channel_ids = channel_ids[:250]
-        return [Zone(internal_id=seq.next(), name="Analog", channels=channel_ids)]
+            channels_2m = channels_2m[:250]
+        if len(channels_70cm) > 250:
+            print("Too many analog channels for zone, truncating.")
+            channels_70cm = channels_70cm[:250]
+        return [
+            Zone(internal_id=seq.next(), name="Analog 2m", channels=channels_2m),
+            Zone(internal_id=seq.next(), name="Analog 70cm", channels=channels_70cm),
+        ]
 
 
 class HotspotZoneGenerator:

@@ -59,9 +59,10 @@ class Recipe(BaseRecipe):
 
         # Channels
         polish_tgs = brandmeister_contact_gen.matched_contacts("^260")
+        uk_tgs = brandmeister_contact_gen.matched_contacts("^235")
         self.digital_channels = ChannelAggregator(
             HotspotDigitalChannelGenerator(
-                polish_tgs, aprs_config=self.digital_aprs_config
+                polish_tgs + uk_tgs, aprs_config=self.digital_aprs_config
             ),
             DigitalChannelGeneratorFromBrandmeister(
                 "High", polish_tgs, aprs_config=self.digital_aprs_config

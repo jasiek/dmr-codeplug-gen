@@ -23,3 +23,7 @@ program: validate
 lint: $(wildcard codeplug/*.py)
 	pylint ./codeplug
 
+clean:
+	rm -rf data/*.json
+	rm -rf cache/*.json
+	rm -rf plug.yaml

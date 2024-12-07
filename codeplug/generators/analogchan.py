@@ -58,7 +58,7 @@ class AnalogChannelGeneratorFromPrzemienniki:
 
     def generate_channels(self, sequence):
         for node in self._repeaters:
-            if node.find("status").text != "WORKING":
+            if node.find("status").text not in ["WORKING", "TESTING"]:
                 continue
 
             if len(node.findall("band")) > 1:

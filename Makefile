@@ -24,6 +24,6 @@ lint: $(wildcard codeplug/*.py)
 	pylint ./codeplug
 
 clean:
-	rm -rf data/*.json
-	rm -rf cache/*.json
+	rm -rf data/*
+	rm -rf cache/*
 	rm -rf plug.yaml

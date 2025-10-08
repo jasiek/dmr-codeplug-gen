@@ -21,7 +21,7 @@ DEFAULT_ANYTONE_EXTENSIONS = DigitalAnytoneExtensions(
     fmAPRSFrequency=None,
     callConfirm=False,
     sms=True,
-    smsConfirm=False,
+    smsConfirm=None,
     dataACK=None,
     simplexTDMA=None,
     adaptiveTDMA=None,
@@ -31,12 +31,23 @@ DEFAULT_ANYTONE_EXTENSIONS = DigitalAnytoneExtensions(
 
 
 class HotspotDigitalChannelGenerator:
-    def __init__(self, talkgroups, *, aprs_config, ts=2, f=431.100, color=1):
+    def __init__(
+        self,
+        talkgroups,
+        *,
+        aprs_config,
+        ts=2,
+        f=431.100,
+        color=1,
+        default_contact_id=None,
+    ):
         self.f = f
         self.ts = ts
         self.color = color
         self.talkgroups = talkgroups
         self._channels = []
+        self.default_contact = default_contact_id
+        self.default_contact_id = default_contact_id
         self.aprs_config = aprs_config
 
     def channels(self, sequence):
@@ -60,7 +71,7 @@ class HotspotDigitalChannelGenerator:
                     color=self.color,
                     slot=slot,
                     rx_grouplist_id="-",
-                    tx_contact_id=None,
+                    tx_contact_id=self.default_contact_id,
                     aprs=self.aprs_config,
                     anytone=DEFAULT_ANYTONE_EXTENSIONS,
                     _lat=None,

@@ -107,11 +107,16 @@ class QDMRWriter:
                     "colorCode": chan.color,
                     "timeSlot": fmt_ts(chan.slot),
                     "anytone": {
-                        "sms": True,
-                        "smsConfirm": True,
+                        "sms": chan.anytone.sms if chan.anytone.sms else False,
+                        "smsConfirm": (
+                            chan.anytone.smsConfirm
+                            if chan.anytone.smsConfirm
+                            else False
+                        ),
                     },
                 }
             }
+
             if chan.tx_contact_id:
                 ch["digital"]["contact"] = fmt_contact_id(chan.tx_contact_id)
 
@@ -194,6 +199,53 @@ class QDMRWriter:
                     "period": aprs.period,
                     "contact": fmt_contact_id(aprs.contact_id),
                 }
+            }
+        )
+
+    def write_sms_configuration(self, sms_configuration):
+        if sms_configuration is None:
+            return
+
+        if "sms" not in self.codeplug:
+            self.codeplug["sms"] = {}
+
+        sms = self.codeplug["sms"]
+        sms["format"] = "Motorola"
+        sms["templates"] = []
+        sms["templates"].append({"id": 1, "name": "RSSI", "messagee": "RSSI"})
+        sms["templates"].append(
+            {
+                "id": 2,
+                "name": "WX",
+                "message": "WX",
+            }
+        )
+        sms["templates"].append(
+            {
+                "id": 3,
+                "name": "METAR EPWA",
+                "message": "METAR EPWA",
+            }
+        )
+        sms["templates"].append(
+            {
+                "id": 4,
+                "name": "TAF EPWA",
+                "message": "TAF EPWA",
+            }
+        )
+        sms["templates"].append(
+            {
+                "id": 5,
+                "name": "INBOX",
+                "message": "INBOX",
+            }
+        )
+        sms["templates"].append(
+            {
+                "id": 6,
+                "name": "DELETE ALL SMS",
+                "message": "DEL",
             }
         )
 

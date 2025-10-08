@@ -57,6 +57,38 @@ class ChannelWidth(StrEnum):
 
 
 @dataclass
+class AnytoneExtensions:
+    talkaround: Optional[bool]
+    frequencyCorrection: Optional[float]
+    handsFree: Optional[bool]
+    fmAPRSFrequency: Optional[float]
+
+
+@dataclass
+class DigitalAnytoneExtensions(AnytoneExtensions):
+    callConfirm: Optional[bool]
+    sms: Optional[bool]
+    smsConfirm: Optional[bool]
+    dataACK: Optional[bool]
+    simplexTDMA: Optional[bool]
+    adaptiveTDMA: Optional[bool]
+    loneWorker: Optional[bool]
+    throughMode: Optional[bool]
+
+
+@dataclass
+class AnalogAnytoneExtensions(AnytoneExtensions):
+    reverseBurst: Optional[bool]
+    rxCustomCTCSS: Optional[float]
+    txCustomCTCSS: Optional[float]
+    customCTCSS: Optional[float]
+    squelchMode: Optional[
+        Literal["Carrier", "SubTone", "OptSig", "SubToneAndOptSig", "SubToneOrOptSig"]
+    ]
+    scrambler: Optional[bool]
+
+
+@dataclass
 class Contact:
     internal_id: ContactID
     name: str
@@ -95,6 +127,7 @@ class DigitalChannel:
     rx_grouplist_id: Optional[GroupListID]
     tx_contact_id: Optional[ContactID]
     aprs: Optional[DigitalAPRSConfig]
+    anytone: Optional[DigitalAnytoneExtensions]
     _lat: Latitude
     _lng: Longitude
     _locator: Locator

@@ -2,7 +2,7 @@ import json
 
 import maidenhead as mh
 
-from models import DigitalChannel, AnalogChannel, TxPower, ChannelWidth
+from models import DigitalChannel, TxPower, DigitalAnytoneExtensions
 from datasources import brandmeister
 
 
@@ -12,6 +12,22 @@ def channel_label(callsign, tg):
 
 def hotspot_channel_label(contact):
     return f"HS{contact.calling_id} {contact.name}"
+
+
+DEFAULT_ANYTONE_EXTENSIONS = DigitalAnytoneExtensions(
+    talkaround=None,
+    frequencyCorrection=None,
+    handsFree=None,
+    fmAPRSFrequency=None,
+    callConfirm=False,
+    sms=True,
+    smsConfirm=False,
+    dataACK=None,
+    simplexTDMA=None,
+    adaptiveTDMA=None,
+    loneWorker=None,
+    throughMode=None,
+)
 
 
 class HotspotDigitalChannelGenerator:
@@ -46,6 +62,7 @@ class HotspotDigitalChannelGenerator:
                     rx_grouplist_id="-",
                     tx_contact_id=None,
                     aprs=self.aprs_config,
+                    anytone=DEFAULT_ANYTONE_EXTENSIONS,
                     _lat=None,
                     _lng=None,
                     _locator=None,
@@ -71,6 +88,7 @@ class HotspotDigitalChannelGenerator:
                     rx_grouplist_id="-",
                     tx_contact_id=tg.internal_id,
                     aprs=self.aprs_config,
+                    anytone=DEFAULT_ANYTONE_EXTENSIONS,
                     _lat=None,
                     _lng=None,
                     _locator=None,
@@ -125,6 +143,7 @@ class DigitalChannelGeneratorFromBrandmeister:
                                 rx_grouplist_id="-",
                                 tx_contact_id=str(tg.internal_id),
                                 aprs=self.aprs_config,
+                                anytone=DEFAULT_ANYTONE_EXTENSIONS,
                                 _lat=float(dev["lat"]),
                                 _lng=float(dev["lng"]),
                                 _locator=mh.to_maiden(dev["lat"], dev["lng"], 3),
@@ -157,6 +176,7 @@ class DigitalChannelGeneratorFromBrandmeister:
                         rx_grouplist_id="-",
                         tx_contact_id=None,
                         aprs=self.aprs_config,
+                        anytone=DEFAULT_ANYTONE_EXTENSIONS,
                         _lat=float(dev["lat"]),
                         _lng=float(dev["lng"]),
                         _locator=mh.to_maiden(dev["lat"], dev["lng"], 3),
@@ -190,6 +210,7 @@ class DigitalPMR446ChannelGenerator:
                     slot=2,
                     rx_grouplist_id="-",
                     tx_contact_id=None,
+                    anytone=DEFAULT_ANYTONE_EXTENSIONS,
                     _lat=None,
                     _lng=None,
                     _locator=None,

@@ -18,7 +18,7 @@ validate: plug.yaml
 	dmrconf -y verify plug.yaml
 
 program: validate
-	dmrconf -y write plug.yaml
+	dmrconf -y write plug.yaml --device cu.usbmodem0000000100001
 
 lint: $(wildcard codeplug/*.py)
 	pylint ./codeplug

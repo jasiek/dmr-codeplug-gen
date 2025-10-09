@@ -43,4 +43,5 @@ class AT878UV:
         writer.write_roaming_zones(self.roaming_zones)
         writer.write_analog_aprs(self.analog_aprs_config)
         writer.write_digital_aprs(self.digital_aprs_config)
+        writer.write_sms_configuration()
         writer.finish()

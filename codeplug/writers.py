@@ -202,10 +202,7 @@ class QDMRWriter:
             }
         )
 
-    def write_sms_configuration(self, sms_configuration):
-        if sms_configuration is None:
-            return
-
+    def write_sms_configuration(self):
         if "sms" not in self.codeplug:
             self.codeplug["sms"] = {}
 

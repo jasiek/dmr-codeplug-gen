@@ -52,9 +52,9 @@ class BrandmeisterSpecialContactGenerator:
     def contacts(self, sequence):
         if len(self._contacts) == 0:
             private = [
-                ("WX SMS", 262993),
-                ("RPT SMS", 262994),
-                ("PARROT", 262997),
+                ("262993 WX SMS", 262993),
+                ("262994 RPT SMS", 262994),
+                ("262997 PARROT", 262997),
             ]
             output = [
                 Contact(
@@ -79,7 +79,15 @@ class BrandmeisterSpecialContactGenerator:
                 )
                 for d in tgs
             ]
-        return output
+
+        self._contacts = output
+        return self._contacts
+
+    def parrot(self):
+        for c in self._contacts:
+            if c.calling_id == 262997:
+                return c
+        return None
 
 
 class APRSContactGenerator:

@@ -41,9 +41,10 @@ class Recipe(BaseRecipe):
         aprs_contact = aprs_contact_gen.contacts(contact_seq)[0]
         brandmeister_contact_gen = BrandmeisterTGContactGenerator()
 
+        bm_special_gen = BrandmeisterSpecialContactGenerator()
         self.contacts = ContactAggregator(
             aprs_contact_gen,
-            BrandmeisterSpecialContactGenerator(),
+            bm_special_gen,
             brandmeister_contact_gen,
         ).contacts(contact_seq)
 
@@ -62,7 +63,9 @@ class Recipe(BaseRecipe):
         uk_tgs = brandmeister_contact_gen.matched_contacts("^235")
         self.digital_channels = ChannelAggregator(
             HotspotDigitalChannelGenerator(
-                polish_tgs + uk_tgs, aprs_config=self.digital_aprs_config
+                polish_tgs + uk_tgs,
+                aprs_config=self.digital_aprs_config,
+                default_contact_id=bm_special_gen.parrot().internal_id,
             ),
             DigitalChannelGeneratorFromBrandmeister(
                 "High", polish_tgs, aprs_config=self.digital_aprs_config

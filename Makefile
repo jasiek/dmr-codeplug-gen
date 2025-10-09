@@ -24,6 +24,8 @@ lint: $(wildcard codeplug/*.py)
 	pylint ./codeplug
 
 clean:
+	rm -rf plug.yaml
+
+distclean: clean
 	rm -rf data/*
 	rm -rf cache/*
-	rm -rf plug.yaml

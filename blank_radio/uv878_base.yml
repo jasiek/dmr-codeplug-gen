@@ -152,10 +152,10 @@ settings:
       encryption: DMR
     gpsSettings:
       units: Metric
-      timeZone: UTC+1
+      timeZone: Europe/Paris
       reportPosition: false
       updatePeriod: 5 s
-      mode: GPS_Beidou
+      mode: All
     roamingSettings:
       autoRoam: false
       autoRoamPeriod: 0

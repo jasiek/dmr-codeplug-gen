@@ -54,6 +54,7 @@ class BrandmeisterSpecialContactGenerator:
             private = [
                 ("262993 WX SMS", 262993),
                 ("262994 RPT SMS", 262994),
+                ("262995 SMSC", 262995),
                 ("262997 PARROT", 262997),
             ]
             output = [
@@ -86,6 +87,12 @@ class BrandmeisterSpecialContactGenerator:
     def parrot(self):
         for c in self._contacts:
             if c.calling_id == 262997:
+                return c
+        return None
+
+    def smsc(self):
+        for c in self._contacts:
+            if c.calling_id == 262995:
                 return c
         return None
 

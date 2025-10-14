@@ -7,7 +7,7 @@ class LXMLCacheAdapter:
     __name__ = "xml"
 
     def loads(self, s):
-        return etree.fromstring(s.lstrip("\n"))
+        return etree.fromstring(s.lstrip())
 
     def dumps(self, value):
         return etree.tostring(value, encoding="unicode")

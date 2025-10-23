@@ -1,5 +1,97 @@
 import requests
+import time
 from .cache import FileCache
+
+
+class NominatimGeocoder(FileCache):
+    """
+    OSM Nominatim geocoding service with caching
+    """
+
+    def __init__(self, user_agent="dmr-codeplug-gen, jan.szumiec@gmail.com"):
+        FileCache.__init__(self, "nominatim")
+        self.user_agent = user_agent
+        self.base_url = "https://nominatim.openstreetmap.org"
+        self.last_request_time = 0
+        self.min_delay = 1.0  # Nominatim requires 1 second between requests
+
+    def _rate_limit(self):
+        """Ensure we respect Nominatim's rate limiting requirements"""
+        current_time = time.time()
+        time_since_last = current_time - self.last_request_time
+        if time_since_last < self.min_delay:
+            time.sleep(self.min_delay - time_since_last)
+        self.last_request_time = time.time()
+
+    def geocode(self, city, state=None, country=None):
+        """
+        Geocode a city to get coordinates
+
+        Args:
+            city: City name
+            state: State/province name (optional)
+            country: Country name (optional)
+
+        Returns:
+            dict with 'lat' and 'lon' keys, or None if not found
+        """
+        if not city or not city.strip():
+            return None
+
+        # Build query string
+        query_parts = [city.strip()]
+        if state:
+            query_parts.append(state.strip())
+        if country:
+            query_parts.append(country.strip())
+
+        query = ", ".join(query_parts)
+
+        # Create cache key from query
+        cache_key = f"geocode_{query.lower().replace(' ', '_').replace(',', '_')}"
+
+        # Check cache first
+        import os.path
+
+        cache_filename = (
+            f"{self._FileCache__cache_dir()}/{cache_key}.{self.method.__name__}"
+        )
+        if os.path.isfile(cache_filename):
+            content = open(cache_filename).read()
+            cached_result = self.method.loads(content)
+            if cached_result:  # Only return if we have a valid result
+                return cached_result
+
+        # Make request with rate limiting
+        self._rate_limit()
+
+        params = {"q": query, "format": "json", "limit": 1, "addressdetails": 1}
+
+        headers = {"User-Agent": self.user_agent}
+
+        try:
+            response = requests.get(
+                f"{self.base_url}/search", params=params, headers=headers, timeout=10
+            )
+            response.raise_for_status()
+
+            results = response.json()
+            if results and len(results) > 0:
+                result = results[0]
+                coords = {"lat": float(result["lat"]), "lon": float(result["lon"])}
+                # Cache the result
+                self.write_cache(cache_key, coords)
+                return coords
+            else:
+                # Cache negative result to avoid repeated requests
+                self.write_cache(cache_key, None)
+                return None
+
+        except (requests.RequestException, ValueError, KeyError) as e:
+            print(f"Geocoding failed for '{query}': {e}")
+            # Cache negative result
+            self.write_cache(cache_key, None)
+            return None
 
 
 class RepeaterBookAPI(FileCache):
@@ -8,12 +100,14 @@ class RepeaterBookAPI(FileCache):
 
     Provides access to repeater data from RepeaterBook.com
     Supports both North America and international repeaters
+    Enhanced with OSM Nominatim geocoding for missing coordinates
     """
 
     def __init__(self, user_agent="dmr-codeplug-gen, jan.szumiec@gmail.com"):
         FileCache.__init__(self, "repeaterbook")
         self.user_agent = user_agent
         self.base_url = "https://www.repeaterbook.com/api"
+        self.geocoder = NominatimGeocoder(user_agent)
 
     def _get_headers(self):
         """Get required headers including User-Agent for API authentication"""
@@ -22,6 +116,64 @@ class RepeaterBookAPI(FileCache):
     def _build_params(self, **kwargs):
         """Build query parameters, filtering out None values"""
         return {k: v for k, v in kwargs.items() if v is not None}
+
+    def _enhance_with_coordinates(self, data):
+        """
+        Enhance repeater data with coordinates from Nominatim when missing
+
+        Args:
+            data: RepeaterBook API response data
+
+        Returns:
+            Enhanced data with geocoded coordinates where missing
+        """
+        if not isinstance(data, dict) or "results" not in data:
+            return data
+
+        enhanced_results = []
+
+        for repeater in data["results"]:
+            enhanced_repeater = repeater.copy()
+
+            # Check if coordinates are missing or invalid
+            has_coords = (
+                repeater.get("Lat")
+                and repeater.get("Long")
+                and float(repeater.get("Lat", 0)) != 0
+                and float(repeater.get("Long", 0)) != 0
+            )
+
+            if not has_coords:
+                # Try to geocode based on available location information
+                city = repeater.get("Nearest City") or repeater.get("Landmark")
+                state = repeater.get("State")
+                country = repeater.get("Country")
+
+                if city:
+                    print(f"Geocoding {city}, {state or ''}, {country or ''}")
+                    coords = self.geocoder.geocode(city, state, country)
+
+                    if coords:
+                        enhanced_repeater["Lat"] = str(coords["lat"])
+                        enhanced_repeater["Long"] = str(coords["lon"])
+                        enhanced_repeater["_geocoded"] = True
+                        print(
+                            f"  -> Found coordinates: {coords['lat']}, {coords['lon']}"
+                        )
+                    else:
+                        print(f"  -> Geocoding failed for {city}")
+                        enhanced_repeater["_geocoded"] = False
+                else:
+                    enhanced_repeater["_geocoded"] = False
+            else:
+                enhanced_repeater["_geocoded"] = False  # Already had coordinates
+
+            enhanced_results.append(enhanced_repeater)
+
+        # Return enhanced data
+        enhanced_data = data.copy()
+        enhanced_data["results"] = enhanced_results
+        return enhanced_data
 
     def _make_request(self, endpoint, **params):
         """Make API request with proper headers and caching"""
@@ -41,14 +193,18 @@ class RepeaterBookAPI(FileCache):
         )
         if os.path.isfile(cache_filename):
             content = open(cache_filename).read()
-            return self.method.loads(content)
+            data = self.method.loads(content)
+            # Enhance with coordinates if needed
+            return self._enhance_with_coordinates(data)
         else:
             # Make request with headers
             response = requests.get(url, params=params, headers=self._get_headers())
             response.raise_for_status()
             content = response.json()
-            self.write_cache(cache_key, content)
-            return content
+            # Enhance with coordinates before caching
+            enhanced_content = self._enhance_with_coordinates(content)
+            self.write_cache(cache_key, enhanced_content)
+            return enhanced_content
 
     def get_repeaters_by_country(self, country, **filters):
         """

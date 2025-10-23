@@ -10,7 +10,7 @@ class RepeaterBookAPI(FileCache):
     Supports both North America and international repeaters
     """
 
-    def __init__(self, user_agent="dmr-codeplug-gen, test@example.com"):
+    def __init__(self, user_agent="dmr-codeplug-gen, jan.szumiec@gmail.com"):
         FileCache.__init__(self, "repeaterbook")
         self.user_agent = user_agent
         self.base_url = "https://www.repeaterbook.com/api"

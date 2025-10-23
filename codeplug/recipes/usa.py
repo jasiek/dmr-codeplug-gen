@@ -11,6 +11,7 @@ from generators.contacts import (
 from generators.analogchan import (
     AnalogPMR446ChannelGenerator,
     AnalogChannelGeneratorFromPrzemienniki,
+    AnalogChannelGeneratorFromRepeaterBook,
 )
 from generators.digitalchan import (
     DigitalChannelGeneratorFromBrandmeister,
@@ -27,8 +28,9 @@ from generators.roaming import (
     RoamingZoneFromCallsignGenerator,
 )
 from datasources.przemienniki import PrzemiennikiAPI
+from datasources.repeaterbook import RepeaterBookAPI
 from aggregators import ChannelAggregator, ZoneAggregator, ContactAggregator
-from callsign_matchers import RegexMatcher
+from callsign_matchers import NYNJCallsignMatcher
 
 
 class Recipe(BaseRecipe):
@@ -59,32 +61,36 @@ class Recipe(BaseRecipe):
         self.analog_aprs_config = analog_aprs.aprs(aprs_seq)
 
         # Channels
-        polish_tgs = brandmeister_contact_gen.matched_contacts("^260")
+        usa_tgs = brandmeister_contact_gen.matched_contacts("^310")
         uk_tgs = brandmeister_contact_gen.matched_contacts("^235")
         self.digital_channels = ChannelAggregator(
             HotspotDigitalChannelGenerator(
-                polish_tgs + uk_tgs,
+                usa_tgs + uk_tgs,
                 aprs_config=self.digital_aprs_config,
                 default_contact_id=bm_special_gen.parrot().internal_id,
             ),
             DigitalChannelGeneratorFromBrandmeister(
                 "High",
-                polish_tgs,
+                usa_tgs,
                 aprs_config=self.digital_aprs_config,
-                callsign_matcher=RegexMatcher(r"^S[P0-9]"),
+                callsign_matcher=NYNJCallsignMatcher(),
             ),
         ).channels(chan_seq)
-        analog_pmr_chan_gen = AnalogPMR446ChannelGenerator(aprs=self.analog_aprs_config)
+
+        # Get NY and NJ analog repeaters from RepeaterBook
+        repeaterbook_api = RepeaterBookAPI()
+        ny_repeaters = repeaterbook_api.get_repeaters_by_state("36")  # New York
+        nj_repeaters = repeaterbook_api.get_repeaters_by_state("34")  # New Jersey
+
         self.analog_channels = ChannelAggregator(
             analog_aprs,
-            analog_pmr_chan_gen,
-            AnalogChannelGeneratorFromPrzemienniki(
-                PrzemiennikiAPI().repeaters_2m(),
+            AnalogChannelGeneratorFromRepeaterBook(
+                ny_repeaters,
                 "High",
                 aprs=self.analog_aprs_config,
             ),
-            AnalogChannelGeneratorFromPrzemienniki(
-                PrzemiennikiAPI().repeaters_70cm(),
+            AnalogChannelGeneratorFromRepeaterBook(
+                nj_repeaters,
                 "High",
                 aprs=self.analog_aprs_config,
             ),
@@ -95,13 +101,12 @@ class Recipe(BaseRecipe):
         self.zones = ZoneAggregator(
             HotspotZoneGenerator(self.digital_channels),
             ZoneFromCallsignGenerator2(self.digital_channels),
-            PMRZoneGenerator(analog_pmr_chan_gen.channels(None)),
             AnalogZoneGenerator(self.analog_channels),
         ).zones(zone_seq)
 
         rch_seq = Sequence()
         self.roaming_channels = RoamingChannelGeneratorFromBrandmeister(
-            polish_tgs
+            usa_tgs
         ).channels(rch_seq)
         self.roaming_zones = RoamingZoneFromCallsignGenerator(
             self.roaming_channels

@@ -121,3 +121,106 @@ class AnalogChannelGeneratorFromPrzemienniki:
                     _qth=qth,
                 )
             )
+
+
+class AnalogChannelGeneratorFromRepeaterBook:
+    def __init__(self, source, power, *, aprs):
+        """
+        Initialize analog channel generator from RepeaterBook data
+
+        Args:
+            source: JSON data from RepeaterBook API
+            power: Transmit power setting
+            aprs: APRS configuration
+        """
+        self._repeaters = source if isinstance(source, list) else []
+        self.power = power
+        self._channels = []
+        self.aprs_config = aprs
+
+    def channels(self, sequence):
+        if len(self._channels) == 0:
+            self.generate_channels(sequence)
+        return self._channels
+
+    def generate_channels(self, sequence):
+        for repeater in self._repeaters:
+            # Skip if not analog mode or if required fields are missing
+            if repeater.get("Mode") != "Analog":
+                continue
+
+            try:
+                # Get frequencies
+                rpt_output = float(repeater.get("Frequency", 0))
+                offset = float(repeater.get("Offset", 0))
+                rpt_input = rpt_output + offset
+
+                # Skip if no offset (not a repeater)
+                if abs(offset) < 0.0001:
+                    continue
+
+                # Skip if frequency is 0 or invalid
+                if rpt_output == 0:
+                    continue
+
+            except (ValueError, TypeError):
+                continue
+
+            # Get tones
+            rx_tone = None
+            tx_tone = None
+            try:
+                if repeater.get("PL"):
+                    tone_val = float(repeater.get("PL"))
+                    rx_tone = tone_val
+                    tx_tone = tone_val
+            except (ValueError, TypeError):
+                pass
+
+            # Get location data
+            lat = None
+            lng = None
+            try:
+                if repeater.get("Lat"):
+                    lat = float(repeater.get("Lat"))
+                if repeater.get("Long"):
+                    lng = float(repeater.get("Long"))
+            except (ValueError, TypeError):
+                pass
+
+            # Get callsign and location
+            callsign = repeater.get("Callsign", "").strip()
+            qth = repeater.get("Nearest City", "").strip()
+            if not qth:
+                qth = repeater.get("Location", "").strip()
+
+            # Use callsign or frequency as name
+            name = callsign if callsign else f"{rpt_output:.4f}"
+
+            # Skip if we don't have a meaningful identifier
+            if not name:
+                continue
+
+            self._channels.append(
+                AnalogChannel(
+                    internal_id=sequence.next(),
+                    name=name,
+                    rx_freq=rpt_output,
+                    tx_freq=rpt_input,
+                    tx_power=TxPower.High,
+                    scanlist_id="-",
+                    tot=None,
+                    rx_only=False,
+                    admit_crit="Free",
+                    squelch=1,
+                    rx_tone=rx_tone,
+                    tx_tone=tx_tone,
+                    width=ChannelWidth.Narrow,
+                    aprs=self.aprs_config,
+                    _lat=lat,
+                    _lng=lng,
+                    _locator=None,
+                    _rpt_callsign=callsign,
+                    _qth=qth,
+                )
+            )

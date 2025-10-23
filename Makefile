@@ -1,3 +1,6 @@
+RECIPE?=poland
+PLUGFILE=plug-${RECIPE}.yaml
+
 default:  validate
 all: data/radiod_users.json data/brandmeister_talkgroups.json data/rptrs.json
 
@@ -10,21 +13,21 @@ data/brandmeister_talkgroups.json:
 data/rptrs.json:
 	curl -o data/rptrs.json https://radioid.net/static/rptrs.json
 
-plug.yaml: all $(wildcard codeplug/*.py)
+${PLUGFILE}: all $(wildcard codeplug/*.py)
 	black .
-	python codeplug/cli.py plug.yaml ${CALLSIGN} ${DMRID} poland
+	python codeplug/cli.py ${PLUGFILE} ${CALLSIGN} ${DMRID} ${RECIPE}
 
-validate: plug.yaml
-	dmrconf -y verify plug.yaml
+validate: ${PLUGFILE}
+	dmrconf -y verify ${PLUGFILE}
 
 program: validate
-	dmrconf -y write plug.yaml --device cu.usbmodem0000000100001
+	dmrconf -y write ${PLUGFILE} --device cu.usbmodem0000000100001
 
 lint: $(wildcard codeplug/*.py)
 	pylint ./codeplug
 
 clean:
-	rm -rf plug.yaml
+	rm -rf ${PLUGFILE}
 
 distclean: clean
 	rm -rf data/*

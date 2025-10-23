@@ -1,4 +1,5 @@
 from lxml import etree
+import json
 import maidenhead as mh
 
 from models import AnalogChannel, TxPower, ChannelWidth
@@ -133,7 +134,7 @@ class AnalogChannelGeneratorFromRepeaterBook:
             power: Transmit power setting
             aprs: APRS configuration
         """
-        self._repeaters = source if isinstance(source, list) else []
+        self._repeaters = source["results"]
         self.power = power
         self._channels = []
         self.aprs_config = aprs
@@ -145,33 +146,38 @@ class AnalogChannelGeneratorFromRepeaterBook:
 
     def generate_channels(self, sequence):
         for repeater in self._repeaters:
+            print(json.dumps(repeater, indent=2))
             # Skip if not analog mode or if required fields are missing
-            if repeater.get("Mode") != "Analog":
+            if repeater.get("FM Analog") != "Yes":
                 continue
 
             try:
-                # Get frequencies
+                # Get frequencies - new format provides Input Freq directly
                 rpt_output = float(repeater.get("Frequency", 0))
-                offset = float(repeater.get("Offset", 0))
-                rpt_input = rpt_output + offset
+                rpt_input = float(repeater.get("Input Freq", 0))
+
+                # Calculate offset to check if it's a repeater
+                offset = rpt_input - rpt_output
 
                 # Skip if no offset (not a repeater)
                 if abs(offset) < 0.0001:
                     continue
 
-                # Skip if frequency is 0 or invalid
-                if rpt_output == 0:
+                # Skip if frequencies are 0 or invalid
+                if rpt_output == 0 or rpt_input == 0:
                     continue
 
             except (ValueError, TypeError):
                 continue
 
-            # Get tones
+            # Get tones - check both PL and TSQ fields
             rx_tone = None
             tx_tone = None
             try:
-                if repeater.get("PL"):
-                    tone_val = float(repeater.get("PL"))
+                # Try PL first, then TSQ as fallback
+                tone_str = repeater.get("PL") or repeater.get("TSQ")
+                if tone_str and tone_str.strip():
+                    tone_val = float(tone_str)
                     rx_tone = tone_val
                     tx_tone = tone_val
             except (ValueError, TypeError):
@@ -192,7 +198,7 @@ class AnalogChannelGeneratorFromRepeaterBook:
             callsign = repeater.get("Callsign", "").strip()
             qth = repeater.get("Nearest City", "").strip()
             if not qth:
-                qth = repeater.get("Location", "").strip()
+                qth = repeater.get("Landmark", "").strip()
 
             # Use callsign or frequency as name
             name = callsign if callsign else f"{rpt_output:.4f}"

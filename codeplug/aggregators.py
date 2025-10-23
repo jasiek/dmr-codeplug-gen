@@ -16,7 +16,12 @@ class ChannelAggregator:
     def channels(self, sequence):
         channels = []
         for gen in self.generators:
-            channels += gen.channels(sequence)
+            generated_channels = gen.channels(sequence)
+            if len(generated_channels) == 0:
+                print(
+                    f"Warning: Channel generator {gen.__class__.__name__} produced no channels."
+                )
+            channels += generated_channels
         return channels
 
 

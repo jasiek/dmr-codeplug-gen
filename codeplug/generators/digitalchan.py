@@ -141,6 +141,16 @@ class DigitalChannelGeneratorFromBrandmeister:
                         # We were passed a TG definition
 
                         name = channel_label(dev["callsign"], tg)
+
+                        # Handle None values for lat/lng
+                        lat = float(dev["lat"]) if dev["lat"] is not None else None
+                        lng = float(dev["lng"]) if dev["lng"] is not None else None
+                        locator = (
+                            mh.to_maiden(dev["lat"], dev["lng"], 3)
+                            if lat is not None and lng is not None
+                            else None
+                        )
+
                         self._channels.append(
                             DigitalChannel(
                                 internal_id=sequence.next(),
@@ -158,9 +168,9 @@ class DigitalChannelGeneratorFromBrandmeister:
                                 tx_contact_id=str(tg.internal_id),
                                 aprs=self.aprs_config,
                                 anytone=DEFAULT_ANYTONE_EXTENSIONS,
-                                _lat=float(dev["lat"]),
-                                _lng=float(dev["lng"]),
-                                _locator=mh.to_maiden(dev["lat"], dev["lng"], 3),
+                                _lat=lat,
+                                _lng=lng,
+                                _locator=locator,
                                 _rpt_callsign=dev["callsign"],
                                 _qth=dev["city"],
                             )
@@ -172,6 +182,15 @@ class DigitalChannelGeneratorFromBrandmeister:
                         dev["callsign"],
                         f"TS{slot}",
                     ]
+                )
+
+                # Handle None values for lat/lng
+                lat = float(dev["lat"]) if dev["lat"] is not None else None
+                lng = float(dev["lng"]) if dev["lng"] is not None else None
+                locator = (
+                    mh.to_maiden(dev["lat"], dev["lng"], 3)
+                    if lat is not None and lng is not None
+                    else None
                 )
 
                 self._channels.append(
@@ -191,9 +210,9 @@ class DigitalChannelGeneratorFromBrandmeister:
                         tx_contact_id=None,
                         aprs=self.aprs_config,
                         anytone=DEFAULT_ANYTONE_EXTENSIONS,
-                        _lat=float(dev["lat"]),
-                        _lng=float(dev["lng"]),
-                        _locator=mh.to_maiden(dev["lat"], dev["lng"], 3),
+                        _lat=lat,
+                        _lng=lng,
+                        _locator=locator,
                         _rpt_callsign=dev["callsign"],
                         _qth=dev["city"],
                     )

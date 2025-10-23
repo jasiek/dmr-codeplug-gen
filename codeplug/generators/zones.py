@@ -104,13 +104,21 @@ class AnalogZoneGenerator:
         channels_70cm = []
         for chan in self.channels:
             if isinstance(chan, AnalogChannel):
-                if chan.rx_freq < 146:
+                if 144 <= chan.rx_freq < 149:
                     channels_2m.append(chan.internal_id)
-                else:
+                elif 400 <= chan.rx_freq < 470:
                     channels_70cm.append(chan.internal_id)
+                else:
+                    print(
+                        f"Analog channel {chan.name} with RX frequency {chan.rx_freq} MHz does not fit in 2m or 70cm band, skipping."
+                    )
+        if len(channels_2m) == 0:
+            print("No 2m analog channels found, skipping zone.")
         if len(channels_2m) > 250:
             print("Too many analog channels for zone, truncating.")
             channels_2m = channels_2m[:250]
+        if len(channels_70cm) == 0:
+            print("No 70cm analog channels found, skipping zone.")
         if len(channels_70cm) > 250:
             print("Too many analog channels for zone, truncating.")
             channels_70cm = channels_70cm[:250]

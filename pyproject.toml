@@ -7,10 +7,10 @@ authors = ["Jan Szumiec <jan.szumiec@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.9"
 Unidecode = "^1.3.6"
-lxml = "^4.9.3"
 maidenhead = "^1.7.0"
 pyyaml = "^6.0.1"
 requests = "^2.31.0"
+lxml = "^6.0.2"
 
 [tool.poetry.dev-dependencies]
 

@@ -228,3 +228,95 @@ class RegionFilter:
         except (ValueError, TypeError):
             # If coordinate conversion fails, apply fallback policy
             return self.include_channels_without_coordinates
+
+
+class BandFilter:
+    """
+    A filter that wraps any channel generator and filters channels by frequency band.
+    By default, only passes through channels in the 2m (144-148 MHz) and 70cm (420-450 MHz) bands.
+
+    Usage:
+        # Filter channels to only include 2m and 70cm bands
+        filtered_gen = BandFilter(
+            generator=my_channel_generator
+        )
+        channels = filtered_gen.channels(sequence)
+
+        # Or specify custom frequency ranges
+        filtered_gen = BandFilter(
+            generator=my_channel_generator,
+            frequency_ranges=[(144.0, 148.0), (420.0, 450.0)]
+        )
+        channels = filtered_gen.channels(sequence)
+    """
+
+    def __init__(
+        self,
+        generator,
+        frequency_ranges: list[tuple[float, float]] = None,
+    ):
+        """
+        Initialize the band filter.
+
+        Args:
+            generator: Any object with a channels(sequence) method that returns channels
+            frequency_ranges: List of (min_freq, max_freq) tuples in MHz.
+                            Defaults to [(144.0, 148.0), (420.0, 450.0)] for 2m and 70cm bands.
+        """
+        self.generator = generator
+        if frequency_ranges is None:
+            # Default to 2m and 70cm bands
+            self.frequency_ranges = [(144.0, 148.0), (420.0, 450.0)]
+        else:
+            self.frequency_ranges = frequency_ranges
+        self._filtered_channels = None
+
+    def channels(self, sequence):
+        """
+        Generate filtered channels based on frequency band criteria.
+
+        Args:
+            sequence: Sequence object for generating internal IDs
+
+        Returns:
+            List of channels within the specified frequency bands
+        """
+        if self._filtered_channels is None:
+            self._filtered_channels = self._filter_channels(sequence)
+        return self._filtered_channels
+
+    def _filter_channels(self, sequence):
+        """
+        Internal method to perform the actual filtering.
+        """
+        all_channels = self.generator.channels(sequence)
+        filtered_channels = []
+
+        for channel in all_channels:
+            if self._should_include_channel(channel):
+                filtered_channels.append(channel)
+
+        return filtered_channels
+
+    def _should_include_channel(self, channel) -> bool:
+        """
+        Determine if a channel should be included based on frequency band criteria.
+
+        Args:
+            channel: Channel object to evaluate
+
+        Returns:
+            True if channel should be included, False otherwise
+        """
+        # Check if channel has rx_freq attribute
+        if not hasattr(channel, "rx_freq"):
+            return False
+
+        rx_freq = channel.rx_freq
+
+        # Check if frequency falls within any of the allowed ranges
+        for min_freq, max_freq in self.frequency_ranges:
+            if min_freq <= rx_freq <= max_freq:
+                return True
+
+        return False

@@ -31,6 +31,7 @@ from datasources.przemienniki import PrzemiennikiAPI
 from datasources.repeaterbook import RepeaterBookAPI
 from aggregators import ChannelAggregator, ZoneAggregator, ContactAggregator
 from callsign_matchers import NYNJCallsignMatcher
+from filters import BandFilter
 
 
 class Recipe(BaseRecipe):
@@ -82,7 +83,8 @@ class Recipe(BaseRecipe):
         ny_repeaters = repeaterbook_api.get_repeaters_by_state("36")  # New York
         nj_repeaters = repeaterbook_api.get_repeaters_by_state("34")  # New Jersey
 
-        self.analog_channels = ChannelAggregator(
+        # Create aggregated analog channel generator (not yet filtered)
+        analog_channel_generator = ChannelAggregator(
             analog_aprs,
             AnalogChannelGeneratorFromRepeaterBook(
                 ny_repeaters,
@@ -94,14 +96,33 @@ class Recipe(BaseRecipe):
                 "High",
                 aprs=self.analog_aprs_config,
             ),
-        ).channels(chan_seq)
+        )
+
+        # Get all analog channels
+        analog_channels = analog_channel_generator.channels(chan_seq)
+
+        # Create filtered channel lists for separate bands using BandFilter
+        # 2m band (144-148 MHz)
+        band_2m_filter = BandFilter(
+            analog_channel_generator, frequency_ranges=[(144.0, 148.0)]
+        )
+        analog_2m_channels = band_2m_filter.channels(chan_seq)
+
+        # 70cm band (420-450 MHz)
+        band_70cm_filter = BandFilter(
+            analog_channel_generator, frequency_ranges=[(420.0, 450.0)]
+        )
+        analog_70cm_channels = band_70cm_filter.channels(chan_seq)
+
+        self.analog_channels = analog_2m_channels + analog_70cm_channels
 
         # Zones
         zone_seq = Sequence()
         self.zones = ZoneAggregator(
             HotspotZoneGenerator(self.digital_channels),
             ZoneFromCallsignGenerator2(self.digital_channels),
-            AnalogZoneGenerator(self.analog_channels),
+            AnalogZoneGenerator(analog_2m_channels, zone_name="Analog 2m"),
+            AnalogZoneGenerator(analog_70cm_channels, zone_name="Analog 70cm"),
         ).zones(zone_seq)
 
         rch_seq = Sequence()

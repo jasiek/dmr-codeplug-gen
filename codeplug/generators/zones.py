@@ -96,35 +96,28 @@ class PMRZoneGenerator:
 
 
 class AnalogZoneGenerator:
-    def __init__(self, channels):
+    def __init__(self, channels, zone_name="Analog"):
         self.channels = channels
+        self.zone_name = zone_name
 
     def zones(self, seq):
-        channels_2m = []
-        channels_70cm = []
+        analog_channels = []
         for chan in self.channels:
             if isinstance(chan, AnalogChannel):
-                if 144 <= chan.rx_freq < 149:
-                    channels_2m.append(chan.internal_id)
-                elif 400 <= chan.rx_freq < 470:
-                    channels_70cm.append(chan.internal_id)
-                else:
-                    print(
-                        f"Analog channel {chan.name} with RX frequency {chan.rx_freq} MHz does not fit in 2m or 70cm band, skipping."
-                    )
-        if len(channels_2m) == 0:
-            print("No 2m analog channels found, skipping zone.")
-        if len(channels_2m) > 250:
-            print("Too many analog channels for zone, truncating.")
-            channels_2m = channels_2m[:250]
-        if len(channels_70cm) == 0:
-            print("No 70cm analog channels found, skipping zone.")
-        if len(channels_70cm) > 250:
-            print("Too many analog channels for zone, truncating.")
-            channels_70cm = channels_70cm[:250]
+                analog_channels.append(chan.internal_id)
+
+        if len(analog_channels) == 0:
+            print(f"No analog channels found, skipping zone '{self.zone_name}'.")
+            return []
+
+        if len(analog_channels) > 250:
+            print(
+                f"Too many analog channels for zone '{self.zone_name}', truncating to 250."
+            )
+            analog_channels = analog_channels[:250]
+
         return [
-            Zone(internal_id=seq.next(), name="Analog 2m", channels=channels_2m),
-            Zone(internal_id=seq.next(), name="Analog 70cm", channels=channels_70cm),
+            Zone(internal_id=seq.next(), name=self.zone_name, channels=analog_channels),
         ]
 
 

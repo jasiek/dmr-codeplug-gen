@@ -33,3 +33,9 @@ clean:
 distclean: clean
 	rm -rf data/*
 	rm -rf cache/*
+
+usa:
+	$(MAKE) RECIPE=usa TIMEZONE=America/New_York validate
+
+poland:
+	$(MAKE) RECIPE=poland TIMEZONE=Europe/Warsaw validate

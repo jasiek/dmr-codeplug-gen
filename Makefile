@@ -1,6 +1,4 @@
-RECIPE?=poland
 PLUGFILE=plug-${RECIPE}.yaml
-TIMEZONE?=Europe/Warsaw
 
 default:  validate
 all: data/radiod_users.json data/brandmeister_talkgroups.json data/rptrs.json
@@ -34,8 +32,15 @@ distclean: clean
 	rm -rf data/*
 	rm -rf cache/*
 
+program-usa:
+	$(MAKE) RECIPE=usa TIMEZONE=America/New_York program
+
 usa:
 	$(MAKE) RECIPE=usa TIMEZONE=America/New_York validate
+
+
+program-poland:
+	$(MAKE) RECIPE=poland TIMEZONE=Europe/Warsaw program
 
 poland:
 	$(MAKE) RECIPE=poland TIMEZONE=Europe/Warsaw validate

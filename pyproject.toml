@@ -17,6 +17,18 @@ lxml = "^6.0.2"
 [tool.poetry.group.dev.dependencies]
 black = "^24.3.0"
 pylint = "^3.0.3"
+pytest = "^8.0.0"
+
+[tool.pytest.ini_options]
+pythonpath = [
+    "."
+]
+testpaths = [
+    "tests"
+]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

@@ -1,5 +1,6 @@
 RECIPE?=poland
 PLUGFILE=plug-${RECIPE}.yaml
+TIMEZONE?=Europe/Warsaw
 
 default:  validate
 all: data/radiod_users.json data/brandmeister_talkgroups.json data/rptrs.json
@@ -15,7 +16,7 @@ data/rptrs.json:
 
 ${PLUGFILE}: all $(wildcard codeplug/*.py)
 	black .
-	python codeplug/cli.py ${PLUGFILE} ${CALLSIGN} ${DMRID} ${RECIPE}
+	python codeplug/cli.py ${PLUGFILE} ${CALLSIGN} ${DMRID} ${RECIPE} ${TIMEZONE}
 
 validate: ${PLUGFILE}
 	dmrconf -y verify ${PLUGFILE}

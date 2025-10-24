@@ -146,7 +146,6 @@ class AnalogChannelGeneratorFromRepeaterBook:
 
     def generate_channels(self, sequence):
         for repeater in self._repeaters:
-            print(json.dumps(repeater, indent=2))
             # Skip if not analog mode or if required fields are missing
             if repeater.get("FM Analog") != "Yes":
                 continue
@@ -165,6 +164,12 @@ class AnalogChannelGeneratorFromRepeaterBook:
 
                 # Skip if frequencies are 0 or invalid
                 if rpt_output == 0 or rpt_input == 0:
+                    continue
+
+                # Skip if not in 2m (144-148 MHz) or 70cm (420-450 MHz) bands
+                if not (
+                    (144.0 <= rpt_output <= 148.0) or (420.0 <= rpt_output <= 450.0)
+                ):
                     continue
 
             except (ValueError, TypeError):

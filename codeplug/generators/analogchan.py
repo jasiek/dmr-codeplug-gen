@@ -200,7 +200,7 @@ class AnalogChannelGeneratorFromRepeaterBook:
                 qth = repeater.get("Landmark", "").strip()
 
             # Use callsign or frequency as name
-            name = callsign if callsign else f"{rpt_output:.4f}"
+            name = f"{callsign} {qth}".strip()
 
             # Skip if we don't have a meaningful identifier
             if not name:

@@ -23,10 +23,6 @@ from generators.zones import (
     PMRZoneGenerator,
     AnalogZoneGenerator,
 )
-from generators.roaming import (
-    RoamingChannelGeneratorFromBrandmeister,
-    RoamingZoneFromCallsignGenerator,
-)
 from datasources.przemienniki import PrzemiennikiAPI
 from datasources.repeaterbook import RepeaterBookAPI
 from aggregators import ChannelAggregator, ZoneAggregator, ContactAggregator
@@ -125,13 +121,6 @@ class Recipe(BaseRecipe):
             AnalogZoneGenerator(analog_70cm_channels, zone_name="Analog 70cm"),
         ).zones(zone_seq)
 
-        rch_seq = Sequence()
-        self.roaming_channels = RoamingChannelGeneratorFromBrandmeister(
-            usa_tgs
-        ).channels(rch_seq)
-        self.roaming_zones = RoamingZoneFromCallsignGenerator(
-            self.roaming_channels
-        ).zones(Sequence())
         self.grouplists = CountryGroupListGenerator(self.contacts, 260).grouplists(
             Sequence()
         )

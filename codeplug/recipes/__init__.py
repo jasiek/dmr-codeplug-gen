@@ -6,6 +6,14 @@ class BaseRecipe:
         self.radio_class = radio_class
         self.writer_class = writer_class
 
+        self.roaming_channels = []
+        self.contacts = []
+        self.grouplists = []
+        self.analog_channels = []
+        self.digital_channels = []
+        self.zones = []
+        self.roaming_zones = []
+
     def generate(self):
         self.prepare()
         with open(self.filename, "wt") as f:

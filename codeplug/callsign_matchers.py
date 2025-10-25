@@ -47,12 +47,18 @@ class NYNJCallsignMatcher(CallsignMatcher):
     - 2x1 format: KC2X, KD2X, etc.
     - 2x2 format: KC2XX, KD2XX, etc.
     - 2x3 format: KC2XXX, KD2XXX, etc.
+
+    Note: A-prefix callsigns are restricted to AA-AL range for US stations.
+    This prevents matching foreign callsigns like AP2HD (Pakistan).
     """
 
     def __init__(self):
         # Pattern for call district 2 (NY/NJ region)
-        # Matches: K2XXX, N2XXX, W2XXX, KC2X, KD2XX, KC2XXX, etc.
-        self.pattern = re.compile(r"^[KNWA][A-Z]?2[A-Z]{1,3}$", re.IGNORECASE)
+        # Matches: K2XXX, N2XXX, W2XXX, KC2X, KD2XX, KC2XXX, AA2-AL2 formats
+        # K, N, W can be followed by any letter; A can only be followed by A-L
+        self.pattern = re.compile(
+            r"^(K[A-Z]?2|N[A-Z]?2|W[A-Z]?2|A[A-L]2)[A-Z]{1,3}$", re.IGNORECASE
+        )
 
     def matches(self, callsign: str) -> bool:
         return bool(self.pattern.match(callsign.strip()))

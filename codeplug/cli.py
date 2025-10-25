@@ -7,12 +7,15 @@ from writers import QDMRWriter
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("missing output file name")
+        exit(1)
 
     if len(sys.argv) < 3:
         print("missing callsign")
+        exit(1)
 
     if len(sys.argv) < 4:
         print("missing dmr_id")
+        exit(1)
 
     if len(sys.argv) < 5:
         print("missing recipe")

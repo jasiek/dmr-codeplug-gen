@@ -1,5 +1,5 @@
 import math
-from typing import Optional, Union
+from typing import Optional, Union, List, Tuple
 
 
 def haversine_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
@@ -320,3 +320,146 @@ class BandFilter:
                 return True
 
         return False
+
+
+def sort_channels_by_distance(
+    channels: List,
+    reference_lat: float,
+    reference_lng: float,
+    channels_without_coordinates_last: bool = True,
+) -> List:
+    """
+    Sort a list of channels by distance from a reference point.
+
+    Args:
+        channels: List of channel objects to sort
+        reference_lat: Reference latitude in decimal degrees
+        reference_lng: Reference longitude in decimal degrees
+        channels_without_coordinates_last: If True, channels without coordinates
+                                          are placed at the end. If False, they're
+                                          placed at the beginning.
+
+    Returns:
+        Sorted list of channels
+    """
+
+    def get_channel_distance(channel) -> Tuple[bool, float]:
+        """
+        Calculate distance for a channel, returning a tuple for sorting.
+        First element is whether coordinates exist, second is distance.
+        """
+        # Check if channel has coordinates
+        if not hasattr(channel, "_lat") or not hasattr(channel, "_lng"):
+            return (False, float("inf"))
+
+        lat = channel._lat
+        lng = channel._lng
+
+        # Handle channels without coordinates
+        if lat is None or lng is None:
+            return (False, float("inf"))
+
+        # Calculate distance
+        try:
+            distance = haversine_distance(
+                reference_lat, reference_lng, float(lat), float(lng)
+            )
+            return (True, distance)
+        except (ValueError, TypeError):
+            return (False, float("inf"))
+
+    # Sort channels
+    if channels_without_coordinates_last:
+        # Channels with coordinates first (sorted by distance), then without
+        sorted_channels = sorted(
+            channels,
+            key=lambda ch: (
+                not get_channel_distance(ch)[0],
+                get_channel_distance(ch)[1],
+            ),
+        )
+    else:
+        # Channels without coordinates first, then with (sorted by distance)
+        sorted_channels = sorted(
+            channels,
+            key=lambda ch: (get_channel_distance(ch)[0], get_channel_distance(ch)[1]),
+        )
+
+    return sorted_channels
+
+
+def sort_zones_by_distance(
+    zones: List,
+    channels: List,
+    reference_lat: float,
+    reference_lng: float,
+    zones_without_coordinates_last: bool = True,
+) -> List:
+    """
+    Sort a list of zones by the minimum distance of their channels from a reference point.
+
+    The zone's distance is determined by the closest channel within that zone.
+
+    Args:
+        zones: List of zone objects to sort
+        channels: List of all channel objects (needed to look up zone channels)
+        reference_lat: Reference latitude in decimal degrees
+        reference_lng: Reference longitude in decimal degrees
+        zones_without_coordinates_last: If True, zones with no valid coordinates
+                                       are placed at the end.
+
+    Returns:
+        Sorted list of zones
+    """
+    # Create a mapping of channel IDs to channels for quick lookup
+    channel_map = {ch.internal_id: ch for ch in channels}
+
+    def get_zone_distance(zone) -> Tuple[bool, float]:
+        """
+        Calculate the minimum distance for a zone based on its channels.
+        Returns tuple of (has_coordinates, min_distance).
+        """
+        min_distance = float("inf")
+        has_valid_channel = False
+
+        # Get all channels in the zone
+        for channel_id in zone.channels:
+            channel = channel_map.get(channel_id)
+            if channel is None:
+                continue
+
+            # Check if channel has coordinates
+            if not hasattr(channel, "_lat") or not hasattr(channel, "_lng"):
+                continue
+
+            lat = channel._lat
+            lng = channel._lng
+
+            if lat is None or lng is None:
+                continue
+
+            # Calculate distance
+            try:
+                distance = haversine_distance(
+                    reference_lat, reference_lng, float(lat), float(lng)
+                )
+                min_distance = min(min_distance, distance)
+                has_valid_channel = True
+            except (ValueError, TypeError):
+                continue
+
+        return (has_valid_channel, min_distance)
+
+    # Sort zones
+    if zones_without_coordinates_last:
+        # Zones with valid channels first (sorted by min distance), then without
+        sorted_zones = sorted(
+            zones, key=lambda z: (not get_zone_distance(z)[0], get_zone_distance(z)[1])
+        )
+    else:
+        # Zones without valid channels first, then with (sorted by min distance)
+        sorted_zones = sorted(
+            zones, key=lambda z: (get_zone_distance(z)[0], get_zone_distance(z)[1])
+        )
+
+    return sorted_zones

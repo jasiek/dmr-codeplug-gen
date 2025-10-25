@@ -5,6 +5,8 @@ class BaseRecipe:
         self.filename = filename
         self.radio_class = radio_class
         self.writer_class = writer_class
+        # Subclasses can define their own location as (latitude, longitude)
+        self.location = None
 
         self.roaming_channels = []
         self.contacts = []

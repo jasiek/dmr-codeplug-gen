@@ -31,8 +31,12 @@ from filters import BandFilter, sort_channels_by_distance, sort_zones_by_distanc
 
 
 class Recipe(BaseRecipe):
-    def __init__(self, callsign, dmr_id, filename, radio_class, writer_class):
-        super().__init__(callsign, dmr_id, filename, radio_class, writer_class)
+    def __init__(
+        self, callsign, dmr_id, filename, radio_class, writer_class, timezone=None
+    ):
+        super().__init__(
+            callsign, dmr_id, filename, radio_class, writer_class, timezone
+        )
         # Set location for distance sorting (New York City)
         # Latitude, Longitude for NYC area
         self.location = (40.7128, -74.0060)
@@ -64,11 +68,12 @@ class Recipe(BaseRecipe):
         self.analog_aprs_config = analog_aprs.aprs(aprs_seq)
 
         # Channels
-        usa_tgs = brandmeister_contact_gen.matched_contacts("^313")
+        usa_tgs = brandmeister_contact_gen.matched_contacts("^31")
         uk_tgs = brandmeister_contact_gen.matched_contacts("^235")
+        pl_tgs = brandmeister_contact_gen.matched_contacts("^260")
         self.digital_channels = ChannelAggregator(
             HotspotDigitalChannelGenerator(
-                usa_tgs + uk_tgs,
+                usa_tgs + uk_tgs + pl_tgs,
                 aprs_config=self.digital_aprs_config,
                 default_contact_id=bm_special_gen.parrot().internal_id,
             ),

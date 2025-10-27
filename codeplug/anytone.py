@@ -17,6 +17,7 @@ class AT878UV:
         zones=[],
         roaming_channels=[],
         roaming_zones=[],
+        timezone=None,
     ):
         self.dmr_id = dmr_id
         self.callsign = callsign
@@ -30,10 +31,13 @@ class AT878UV:
 
         self.analog_aprs_config = analog_aprs_config
         self.digital_aprs_config = digital_aprs_config
+        self.timezone = timezone
 
     def generate(self, writer):
         writer.start()
         writer.write_radio_config(self.dmr_id, self.callsign)
+        if self.timezone:
+            writer.write_gps_settings(self.timezone)
         writer.write_contacts(self.contacts)
         writer.write_grouplists(self.grouplists)
         writer.write_analog_channels(self.analog_channels)

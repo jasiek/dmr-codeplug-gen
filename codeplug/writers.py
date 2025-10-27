@@ -31,6 +31,13 @@ class QDMRWriter:
         ]
         self.codeplug["settings"]["defaultID"] = callsign
 
+    def write_gps_settings(self, timezone):
+        if "anytone" not in self.codeplug["settings"]:
+            self.codeplug["settings"]["anytone"] = {}
+        if "gpsSettings" not in self.codeplug["settings"]["anytone"]:
+            self.codeplug["settings"]["anytone"]["gpsSettings"] = {}
+        self.codeplug["settings"]["anytone"]["gpsSettings"]["timeZone"] = timezone
+
     def write_contacts(self, contacts):
         self.codeplug["contacts"] = []
         for contact in contacts:

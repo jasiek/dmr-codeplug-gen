@@ -25,6 +25,7 @@ if __name__ == "__main__":
     callsign = sys.argv[2]
     dmr_id = int(sys.argv[3])
     recipe_name = sys.argv[4]
+    timezone = sys.argv[5] if len(sys.argv) > 5 else None
 
     recipe_class = importlib.import_module(f"recipes.{recipe_name}").Recipe
-    recipe_class(callsign, dmr_id, filename, AT878UV, QDMRWriter).generate()
+    recipe_class(callsign, dmr_id, filename, AT878UV, QDMRWriter, timezone).generate()

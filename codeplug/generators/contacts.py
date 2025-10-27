@@ -2,12 +2,13 @@ import re
 import json
 
 from models import Contact, ContactType
-from datasources.brandmeister import ContactDB
+from datasources.brandmeister import ContactDB, UnlistedContactDB
 
 
 class BrandmeisterTGContactGenerator:
-    def __init__(self):
+    def __init__(self, include_unlisted=True):
         self._contactdb = ContactDB
+        self._unlisted_contactdb = UnlistedContactDB if include_unlisted else {}
         self._contacts = []
 
     def contacts(self, sequence):
@@ -16,11 +17,22 @@ class BrandmeisterTGContactGenerator:
         return self._contacts
 
     def generate_contacts(self, sequence):
+        # Add official Brandmeister talkgroups
         for key in self._contactdb:
             self._contacts.append(
                 Contact(
                     internal_id=sequence.next(),
                     name=self._contactdb[key],
+                    type=ContactType.GroupCall,
+                    calling_id=int(key),
+                )
+            )
+        # Add unlisted talkgroups
+        for key in self._unlisted_contactdb:
+            self._contacts.append(
+                Contact(
+                    internal_id=sequence.next(),
+                    name=self._unlisted_contactdb[key],
                     type=ContactType.GroupCall,
                     calling_id=int(key),
                 )

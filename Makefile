@@ -30,14 +30,14 @@ distclean: clean
 	rm -rf cache/*
 
 program-usa:
-	$(MAKE) RECIPE=usa TIMEZONE=America/New_York program
+	$(MAKE) RECIPE=usa TIMEZONE=GMT-04:00 program
 
 usa:
-	$(MAKE) RECIPE=usa TIMEZONE=America/New_York validate
+	$(MAKE) RECIPE=usa TIMEZONE=GMT-04:00 validate
 
 
 program-poland:
-	$(MAKE) RECIPE=poland TIMEZONE=Europe/Warsaw program
+	$(MAKE) RECIPE=poland TIMEZONE=GMT+01:00 program
 
 poland:
-	$(MAKE) RECIPE=poland TIMEZONE=Europe/Warsaw validate
+	$(MAKE) RECIPE=poland TIMEZONE=GMT+01:00 validate

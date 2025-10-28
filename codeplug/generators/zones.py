@@ -112,7 +112,7 @@ class AnalogZoneGenerator:
 
         if len(analog_channels) > 250:
             print(
-                f"Too many analog channels for zone '{self.zone_name}', truncating to 250."
+                f"Too many analog channels for zone ({len(analog_channels)}) '{self.zone_name}', truncating to 250."
             )
             analog_channels = analog_channels[:250]
 

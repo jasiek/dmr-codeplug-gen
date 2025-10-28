@@ -41,41 +41,40 @@ class Recipe(BaseRecipe):
         # Latitude, Longitude for NYC area
         self.location = (40.7128, -74.0060)
 
-    def prepare(self):
-        chan_seq = Sequence()
-
-        # Contacts
-        contact_seq = Sequence()
+    def prepare_contacts(self):
+        """Prepare DMR contacts including APRS, Brandmeister TGs, and special contacts."""
         aprs_contact_gen = APRSContactGenerator()
-        aprs_contact = aprs_contact_gen.contacts(contact_seq)[0]
-        brandmeister_contact_gen = BrandmeisterTGContactGenerator()
+        self.aprs_contact = aprs_contact_gen.contacts(self.contact_seq)[0]
+        self.brandmeister_contact_gen = BrandmeisterTGContactGenerator()
+        self.bm_special_gen = BrandmeisterSpecialContactGenerator()
 
-        bm_special_gen = BrandmeisterSpecialContactGenerator()
         self.contacts = ContactAggregator(
             aprs_contact_gen,
-            bm_special_gen,
-            brandmeister_contact_gen,
-        ).contacts(contact_seq)
+            self.bm_special_gen,
+            self.brandmeister_contact_gen,
+        ).contacts(self.contact_seq)
 
-        # APRS
-        aprs_seq = Sequence()
-        digital_aprs_gen = DigitalAPRSGenerator(aprs_contact=aprs_contact)
-        self.digital_aprs_config = digital_aprs_gen.aprs(aprs_seq)
-        analog_aprs = AnalogAPRSGenerator(self.callsign)
-        _ = analog_aprs.channels(
-            chan_seq
-        )  # This is a bit of a hack, it will pre-generate channels
-        self.analog_aprs_config = analog_aprs.aprs(aprs_seq)
+    def prepare_aprs(self):
+        """Prepare APRS configurations for both digital and analog modes."""
+        digital_aprs_gen = DigitalAPRSGenerator(aprs_contact=self.aprs_contact)
+        self.digital_aprs_config = digital_aprs_gen.aprs(self.aprs_seq)
 
-        # Channels
-        usa_tgs = brandmeister_contact_gen.matched_contacts("^31")
-        uk_tgs = brandmeister_contact_gen.matched_contacts("^235")
-        pl_tgs = brandmeister_contact_gen.matched_contacts("^260")
+        self.analog_aprs = AnalogAPRSGenerator(self.callsign)
+        # Pre-generate channels to setup APRS properly
+        _ = self.analog_aprs.channels(self.chan_seq)
+        self.analog_aprs_config = self.analog_aprs.aprs(self.aprs_seq)
+
+    def prepare_digital_channels(self):
+        """Prepare digital (DMR) channels from Brandmeister for USA, UK, and Poland."""
+        usa_tgs = self.brandmeister_contact_gen.matched_contacts("^31")
+        uk_tgs = self.brandmeister_contact_gen.matched_contacts("^235")
+        pl_tgs = self.brandmeister_contact_gen.matched_contacts("^260")
+
         self.digital_channels = ChannelAggregator(
             HotspotDigitalChannelGenerator(
                 usa_tgs + uk_tgs + pl_tgs,
                 aprs_config=self.digital_aprs_config,
-                default_contact_id=bm_special_gen.parrot().internal_id,
+                default_contact_id=self.bm_special_gen.parrot().internal_id,
             ),
             DigitalChannelGeneratorFromBrandmeister(
                 "High",
@@ -83,16 +82,18 @@ class Recipe(BaseRecipe):
                 aprs_config=self.digital_aprs_config,
                 callsign_matcher=NYNJCallsignMatcher(),
             ),
-        ).channels(chan_seq)
+        ).channels(self.chan_seq)
 
+    def prepare_analog_channels(self):
+        """Prepare analog (FM) channels from RepeaterBook for NY/NJ, filtered and sorted by distance."""
         # Get NY and NJ analog repeaters from RepeaterBook
         repeaterbook_api = RepeaterBookAPI()
         ny_repeaters = repeaterbook_api.get_repeaters_by_state("36")  # New York
         nj_repeaters = repeaterbook_api.get_repeaters_by_state("34")  # New Jersey
 
-        # Create aggregated analog channel generator (not yet filtered)
+        # Create aggregated analog channel generator
         analog_channel_generator = ChannelAggregator(
-            analog_aprs,
+            self.analog_aprs,
             AnalogChannelGeneratorFromRepeaterBook(
                 ny_repeaters,
                 "High",
@@ -105,21 +106,18 @@ class Recipe(BaseRecipe):
             ),
         )
 
-        # Get all analog channels
-        analog_channels = analog_channel_generator.channels(chan_seq)
-
         # Create filtered channel lists for separate bands using BandFilter
         # 2m band (144-148 MHz)
         band_2m_filter = BandFilter(
             analog_channel_generator, frequency_ranges=[(144.0, 148.0)]
         )
-        analog_2m_channels = band_2m_filter.channels(chan_seq)
+        analog_2m_channels = band_2m_filter.channels(self.chan_seq)
 
         # 70cm band (420-450 MHz)
         band_70cm_filter = BandFilter(
             analog_channel_generator, frequency_ranges=[(420.0, 450.0)]
         )
-        analog_70cm_channels = band_70cm_filter.channels(chan_seq)
+        analog_70cm_channels = band_70cm_filter.channels(self.chan_seq)
 
         # Sort analog channels by distance if location is provided
         if self.location is not None:
@@ -131,16 +129,19 @@ class Recipe(BaseRecipe):
                 analog_70cm_channels, reference_lat, reference_lng
             )
 
+        # Store separated channels for zone generation
+        self.analog_2m_channels = analog_2m_channels
+        self.analog_70cm_channels = analog_70cm_channels
         self.analog_channels = analog_2m_channels + analog_70cm_channels
 
-        # Zones
-        zone_seq = Sequence()
+    def prepare_zones(self):
+        """Prepare channel zones organized by callsign, type, and band, sorted by distance."""
         zones = ZoneAggregator(
             HotspotZoneGenerator(self.digital_channels),
             ZoneFromCallsignGenerator2(self.digital_channels),
-            AnalogZoneGenerator(analog_2m_channels, zone_name="Analog 2m"),
-            AnalogZoneGenerator(analog_70cm_channels, zone_name="Analog 70cm"),
-        ).zones(zone_seq)
+            AnalogZoneGenerator(self.analog_2m_channels, zone_name="Analog 2m"),
+            AnalogZoneGenerator(self.analog_70cm_channels, zone_name="Analog 70cm"),
+        ).zones(self.zone_seq)
 
         # Sort zones by distance if location is provided
         if self.location is not None:
@@ -153,6 +154,8 @@ class Recipe(BaseRecipe):
 
         self.zones = zones
 
+    def prepare_grouplists(self):
+        """Prepare talkgroup lists for Polish country code (260)."""
         self.grouplists = CountryGroupListGenerator(self.contacts, 260).grouplists(
             Sequence()
         )

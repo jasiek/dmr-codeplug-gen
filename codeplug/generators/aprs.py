@@ -11,17 +11,19 @@ from models import (
 class AnalogAPRSGenerator:
     def __init__(self, callsign):
         self.source = callsign
-        self.aprs_channel = None
-        self.aprs_config = None
+        self.aprs_channels = []
+        self._aprs_config_eu = None
+        self._aprs_config_us = None
 
     def channels(self, seq):
-        f = 144.800
-        if self.aprs_channel is None:
-            self.aprs_channel = AnalogChannel(
+        if len(self.aprs_channels) > 0:
+            return self.aprs_channels
+        self.aprs_channels.append(
+            AnalogChannel(
                 internal_id=seq.next(),
-                name="APRS",
-                rx_freq=f,
-                tx_freq=f,
+                name="APRS EU",
+                rx_freq=144.800,
+                tx_freq=144.800,
                 tx_power=TxPower.High,
                 scanlist_id=None,
                 tot=None,
@@ -38,16 +40,38 @@ class AnalogAPRSGenerator:
                 _rpt_callsign=None,
                 _qth=None,
             )
-        return [self.aprs_channel]
-
-    def aprs(self, seq):
-        if self.aprs_channel is None:
-            raise "Generate channels first"
-        if self.aprs_config is None:
-            self.aprs_config = AnalogAPRSConfig(
+        )
+        self.aprs_channels.append(
+            AnalogChannel(
                 internal_id=seq.next(),
-                name="Analog APRS",
-                channel_id=self.aprs_channel.internal_id,
+                name="APRS US",
+                rx_freq=144.390,
+                tx_freq=144.390,
+                tx_power=TxPower.High,
+                scanlist_id=None,
+                tot=None,
+                squelch=1,
+                rx_tone=None,
+                tx_tone=None,
+                rx_only=False,
+                admit_crit=AnalogAdmitCriteria.Free.value,
+                width=ChannelWidth.Narrow,
+                aprs=None,
+                _lat=None,
+                _lng=None,
+                _locator=None,
+                _rpt_callsign=None,
+                _qth=None,
+            )
+        )
+        return self.aprs_channels
+
+    def aprs_config_eu(self, seq):
+        if self._aprs_config_eu is None:
+            self._aprs_config_eu = AnalogAPRSConfig(
+                internal_id=seq.next(),
+                name="Analog APRS EU",
+                channel_id=self.aprs_channels[0].internal_id,
                 source=f"{self.source}-7",
                 destination="APAT81-0",
                 path=["WIDE1-1", "WIDE2-1"],
@@ -55,7 +79,22 @@ class AnalogAPRSGenerator:
                 icon="Runner",
                 message=f"{self.source} testing",
             )
-        return self.aprs_config
+        return self._aprs_config_eu
+
+    def aprs_config_us(self, seq):
+        if self._aprs_config_us is None:
+            self._aprs_config_us = AnalogAPRSConfig(
+                internal_id=seq.next(),
+                name="Analog APRS US",
+                channel_id=self.aprs_channels[1].internal_id,
+                source=f"{self.source}-7",
+                destination="APAT81-0",
+                path=["WIDE1-1", "WIDE2-1"],
+                period=60,
+                icon="Runner",
+                message=f"{self.source} testing",
+            )
+        return self._aprs_config_us
 
 
 class DigitalAPRSGenerator:
@@ -67,7 +106,7 @@ class DigitalAPRSGenerator:
     def channels(self, _):
         return []
 
-    def aprs(self, seq):
+    def digital_aprs_config(self, seq):
         if self.aprs_config is None:
             self.aprs_config = DigitalAPRSConfig(
                 internal_id=seq.next(),

@@ -109,7 +109,7 @@ class BrandmeisterSpecialContactGenerator:
         return None
 
 
-class APRSContactGenerator:
+class APRSDigitalContactGenerator:
     def __init__(self):
         self._contacts = []
 

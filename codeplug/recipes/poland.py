@@ -4,7 +4,7 @@ from generators import Sequence
 from generators.aprs import AnalogAPRSGenerator, DigitalAPRSGenerator
 from generators.grouplists import CountryGroupListGenerator
 from generators.contacts import (
-    APRSContactGenerator,
+    APRSDigitalContactGenerator,
     BrandmeisterTGContactGenerator,
     BrandmeisterSpecialContactGenerator,
 )
@@ -34,7 +34,7 @@ from callsign_matchers import RegexMatcher
 class Recipe(BaseRecipe):
     def prepare_contacts(self):
         """Prepare DMR contacts including APRS, Brandmeister TGs, and special contacts."""
-        aprs_contact_gen = APRSContactGenerator()
+        aprs_contact_gen = APRSDigitalContactGenerator()
         self.aprs_contact = aprs_contact_gen.contacts(self.contact_seq)[0]
         self.brandmeister_contact_gen = BrandmeisterTGContactGenerator()
         self.bm_special_gen = BrandmeisterSpecialContactGenerator()
@@ -48,12 +48,12 @@ class Recipe(BaseRecipe):
     def prepare_aprs(self):
         """Prepare APRS configurations for both digital and analog modes."""
         digital_aprs_gen = DigitalAPRSGenerator(aprs_contact=self.aprs_contact)
-        self.digital_aprs_config = digital_aprs_gen.aprs(self.aprs_seq)
+        self.digital_aprs_config = digital_aprs_gen.digital_aprs_config(self.aprs_seq)
 
         self.analog_aprs = AnalogAPRSGenerator(self.callsign)
         # Pre-generate channels to setup APRS properly
         _ = self.analog_aprs.channels(self.chan_seq)
-        self.analog_aprs_config = self.analog_aprs.aprs(self.aprs_seq)
+        self.analog_aprs_config = self.analog_aprs.aprs_config_eu(self.aprs_seq)
 
     def prepare_digital_channels(self):
         """Prepare digital (DMR) channels from Brandmeister and hotspot."""

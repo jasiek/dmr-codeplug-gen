@@ -123,6 +123,51 @@ class DigitalChannelGeneratorFromBrandmeister:
         return self._channels
 
     def generate_channels(self, sequence):
+        """
+        Generate digital channels from Brandmeister repeater database.
+
+        This method processes repeaters from the Brandmeister device database and creates
+        DigitalChannel objects for both talkgroup-specific channels and generic timeslot channels.
+
+        Process Overview:
+        1. Iterates through all devices in the Brandmeister device database
+        2. Filters devices based on callsign_matcher if provided (used to limit channels to specific regions/repeaters)
+        3. Skips hotspots (identified by: rx frequency == tx frequency, pep == 1, or statusText == "DMO")
+        4. For each repeater device, queries Brandmeister API for static talkgroups configured on that repeater
+        5. Creates talkgroup-specific channels for matches between repeater's static TGs and the provided talkgroups list
+        6. Creates two generic timeslot channels (TS1 and TS2) for each repeater to allow dynamic talkgroup access
+
+        Channel Creation Details:
+
+        Talkgroup-Specific Channels:
+        - Created only when a repeater's static talkgroup matches one from the provided talkgroups list
+        - Channel name format: "<repeater_callsign> <tg_calling_id> <tg_name>"
+        - Uses the repeater's configured timeslot for that talkgroup
+        - Sets tx_contact_id to the specific talkgroup's internal ID for direct access
+        - Skips talkgroups on slot 0 (invalid configuration)
+
+        Generic Timeslot Channels:
+        - Two channels created per repeater (one for TS1, one for TS2)
+        - Channel name format: "<repeater_callsign> TS<slot_number>"
+        - No tx_contact_id set (None), allowing user to manually select talkgroup during transmission
+        - Provides flexibility for accessing non-static talkgroups
+
+        Channel Configuration:
+        - RX frequency: Set to repeater's TX frequency (what the repeater transmits)
+        - TX frequency: Set to repeater's RX frequency (what the repeater receives)
+        - Color code: Obtained from repeater's configuration
+        - Geographic data: Latitude, longitude, maidenhead locator, and QTH extracted from repeater info
+        - Handles None values gracefully for missing lat/lng coordinates
+        - Power: Set to High for all repeater channels
+        - APRS: Uses the aprs_config provided to the generator
+
+        Parameters:
+        - sequence: A sequence generator providing unique internal IDs for each channel
+
+        Side Effects:
+        - Populates self._channels list with generated DigitalChannel objects
+        - Each channel receives a sequential internal_id from the provided sequence
+        """
         for dev in self.devices:
             if self.callsign_matcher and not self.callsign_matcher.matches(
                 dev["callsign"]

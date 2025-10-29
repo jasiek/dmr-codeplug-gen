@@ -7,7 +7,7 @@ import requests
 from .cache import FileCache
 
 ContactDB = json.load(open("data/brandmeister_talkgroups.json"))
-UnlistedContactDB = json.load(open("data/brandmeister_unlisted_talkgroups.json"))
+UnlistedContactDB = json.load(open("data_static/brandmeister_unlisted_talkgroups.json"))
 
 
 class DeviceDB(FileCache):

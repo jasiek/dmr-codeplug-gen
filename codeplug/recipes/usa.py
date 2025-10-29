@@ -26,7 +26,12 @@ from generators.zones import (
 from datasources.przemienniki import PrzemiennikiAPI
 from datasources.repeaterbook import RepeaterBookAPI
 from aggregators import ChannelAggregator, ZoneAggregator, ContactAggregator
-from callsign_matchers import NYNJCallsignMatcher
+from callsign_matchers import (
+    MultiMatcher,
+    CACallsignMatcher,
+    NMCallsignMatcher,
+    NYNJCallsignMatcher,
+)
 from filters import BandFilter, sort_channels_by_distance, sort_zones_by_distance
 
 
@@ -80,7 +85,11 @@ class Recipe(BaseRecipe):
                 "High",
                 usa_tgs,
                 aprs_config=self.digital_aprs_config,
-                callsign_matcher=NYNJCallsignMatcher(),
+                callsign_matcher=MultiMatcher(
+                    NYNJCallsignMatcher(),
+                    CACallsignMatcher(),
+                    NMCallsignMatcher(),
+                ),
             ),
         ).channels(self.chan_seq)
 

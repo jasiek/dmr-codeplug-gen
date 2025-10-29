@@ -64,6 +64,58 @@ class NYNJCallsignMatcher(CallsignMatcher):
         return bool(self.pattern.match(callsign.strip()))
 
 
+class CACallsignMatcher(CallsignMatcher):
+    """Matcher for California amateur radio callsigns.
+
+    California callsigns follow FCC regional patterns:
+    - California: Call sign district 6 (K6, N6, W6, KC6, KD6, etc.)
+
+    Matches:
+    - 1x2 format: K6XXX, N6XXX, W6XXX
+    - 2x1 format: KC6X, KD6X, etc.
+    - 2x2 format: KC6XX, KD6XX, etc.
+    - 2x3 format: KC6XXX, KD6XXX, etc.
+
+    Note: A-prefix callsigns are restricted to AA-AL range for US stations.
+    """
+
+    def __init__(self):
+        # Pattern for call district 6 (CA region)
+        # Matches: K6XXX, N6XXX, W6XXX, KC6X, KD6XX, KC6XXX, AA6-AL6 formats
+        self.pattern = re.compile(
+            r"^(K[A-Z]?6|N[A-Z]?6|W[A-Z]?6|A[A-L]6)[A-Z]{1,3}$", re.IGNORECASE
+        )
+
+    def matches(self, callsign: str) -> bool:
+        return bool(self.pattern.match(callsign.strip()))
+
+
+class NMCallsignMatcher(CallsignMatcher):
+    """Matcher for New Mexico amateur radio callsigns.
+
+    New Mexico callsigns follow FCC regional patterns:
+    - New Mexico: Call sign district 5 (K5, N5, W5, KC5, KD5, etc.)
+
+    Matches:
+    - 1x2 format: K5XXX, N5XXX, W5XXX
+    - 2x1 format: KC5X, KD5X, etc.
+    - 2x2 format: KC5XX, KD5XX, etc.
+    - 2x3 format: KC5XXX, KD5XXX, etc.
+
+    Note: A-prefix callsigns are restricted to AA-AL range for US stations.
+    """
+
+    def __init__(self):
+        # Pattern for call district 5 (NM region)
+        # Matches: K5XXX, N5XXX, W5XXX, KC5X, KD5XX, KC5XXX, AA5-AL5 formats
+        self.pattern = re.compile(
+            r"^(K[A-Z]?5|N[A-Z]?5|W[A-Z]?5|A[A-L]5)[A-Z]{1,3}$", re.IGNORECASE
+        )
+
+    def matches(self, callsign: str) -> bool:
+        return bool(self.pattern.match(callsign.strip()))
+
+
 class MultiMatcher(CallsignMatcher):
     """Matcher that combines multiple matchers with OR logic."""
 

@@ -32,7 +32,12 @@ from callsign_matchers import (
     NMCallsignMatcher,
     NYNJCallsignMatcher,
 )
-from filters import BandFilter, sort_channels_by_distance, sort_zones_by_distance
+from filters import (
+    BandFilter,
+    DistanceFilter,
+    sort_channels_by_distance,
+    sort_zones_by_distance,
+)
 
 
 class Recipe(BaseRecipe):
@@ -119,12 +124,24 @@ class Recipe(BaseRecipe):
             ),
         )
 
-        ca_channel_generator = ChannelAggregator(
+        # Redwood City, CA coordinates for distance filtering
+        redwood_city_lat = 37.4852
+        redwood_city_lng = -122.2364
+
+        # Apply distance filter to California repeaters (50km from Redwood City)
+        ca_channel_generator_unfiltered = ChannelAggregator(
             AnalogChannelGeneratorFromRepeaterBook(
                 ca_repeaters,
                 "High",
                 aprs=self.analog_aprs_config,
             ),
+        )
+
+        ca_channel_generator = DistanceFilter(
+            ca_channel_generator_unfiltered,
+            reference_lat=redwood_city_lat,
+            reference_lng=redwood_city_lng,
+            max_distance_km=50.0,
         )
 
         nm_channel_generator = ChannelAggregator(

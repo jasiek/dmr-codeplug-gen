@@ -41,11 +41,11 @@ settings:
       atpc: true
     keySettings:
       funcKey1Short: SMS
-      funcKey1Long: ToggleVFO
+      funcKey1Long: APRSSend
       funcKey2Short: LastCallReply
       funcKey2Long: GPS
       funcKey3Short: Power
-      funcKey3Long: APRSSend
+      funcKey3Long: "Off"
       funcKeyAShort: Monitor
       funcKeyALong: "Off"
       funcKeyBShort: Dial
@@ -83,14 +83,14 @@ settings:
     displaySettings:
       displayFrequency: false
       brightness: 3
-      backlightDuration: 60 s
+      backlightDuration: 180 s
       backlightDurationTX: 0
       backlightDurationRX: 0
       customChannelBackground: false
       volumeChangePrompt: false
       callEndPrompt: false
       showClock: true
-      showCall: false
+      showCall: true
       showContact: true
       showChannelNumber: false
       showColorCode: true

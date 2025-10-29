@@ -13,7 +13,7 @@ ${PLUGFILE}: all $(wildcard codeplug/*.py)
 	black .
 	python codeplug/cli.py ${PLUGFILE} ${CALLSIGN} ${DMRID} ${RECIPE} ${TIMEZONE}
 
-validate: ${PLUGFILE}
+validate: ${PLUGFILE} blank_radio/uv878_base.yml
 	dmrconf -y verify ${PLUGFILE}
 
 program: validate

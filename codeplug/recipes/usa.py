@@ -91,7 +91,7 @@ class Recipe(BaseRecipe):
                 usa_tgs,
                 aprs_config=self.digital_aprs_config,
                 callsign_matcher=MultiMatcher(
-                    NYNJCallsignMatcher(),
+                    # NYNJCallsignMatcher(),
                     CACallsignMatcher(),
                     NMCallsignMatcher(),
                 ),
@@ -245,10 +245,10 @@ class Recipe(BaseRecipe):
         # Combine all analog channels
         self.analog_channels = (
             self.analog_aprs.channels(self.chan_seq)
-            + ny_2m_channels
-            + ny_70cm_channels
-            + nj_2m_channels
-            + nj_70cm_channels
+            #            + ny_2m_channels
+            #            + ny_70cm_channels
+            #            + nj_2m_channels
+            #            + nj_70cm_channels
             + ca_2m_channels
             + ca_70cm_channels
             + nm_2m_channels
@@ -258,12 +258,12 @@ class Recipe(BaseRecipe):
     def prepare_zones(self):
         """Prepare channel zones organized by callsign, state, band, sorted by distance."""
         zones = ZoneAggregator(
-            HotspotZoneGenerator(self.digital_channels),
+            # HotspotZoneGenerator(self.digital_channels),
             ZoneFromCallsignGenerator2(self.digital_channels),
-            AnalogZoneGenerator(self.ny_2m_channels, zone_name="NY 2m Analog"),
-            AnalogZoneGenerator(self.ny_70cm_channels, zone_name="NY 70cm Analog"),
-            AnalogZoneGenerator(self.nj_2m_channels, zone_name="NJ 2m Analog"),
-            AnalogZoneGenerator(self.nj_70cm_channels, zone_name="NJ 70cm Analog"),
+            # AnalogZoneGenerator(self.ny_2m_channels, zone_name="NY 2m Analog"),
+            # AnalogZoneGenerator(self.ny_70cm_channels, zone_name="NY 70cm Analog"),
+            # AnalogZoneGenerator(self.nj_2m_channels, zone_name="NJ 2m Analog"),
+            # AnalogZoneGenerator(self.nj_70cm_channels, zone_name="NJ 70cm Analog"),
             AnalogZoneGenerator(self.ca_2m_channels, zone_name="CA 2m Analog"),
             AnalogZoneGenerator(self.ca_70cm_channels, zone_name="CA 70cm Analog"),
             AnalogZoneGenerator(self.nm_2m_channels, zone_name="NM 2m Analog"),

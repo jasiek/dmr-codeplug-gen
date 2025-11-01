@@ -4,6 +4,9 @@ from collections import defaultdict
 from generators import Sequence
 from models import Zone, DigitalChannel, is_hotspot, AnalogChannel
 
+# Import the new location-based zone generators
+from .location_zones import LocationClusterZoneGenerator, DistanceBandedZoneGenerator
+
 
 class ZoneFromLocatorGenerator:
     def __init__(self, channels):

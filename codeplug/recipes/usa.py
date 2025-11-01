@@ -80,22 +80,53 @@ class Recipe(BaseRecipe):
         uk_tgs = self.brandmeister_contact_gen.matched_contacts("^235")
         pl_tgs = self.brandmeister_contact_gen.matched_contacts("^260")
 
+        # Redwood City, CA coordinates for distance filtering
+        redwood_city_lat = 37.4852
+        redwood_city_lng = -122.2364
+
+        # San Antonio, NM coordinates for distance filtering
+        san_antonio_nm_lat = 33.9178
+        san_antonio_nm_lng = -106.8531
+
+        # Create separate digital channel generators for CA and NM
+        ca_digital_generator = DigitalChannelGeneratorFromBrandmeister(
+            "High",
+            usa_tgs,
+            aprs_config=self.digital_aprs_config,
+            callsign_matcher=CACallsignMatcher(),
+        )
+
+        nm_digital_generator = DigitalChannelGeneratorFromBrandmeister(
+            "High",
+            usa_tgs,
+            aprs_config=self.digital_aprs_config,
+            callsign_matcher=NMCallsignMatcher(),
+        )
+
+        # Apply distance filter to California digital channels (50km from Redwood City)
+        ca_digital_filtered = DistanceFilter(
+            ca_digital_generator,
+            reference_lat=redwood_city_lat,
+            reference_lng=redwood_city_lng,
+            max_distance_km=50.0,
+        )
+
+        # Apply distance filter to New Mexico digital channels (150km from San Antonio, NM)
+        nm_digital_filtered = DistanceFilter(
+            nm_digital_generator,
+            reference_lat=san_antonio_nm_lat,
+            reference_lng=san_antonio_nm_lng,
+            max_distance_km=150.0,
+        )
+
         self.digital_channels = ChannelAggregator(
             HotspotDigitalChannelGenerator(
                 usa_tgs + uk_tgs + pl_tgs,
                 aprs_config=self.digital_aprs_config,
                 default_contact_id=self.bm_special_gen.parrot().internal_id,
             ),
-            DigitalChannelGeneratorFromBrandmeister(
-                "High",
-                usa_tgs,
-                aprs_config=self.digital_aprs_config,
-                callsign_matcher=MultiMatcher(
-                    # NYNJCallsignMatcher(),
-                    CACallsignMatcher(),
-                    NMCallsignMatcher(),
-                ),
-            ),
+            ca_digital_filtered,
+            nm_digital_filtered,
         ).channels(self.chan_seq)
 
     def prepare_analog_channels(self):
@@ -128,6 +159,10 @@ class Recipe(BaseRecipe):
         redwood_city_lat = 37.4852
         redwood_city_lng = -122.2364
 
+        # San Antonio, NM coordinates for distance filtering
+        san_antonio_nm_lat = 33.9178
+        san_antonio_nm_lng = -106.8531
+
         # Apply distance filter to California repeaters (50km from Redwood City)
         ca_channel_generator_unfiltered = ChannelAggregator(
             AnalogChannelGeneratorFromRepeaterBook(
@@ -144,12 +179,20 @@ class Recipe(BaseRecipe):
             max_distance_km=50.0,
         )
 
-        nm_channel_generator = ChannelAggregator(
+        # Apply distance filter to New Mexico repeaters (150km from San Antonio, NM)
+        nm_channel_generator_unfiltered = ChannelAggregator(
             AnalogChannelGeneratorFromRepeaterBook(
                 nm_repeaters,
                 "High",
                 aprs=self.analog_aprs_config,
             ),
+        )
+
+        nm_channel_generator = DistanceFilter(
+            nm_channel_generator_unfiltered,
+            reference_lat=san_antonio_nm_lat,
+            reference_lng=san_antonio_nm_lng,
+            max_distance_km=150.0,
         )
 
         # Create filtered channel lists for NY by band
@@ -191,6 +234,14 @@ class Recipe(BaseRecipe):
         )
         ca_70cm_channels = ca_70cm_filter.channels(self.chan_seq)
 
+        # Sort CA channels by distance from Redwood City (closest first)
+        ca_2m_channels = sort_channels_by_distance(
+            ca_2m_channels, redwood_city_lat, redwood_city_lng
+        )
+        ca_70cm_channels = sort_channels_by_distance(
+            ca_70cm_channels, redwood_city_lat, redwood_city_lng
+        )
+
         # Create filtered channel lists for NM by band
         # NM 2m band (144-148 MHz)
         nm_2m_filter = BandFilter(
@@ -203,6 +254,14 @@ class Recipe(BaseRecipe):
             nm_channel_generator, frequency_ranges=[(420.0, 450.0)]
         )
         nm_70cm_channels = nm_70cm_filter.channels(self.chan_seq)
+
+        # Sort NM channels by distance from San Antonio, NM (closest first)
+        nm_2m_channels = sort_channels_by_distance(
+            nm_2m_channels, san_antonio_nm_lat, san_antonio_nm_lng
+        )
+        nm_70cm_channels = sort_channels_by_distance(
+            nm_70cm_channels, san_antonio_nm_lat, san_antonio_nm_lng
+        )
 
         # Sort analog channels by distance if location is provided
         if self.location is not None:
@@ -219,18 +278,7 @@ class Recipe(BaseRecipe):
             nj_70cm_channels = sort_channels_by_distance(
                 nj_70cm_channels, reference_lat, reference_lng
             )
-            ca_2m_channels = sort_channels_by_distance(
-                ca_2m_channels, reference_lat, reference_lng
-            )
-            ca_70cm_channels = sort_channels_by_distance(
-                ca_70cm_channels, reference_lat, reference_lng
-            )
-            nm_2m_channels = sort_channels_by_distance(
-                nm_2m_channels, reference_lat, reference_lng
-            )
-            nm_70cm_channels = sort_channels_by_distance(
-                nm_70cm_channels, reference_lat, reference_lng
-            )
+            # CA and NM channels are already sorted by their respective reference points
 
         # Store separated channels for zone generation
         self.ny_2m_channels = ny_2m_channels

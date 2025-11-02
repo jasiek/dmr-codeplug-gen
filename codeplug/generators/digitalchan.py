@@ -110,12 +110,21 @@ class HotspotDigitalChannelGenerator:
 
 
 class DigitalChannelGeneratorFromBrandmeister:
-    def __init__(self, power, talkgroups, *, aprs_config, callsign_matcher=None):
+    def __init__(
+        self,
+        power,
+        talkgroups,
+        *,
+        aprs_config,
+        callsign_matcher=None,
+        default_contact_id=None,
+    ):
         self.devices = brandmeister.DeviceDB().devices
         self._channels = []
         self.talkgroups = talkgroups
         self.aprs_config = aprs_config
         self.callsign_matcher = callsign_matcher
+        self.default_contact_id = default_contact_id
 
     def channels(self, sequence):
         if len(self._channels) == 0:
@@ -252,7 +261,7 @@ class DigitalChannelGeneratorFromBrandmeister:
                         color=dev["colorcode"],
                         slot=slot,
                         rx_grouplist_id="-",
-                        tx_contact_id=None,
+                        tx_contact_id=self.default_contact_id,
                         aprs=self.aprs_config,
                         anytone=DEFAULT_ANYTONE_EXTENSIONS,
                         _lat=lat,

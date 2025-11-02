@@ -53,6 +53,11 @@ class ChannelWidth(StrEnum):
     Wide = "Wide"  # 25
 
 
+class Band(Enum):
+    VHF = "VHF"
+    UHF = "UHF"
+
+
 # model definitions
 
 
@@ -134,6 +139,14 @@ class DigitalChannel:
     _rpt_callsign: Optional[str]  # Optional repeater callsign, for zone grouping
     _qth: QTH
 
+    def band(self) -> Band:
+        if 136.0 <= self.rx_freq <= 174.0:
+            return Band.VHF
+        elif 400.0 <= self.rx_freq <= 520.0:
+            return Band.UHF
+        else:
+            raise ValueError(f"Frequency {self.rx_freq} MHz is out of VHF/UHF range.")
+
 
 def is_hotspot(chan):
     return chan.name.startswith("HS")
@@ -173,6 +186,14 @@ class AnalogChannel:
     _locator: Locator
     _rpt_callsign: Optional[str]
     _qth: Optional[str]
+
+    def band(self) -> Band:
+        if 136.0 <= self.rx_freq <= 174.0:
+            return Band.VHF
+        elif 400.0 <= self.rx_freq <= 520.0:
+            return Band.UHF
+        else:
+            raise ValueError(f"Frequency {self.rx_freq} MHz is out of VHF/UHF range.")
 
 
 @dataclass

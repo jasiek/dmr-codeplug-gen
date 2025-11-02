@@ -29,10 +29,14 @@ class ZoneFromLocatorGenerator:
             else:
                 locators_to_channels[locator_label] += [chan]
 
+        output = []
+
         for key in sorted(locators_to_channels.keys()):
             channels = sorted(locators_to_channels[key], key=lambda chan: chan.name)
             channel_ids = [chan.internal_id for chan in channels]
-            yield Zone(internal_id=seq.next(), name=key, channels=channel_ids)
+            output.append(Zone(internal_id=seq.next(), name=key, channels=channel_ids))
+
+        return output[:250]
 
 
 class ZoneFromCallsignGenerator:
@@ -55,7 +59,7 @@ class ZoneFromCallsignGenerator:
             channels = sorted(prefix_to_channels[key], key=lambda chan: chan.name)
             channel_ids = [chan.internal_id for chan in channels]
             output.append(Zone(internal_id=seq.next(), name=key, channels=channel_ids))
-        return output
+        return output[:250]
 
 
 class ZoneFromCallsignGenerator2:
@@ -71,8 +75,6 @@ class ZoneFromCallsignGenerator2:
 
         output = []
 
-        del callsign_to_channels[None]  # ignore hotspots
-
         for key in sorted(callsign_to_channels.keys()):
             channels = sorted(callsign_to_channels[key], key=lambda chan: chan.name)
             channel_ids = [chan.internal_id for chan in channels]
@@ -81,7 +83,7 @@ class ZoneFromCallsignGenerator2:
             else:
                 name = key
             output.append(Zone(internal_id=seq.next(), name=name, channels=channel_ids))
-        return output
+        return output[:250]
 
 
 class PMRZoneGenerator:
@@ -121,7 +123,30 @@ class AnalogZoneGenerator:
 
         return [
             Zone(internal_id=seq.next(), name=self.zone_name, channels=analog_channels),
-        ]
+        ][:250]
+
+
+class AnalogZoneByBandGenerator:
+    def __init__(self, channels, prefix):
+        self.channels = channels
+        self.prefix = prefix
+
+    def zones(self, seq):
+        zones = {}
+        for chan in self.channels:
+            if isinstance(chan, AnalogChannel):
+                if chan.band not in zones:
+                    zones[chan.band] = []
+                zones[chan.band].append(chan.internal_id)
+
+        return [
+            Zone(
+                internal_id=seq.next(),
+                name=f"{self.prefix} {band} Analog",
+                channels=channel_ids,
+            )
+            for band, channel_ids in zones.items()
+        ][:250]
 
 
 class HotspotZoneGenerator:
@@ -134,4 +159,6 @@ class HotspotZoneGenerator:
             if is_hotspot(chan):
                 hotspot_channels.append(chan.internal_id)
 
-        return [Zone(internal_id=seq.next(), name="Hotspot", channels=hotspot_channels)]
+        return [
+            Zone(internal_id=seq.next(), name="Hotspot", channels=hotspot_channels)
+        ][:250]

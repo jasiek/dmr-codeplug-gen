@@ -17,6 +17,7 @@ class AT878UV:
         zones=[],
         roaming_channels=[],
         roaming_zones=[],
+        scanlists=[],
         timezone=None,
     ):
         self.dmr_id = dmr_id
@@ -28,6 +29,7 @@ class AT878UV:
         self.zones = zones
         self.roaming_channels = roaming_channels
         self.roaming_zones = roaming_zones
+        self.scanlists = scanlists
 
         self.analog_aprs_config = analog_aprs_config
         self.digital_aprs_config = digital_aprs_config
@@ -40,6 +42,7 @@ class AT878UV:
             writer.write_gps_settings(self.timezone)
         writer.write_contacts(self.contacts)
         writer.write_grouplists(self.grouplists)
+        writer.write_scanlists(self.scanlists)
         writer.write_analog_channels(self.analog_channels)
         writer.write_digital_channels(self.digital_channels)
         writer.write_zones(self.zones)

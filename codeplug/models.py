@@ -197,3 +197,10 @@ class DigitalRoamingZone:
     internal_id: ZoneID
     name: str
     channels: List[ChannelID]
+
+
+@dataclass
+class ScanList:
+    internal_id: ScanListID
+    name: str
+    channels: List[ChannelID]

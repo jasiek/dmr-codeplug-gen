@@ -1,4 +1,4 @@
-from models import ContactID, GroupListID, ChannelID, ZoneID, Slot
+from models import ContactID, GroupListID, ChannelID, ZoneID, ScanListID, Slot
 
 
 def fmt_contact_id(id: ContactID) -> str:
@@ -7,6 +7,10 @@ def fmt_contact_id(id: ContactID) -> str:
 
 def fmt_grouplist_id(id: GroupListID) -> str:
     return f"grouplist{id}"
+
+
+def fmt_scanlist_id(id: ScanListID) -> str:
+    return f"scanlist{id}"
 
 
 def fmt_chan_id(id: ChannelID) -> str:

@@ -23,9 +23,10 @@ from generators.zones import (
     PMRZoneGenerator,
     AnalogZoneGenerator,
 )
+from generators.scanlists import StateScanListGenerator
+from aggregators import ChannelAggregator, ZoneAggregator, ContactAggregator
 from datasources.przemienniki import PrzemiennikiAPI
 from datasources.repeaterbook import RepeaterBookAPI
-from aggregators import ChannelAggregator, ZoneAggregator, ContactAggregator
 from callsign_matchers import (
     MultiMatcher,
     CACallsignMatcher,
@@ -119,15 +120,21 @@ class Recipe(BaseRecipe):
             max_distance_km=150.0,
         )
 
-        self.digital_channels = ChannelAggregator(
-            HotspotDigitalChannelGenerator(
-                usa_tgs + uk_tgs + pl_tgs,
-                aprs_config=self.digital_aprs_config,
-                default_contact_id=self.bm_special_gen.parrot().internal_id,
-            ),
-            ca_digital_filtered,
-            nm_digital_filtered,
+        # Generate hotspot channels
+        hotspot_channels = HotspotDigitalChannelGenerator(
+            usa_tgs + uk_tgs + pl_tgs,
+            aprs_config=self.digital_aprs_config,
+            default_contact_id=self.bm_special_gen.parrot().internal_id,
         ).channels(self.chan_seq)
+
+        # Generate state-specific channels
+        self.ca_digital_channels = ca_digital_filtered.channels(self.chan_seq)
+        self.nm_digital_channels = nm_digital_filtered.channels(self.chan_seq)
+
+        # Combine all digital channels
+        self.digital_channels = (
+            hotspot_channels + self.ca_digital_channels + self.nm_digital_channels
+        )
 
     def prepare_analog_channels(self):
         """Prepare analog (FM) channels from RepeaterBook for NY/NJ/CA/NM, filtered and sorted by distance."""
@@ -328,6 +335,53 @@ class Recipe(BaseRecipe):
             )
 
         self.zones = zones
+
+    def prepare_scanlists(self):
+        """Prepare scan lists for analog and digital channels per state."""
+        # Combine all analog channels per state
+        ca_analog_channels = self.ca_2m_channels + self.ca_70cm_channels
+        nm_analog_channels = self.nm_2m_channels + self.nm_70cm_channels
+
+        # Create scan lists for CA and NM
+        ca_scanlist_gen = StateScanListGenerator(
+            "CA", ca_analog_channels, self.ca_digital_channels
+        )
+        nm_scanlist_gen = StateScanListGenerator(
+            "NM", nm_analog_channels, self.nm_digital_channels
+        )
+
+        # Generate all scan lists using a single sequence to avoid ID collisions
+        scanlist_seq = Sequence()
+        ca_scanlists = ca_scanlist_gen.scanlists(scanlist_seq)
+        nm_scanlists = nm_scanlist_gen.scanlists(scanlist_seq)
+
+        self.scanlists = ca_scanlists + nm_scanlists
+
+        # Create a mapping of scanlist names to IDs for channel assignment
+        scanlist_map = {}
+        for scanlist in self.scanlists:
+            scanlist_map[scanlist.name] = scanlist.internal_id
+
+        # Assign scan list IDs to channels
+        # CA analog channels
+        for channel in ca_analog_channels:
+            if "CA Analog" in scanlist_map:
+                channel.scanlist_id = scanlist_map["CA Analog"]
+
+        # CA digital channels
+        for channel in self.ca_digital_channels:
+            if "CA Digital" in scanlist_map:
+                channel.scanlist_id = scanlist_map["CA Digital"]
+
+        # NM analog channels
+        for channel in nm_analog_channels:
+            if "NM Analog" in scanlist_map:
+                channel.scanlist_id = scanlist_map["NM Analog"]
+
+        # NM digital channels
+        for channel in self.nm_digital_channels:
+            if "NM Digital" in scanlist_map:
+                channel.scanlist_id = scanlist_map["NM Digital"]
 
     def prepare_grouplists(self):
         """Prepare talkgroup lists for Polish country code (260)."""

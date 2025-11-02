@@ -18,6 +18,7 @@ class BaseRecipe:
         self.digital_channels = []
         self.zones = []
         self.roaming_zones = []
+        self.scanlists = []
 
     def prepare(self):
         """Main preparation method that orchestrates all section preparation."""
@@ -37,6 +38,7 @@ class BaseRecipe:
         self.prepare_analog_channels()
         self.prepare_zones()
         self.prepare_roaming()
+        self.prepare_scanlists()
         self.prepare_grouplists()
 
     def prepare_contacts(self):
@@ -63,6 +65,10 @@ class BaseRecipe:
         """Prepare roaming channels and zones. Override in subclasses."""
         pass
 
+    def prepare_scanlists(self):
+        """Prepare scan lists. Override in subclasses."""
+        pass
+
     def prepare_grouplists(self):
         """Prepare talkgroup lists. Override in subclasses."""
         pass
@@ -76,6 +82,7 @@ class BaseRecipe:
                 callsign=self.callsign,
                 contacts=self.contacts,
                 grouplists=self.grouplists,
+                scanlists=self.scanlists,
                 analog_channels=self.analog_channels,
                 digital_channels=self.digital_channels,
                 zones=self.zones,

@@ -64,6 +64,17 @@ class QDMRWriter:
                 }
             )
 
+    def write_scanlists(self, scanlists):
+        self.codeplug["scanLists"] = []
+        for scanlist in scanlists:
+            self.codeplug["scanLists"].append(
+                {
+                    "id": fmt_scanlist_id(scanlist.internal_id),
+                    "name": scanlist.name,
+                    "channels": [fmt_chan_id(id) for id in scanlist.channels],
+                }
+            )
+
     def write_analog_channels(self, channels):
         codeplug_channels = []
         for chan in channels:
@@ -77,7 +88,11 @@ class QDMRWriter:
                     "timeout": chan.tot,
                     "rxOnly": chan.rx_only,
                     # "vox": False,
-                    "scanList": chan.scanlist_id,
+                    "scanList": (
+                        fmt_scanlist_id(chan.scanlist_id)
+                        if chan.scanlist_id
+                        else chan.scanlist_id
+                    ),
                     "admit": chan.admit_crit,
                     "squelch": 1,
                     "bandwidth": chan.width.value,
@@ -109,7 +124,11 @@ class QDMRWriter:
                     "timeout": chan.tot,
                     "rxOnly": chan.rx_only,
                     # "vox": False,
-                    "scanList": chan.scanlist_id,
+                    "scanList": (
+                        fmt_scanlist_id(chan.scanlist_id)
+                        if chan.scanlist_id
+                        else chan.scanlist_id
+                    ),
                     "admit": chan.admit_crit,
                     "colorCode": chan.color,
                     "timeSlot": fmt_ts(chan.slot),

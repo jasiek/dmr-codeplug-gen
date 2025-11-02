@@ -3,6 +3,7 @@ from . import BaseRecipe
 from generators import Sequence
 from generators.aprs import AnalogAPRSGenerator, DigitalAPRSGenerator
 from generators.grouplists import CountryGroupListGenerator
+from generators.rxgrouplists import RXGroupListGenerator, HotspotRXGroupListGenerator
 from generators.contacts import (
     APRSDigitalContactGenerator,
     BrandmeisterTGContactGenerator,
@@ -384,7 +385,39 @@ class Recipe(BaseRecipe):
                 channel.scanlist_id = scanlist_map["NM Digital"]
 
     def prepare_grouplists(self):
-        """Prepare talkgroup lists for Polish country code (260)."""
-        self.grouplists = CountryGroupListGenerator(self.contacts, 260).grouplists(
-            Sequence()
-        )
+        """
+        Prepare RX Group Lists based on channel definitions and their talkgroups.
+
+        This method generates two types of group lists:
+        1. Repeater-specific RXGroupLists: For each repeater, creates a list containing
+           all static talkgroups configured on that repeater (fetched from Brandmeister API)
+        2. Hotspot RXGroupList: A comprehensive list for hotspot channels containing all
+           available talkgroups (USA, UK, and Poland)
+
+        The group lists are then automatically assigned to their respective channels.
+        """
+        # Separate hotspot channels from repeater channels
+        hotspot_channels = [
+            ch for ch in self.digital_channels if ch.name.startswith("HS")
+        ]
+        repeater_channels = [
+            ch for ch in self.digital_channels if not ch.name.startswith("HS")
+        ]
+
+        # Use a single sequence to avoid ID collisions
+        grouplist_seq = Sequence()
+
+        # Generate RXGroupLists for repeater channels
+        # This will create one group list per repeater containing all its static TGs
+        repeater_rxgrouplists = RXGroupListGenerator(
+            repeater_channels, self.contacts
+        ).grouplists(grouplist_seq)
+
+        # Generate RXGroupList for hotspot channels
+        # This creates a single comprehensive group list for all hotspot access
+        hotspot_rxgrouplists = HotspotRXGroupListGenerator(
+            hotspot_channels, self.contacts
+        ).grouplists(grouplist_seq)
+
+        # Combine all group lists
+        self.grouplists = repeater_rxgrouplists + hotspot_rxgrouplists

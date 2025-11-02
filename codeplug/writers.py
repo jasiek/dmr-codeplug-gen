@@ -146,6 +146,9 @@ class QDMRWriter:
             if chan.tx_contact_id:
                 ch["digital"]["contact"] = fmt_contact_id(chan.tx_contact_id)
 
+            if chan.rx_grouplist_id and chan.rx_grouplist_id != "-":
+                ch["digital"]["rxGroupList"] = fmt_grouplist_id(chan.rx_grouplist_id)
+
             if chan.aprs:
                 ch["digital"]["aprs"] = fmt_aprs(chan.aprs.internal_id)
 

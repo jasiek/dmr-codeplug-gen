@@ -67,7 +67,7 @@ class BrandmeisterSpecialContactGenerator:
                 ("262993 WX SMS", 262993),
                 ("262994 RPT SMS", 262994),
                 ("262995 SMSC", 262995),
-                ("262997 PARROT", 262997),
+                ("9990 PARROT", 9990),
             ]
             output = [
                 Contact(
@@ -98,7 +98,7 @@ class BrandmeisterSpecialContactGenerator:
 
     def parrot(self):
         for c in self._contacts:
-            if c.calling_id == 262997:
+            if c.calling_id == 9990:
                 return c
         return None
 

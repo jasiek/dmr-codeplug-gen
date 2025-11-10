@@ -135,9 +135,9 @@ class AnalogZoneByBandGenerator:
         zones = {}
         for chan in self.channels:
             if isinstance(chan, AnalogChannel):
-                if chan.band not in zones:
-                    zones[chan.band] = []
-                zones[chan.band].append(chan.internal_id)
+                if chan.band() not in zones:
+                    zones[chan.band()] = []
+                zones[chan.band()].append(chan.internal_id)
 
         return [
             Zone(

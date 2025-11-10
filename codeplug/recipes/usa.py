@@ -46,10 +46,6 @@ from filters import (
 REDWOOD_CITY_LAT = 37.4852
 REDWOOD_CITY_LNG = -122.2364
 
-# San Antonio, NM coordinates for distance filtering
-SAN_ANTONIO_NM_LAT = 33.9178
-SAN_ANTONIO_NM_LNG = -106.8531
-
 # New York City, NY coordinates for distance filtering
 NYC_LAT = 40.7128
 NYC_LNG = -74.0060
@@ -110,30 +106,9 @@ class Recipe(BaseRecipe):
 
         return ca_digital_filtered
 
-    def nm_digital_channel_generator(self, usa_tgs):
-        nm_digital_generator = DigitalChannelGeneratorFromBrandmeister(
-            "High",
-            usa_tgs,
-            aprs_config=self.digital_aprs_config,
-            callsign_matcher=NMCallsignMatcher(),
-            default_contact_id=self.bm_special_gen.parrot().internal_id,
-        )
-
-        # Apply distance filter to New Mexico digital channels (150km from San Antonio, NM)
-        nm_digital_filtered = DistanceFilter(
-            nm_digital_generator,
-            reference_lat=SAN_ANTONIO_NM_LAT,
-            reference_lng=SAN_ANTONIO_NM_LNG,
-            max_distance_km=150.0,
-        )
-
-        nm_digital_filtered = BandFilter(nm_digital_filtered)
-
-        return nm_digital_filtered
-
     def prepare_digital_channels(self):
         """Prepare digital (DMR) channels from Brandmeister for USA, UK, and Poland."""
-        usa_tgs = self.brandmeister_contact_gen.matched_contacts("^31")
+        usa_tgs = self.brandmeister_contact_gen.matched_contacts("^3")
         uk_tgs = self.brandmeister_contact_gen.matched_contacts("^235")
         pl_tgs = self.brandmeister_contact_gen.matched_contacts("^260")
 
@@ -148,12 +123,9 @@ class Recipe(BaseRecipe):
         self.ca_digital_channels = self.ca_digital_channel_generator(usa_tgs).channels(
             self.chan_seq
         )
-        self.nm_digital_channels = self.nm_digital_channel_generator(usa_tgs).channels(
-            self.chan_seq
-        )
 
         # Combine all digital channels
-        self.digital_channels = self.ca_digital_channels + self.nm_digital_channels
+        self.digital_channels = self.ca_digital_channels
 
     def generate_ca_analog_channels(self):
         # Create separate analog channel generators for CA and NM
@@ -188,48 +160,11 @@ class Recipe(BaseRecipe):
 
         return ca_2m_channels + ca_70cm_channels
 
-    def generate_nm_analog_channels(self):
-        nm_repeaters = RepeaterBookAPI().get_repeaters_by_state("35")  # New Mexico
-
-        nm_channel_generator_unfiltered = ChannelAggregator(
-            AnalogChannelGeneratorFromRepeaterBook(
-                nm_repeaters,
-                "High",
-                aprs=self.analog_aprs_config,
-            ),
-        )
-
-        # Apply distance filter to New Mexico repeaters (150km from San Antonio, NM)
-        nm_channel_generator = DistanceFilter(
-            nm_channel_generator_unfiltered,
-            reference_lat=SAN_ANTONIO_NM_LAT,
-            reference_lng=SAN_ANTONIO_NM_LNG,
-            max_distance_km=150.0,
-        )
-
-        # Create filtered channel lists for NM by band
-        # NM 2m band (144-148 MHz)
-        nm_2m_filter = BandFilter(
-            nm_channel_generator, frequency_ranges=[(144.0, 148.0)]
-        )
-        nm_2m_channels = nm_2m_filter.channels(self.chan_seq)
-
-        # NM 70cm band (420-450 MHz)
-        nm_70cm_filter = BandFilter(
-            nm_channel_generator, frequency_ranges=[(420.0, 450.0)]
-        )
-        nm_70cm_channels = nm_70cm_filter.channels(self.chan_seq)
-
-        return nm_2m_channels + nm_70cm_channels
-
     def prepare_analog_channels(self):
         self.ca_analog_channels = self.generate_ca_analog_channels()
-        self.nm_analog_channels = self.generate_nm_analog_channels()
 
         self.analog_channels = (
-            self.analog_aprs.channels(self.chan_seq)
-            + self.ca_analog_channels
-            + self.nm_analog_channels
+            self.analog_aprs.channels(self.chan_seq) + self.ca_analog_channels
         )
 
     def prepare_zones(self):
@@ -238,7 +173,6 @@ class Recipe(BaseRecipe):
         self.zones = ZoneAggregator(
             ZoneFromCallsignGenerator2(self.digital_channels),
             AnalogZoneByBandGenerator(self.ca_analog_channels, prefix="CA"),
-            AnalogZoneByBandGenerator(self.nm_analog_channels, prefix="NM"),
         ).zones(zone_seq)
 
     def prepare_scanlists(self):
@@ -248,16 +182,12 @@ class Recipe(BaseRecipe):
         ca_scanlist_gen = StateScanListGenerator(
             "CA", self.ca_analog_channels, self.ca_digital_channels
         )
-        nm_scanlist_gen = StateScanListGenerator(
-            "NM", self.nm_analog_channels, self.nm_digital_channels
-        )
 
         # Generate all scan lists using a single sequence to avoid ID collisions
         scanlist_seq = Sequence()
         ca_scanlists = ca_scanlist_gen.scanlists(scanlist_seq)
-        nm_scanlists = nm_scanlist_gen.scanlists(scanlist_seq)
 
-        self.scanlists = ca_scanlists + nm_scanlists
+        self.scanlists = ca_scanlists
 
         # Create a mapping of scanlist names to IDs for channel assignment
         scanlist_map = {}
@@ -274,16 +204,6 @@ class Recipe(BaseRecipe):
         for channel in self.ca_digital_channels:
             if "CA Digital" in scanlist_map:
                 channel.scanlist_id = scanlist_map["CA Digital"]
-
-        # NM analog channels
-        for channel in self.nm_analog_channels:
-            if "NM Analog" in scanlist_map:
-                channel.scanlist_id = scanlist_map["NM Analog"]
-
-        # NM digital channels
-        for channel in self.nm_digital_channels:
-            if "NM Digital" in scanlist_map:
-                channel.scanlist_id = scanlist_map["NM Digital"]
 
     def prepare_grouplists(self):
         grouplist_seq = Sequence()

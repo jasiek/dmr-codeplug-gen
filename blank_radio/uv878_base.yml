@@ -155,7 +155,7 @@ settings:
       timeZone: Europe/Paris
       reportPosition: false
       updatePeriod: 5 s
-      mode: All
+      mode: GPS
     roamingSettings:
       autoRoam: false
       autoRoamPeriod: 0

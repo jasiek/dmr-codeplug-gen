@@ -7,6 +7,8 @@ from models import (
     DigitalAPRSConfig,
 )
 
+DEFAULT_PERIOD = 60
+
 
 class AnalogAPRSGenerator:
     def __init__(self, callsign):
@@ -75,7 +77,7 @@ class AnalogAPRSGenerator:
                 source=f"{self.source}-7",
                 destination="APAT81-0",
                 path=["WIDE1-1", "WIDE2-1"],
-                period=60,
+                period=DEFAULT_PERIOD,
                 icon="Runner",
                 message=f"{self.source} testing",
             )
@@ -90,7 +92,7 @@ class AnalogAPRSGenerator:
                 source=f"{self.source}-7",
                 destination="APAT81-0",
                 path=["WIDE1-1", "WIDE2-1"],
-                period=60,
+                period=DEFAULT_PERIOD,
                 icon="Runner",
                 message=f"{self.source} testing",
             )
@@ -111,7 +113,7 @@ class DigitalAPRSGenerator:
             self.aprs_config = DigitalAPRSConfig(
                 internal_id=seq.next(),
                 name="DMR APRS",
-                period=180,
+                period=DEFAULT_PERIOD,
                 contact_id=self.aprs_contact.internal_id,
             )
         return self.aprs_config

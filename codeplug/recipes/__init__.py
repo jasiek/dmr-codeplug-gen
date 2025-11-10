@@ -1,6 +1,13 @@
 class BaseRecipe:
     def __init__(
-        self, callsign, dmr_id, filename, radio_class, writer_class, timezone=None
+        self,
+        callsign,
+        dmr_id,
+        filename,
+        radio_class,
+        writer_class,
+        timezone=None,
+        debug=False,
     ):
         self.callsign = callsign
         self.dmr_id = dmr_id
@@ -8,6 +15,7 @@ class BaseRecipe:
         self.radio_class = radio_class
         self.writer_class = writer_class
         self.timezone = timezone
+        self.debug = debug
         # Subclasses can define their own location as (latitude, longitude)
         self.location = None
 

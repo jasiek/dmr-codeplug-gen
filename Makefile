@@ -11,7 +11,7 @@ data/brandmeister_talkgroups.json:
 
 ${PLUGFILE}: all $(wildcard codeplug/*.py)
 	black .
-	python codeplug/cli.py ${PLUGFILE} ${CALLSIGN} ${DMRID} ${RECIPE} ${TIMEZONE}
+	python codeplug/cli.py --debug ${PLUGFILE} ${CALLSIGN} ${DMRID} ${RECIPE} ${TIMEZONE}
 
 validate: ${PLUGFILE} blank_radio/uv878_base.yml
 	dmrconf -y verify ${PLUGFILE}

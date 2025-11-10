@@ -38,8 +38,6 @@ from callsign_matchers import (
 from filters import (
     BandFilter,
     DistanceFilter,
-    sort_channels_by_distance,
-    sort_zones_by_distance,
 )
 
 # Redwood City, CA coordinates for distance filtering
@@ -53,10 +51,17 @@ NYC_LNG = -74.0060
 
 class Recipe(BaseRecipe):
     def __init__(
-        self, callsign, dmr_id, filename, radio_class, writer_class, timezone=None
+        self,
+        callsign,
+        dmr_id,
+        filename,
+        radio_class,
+        writer_class,
+        timezone=None,
+        debug=False,
     ):
         super().__init__(
-            callsign, dmr_id, filename, radio_class, writer_class, timezone
+            callsign, dmr_id, filename, radio_class, writer_class, timezone, debug
         )
 
     def prepare_contacts(self):
@@ -100,9 +105,10 @@ class Recipe(BaseRecipe):
             reference_lat=REDWOOD_CITY_LAT,
             reference_lng=REDWOOD_CITY_LNG,
             max_distance_km=50.0,
+            debug=self.debug,
         )
 
-        ca_digital_filtered = BandFilter(ca_digital_filtered)
+        ca_digital_filtered = BandFilter(ca_digital_filtered, debug=self.debug)
 
         return ca_digital_filtered
 
@@ -145,16 +151,17 @@ class Recipe(BaseRecipe):
             reference_lat=REDWOOD_CITY_LAT,
             reference_lng=REDWOOD_CITY_LNG,
             max_distance_km=50.0,
+            debug=self.debug,
         )
 
         ca_2m_filter = BandFilter(
-            ca_channel_generator, frequency_ranges=[(144.0, 148.0)]
+            ca_channel_generator, frequency_ranges=[(144.0, 148.0)], debug=self.debug
         )
         ca_2m_channels = ca_2m_filter.channels(self.chan_seq)
 
         # CA 70cm band (420-450 MHz)
         ca_70cm_filter = BandFilter(
-            ca_channel_generator, frequency_ranges=[(420.0, 450.0)]
+            ca_channel_generator, frequency_ranges=[(420.0, 450.0)], debug=self.debug
         )
         ca_70cm_channels = ca_70cm_filter.channels(self.chan_seq)
 

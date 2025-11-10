@@ -47,6 +47,7 @@ class DistanceFilter:
         reference_lng: float,
         max_distance_km: float,
         include_channels_without_coordinates: bool = False,
+        debug: bool = False,
     ):
         """
         Initialize the distance filter.
@@ -57,12 +58,14 @@ class DistanceFilter:
             reference_lng: Reference longitude in decimal degrees
             max_distance_km: Maximum distance in kilometers from reference point
             include_channels_without_coordinates: Whether to include channels that don't have lat/lng
+            debug: If True, print debug information for filtered channels
         """
         self.generator = generator
         self.reference_lat = reference_lat
         self.reference_lng = reference_lng
         self.max_distance_km = max_distance_km
         self.include_channels_without_coordinates = include_channels_without_coordinates
+        self.debug = debug
         self._filtered_channels = None
 
     def channels(self, sequence):
@@ -87,12 +90,16 @@ class DistanceFilter:
         filtered_channels = []
 
         for channel in all_channels:
-            if self._should_include_channel(channel):
+            should_include, reason = self._should_include_channel(channel)
+            if should_include:
                 filtered_channels.append(channel)
+            elif self.debug:
+                channel_name = getattr(channel, "name", str(channel))
+                print(f"[DistanceFilter] Filtered out: {channel_name} - {reason}")
 
         return filtered_channels
 
-    def _should_include_channel(self, channel) -> bool:
+    def _should_include_channel(self, channel) -> Tuple[bool, str]:
         """
         Determine if a channel should be included based on distance criteria.
 
@@ -100,28 +107,43 @@ class DistanceFilter:
             channel: Channel object to evaluate
 
         Returns:
-            True if channel should be included, False otherwise
+            Tuple of (should_include, reason) where should_include is bool and reason is string
         """
         # Check if channel has coordinates
         if not hasattr(channel, "_lat") or not hasattr(channel, "_lng"):
-            return self.include_channels_without_coordinates
+            if self.include_channels_without_coordinates:
+                return (True, "")
+            else:
+                return (False, "Missing coordinate attributes")
 
         lat = channel._lat
         lng = channel._lng
 
         # Handle channels without coordinates
         if lat is None or lng is None:
-            return self.include_channels_without_coordinates
+            if self.include_channels_without_coordinates:
+                return (True, "")
+            else:
+                return (False, "Coordinates are None")
 
         # Calculate distance and check if within range
         try:
             distance = haversine_distance(
                 self.reference_lat, self.reference_lng, float(lat), float(lng)
             )
-            return distance <= self.max_distance_km
-        except (ValueError, TypeError):
+            if distance <= self.max_distance_km:
+                return (True, "")
+            else:
+                return (
+                    False,
+                    f"Distance {distance:.1f}km exceeds max {self.max_distance_km}km",
+                )
+        except (ValueError, TypeError) as e:
             # If coordinate conversion fails, apply fallback policy
-            return self.include_channels_without_coordinates
+            if self.include_channels_without_coordinates:
+                return (True, "")
+            else:
+                return (False, f"Coordinate conversion error: {e}")
 
 
 class RegionFilter:
@@ -148,6 +170,7 @@ class RegionFilter:
         min_lng: float,
         max_lng: float,
         include_channels_without_coordinates: bool = False,
+        debug: bool = False,
     ):
         """
         Initialize the region filter.
@@ -159,6 +182,7 @@ class RegionFilter:
             min_lng: Minimum longitude bound
             max_lng: Maximum longitude bound
             include_channels_without_coordinates: Whether to include channels that don't have lat/lng
+            debug: If True, print debug information for filtered channels
         """
         self.generator = generator
         self.min_lat = min_lat
@@ -166,6 +190,7 @@ class RegionFilter:
         self.min_lng = min_lng
         self.max_lng = max_lng
         self.include_channels_without_coordinates = include_channels_without_coordinates
+        self.debug = debug
         self._filtered_channels = None
 
     def channels(self, sequence):
@@ -190,12 +215,16 @@ class RegionFilter:
         filtered_channels = []
 
         for channel in all_channels:
-            if self._should_include_channel(channel):
+            should_include, reason = self._should_include_channel(channel)
+            if should_include:
                 filtered_channels.append(channel)
+            elif self.debug:
+                channel_name = getattr(channel, "name", str(channel))
+                print(f"[RegionFilter] Filtered out: {channel_name} - {reason}")
 
         return filtered_channels
 
-    def _should_include_channel(self, channel) -> bool:
+    def _should_include_channel(self, channel) -> Tuple[bool, str]:
         """
         Determine if a channel should be included based on region criteria.
 
@@ -203,31 +232,46 @@ class RegionFilter:
             channel: Channel object to evaluate
 
         Returns:
-            True if channel should be included, False otherwise
+            Tuple of (should_include, reason) where should_include is bool and reason is string
         """
         # Check if channel has coordinates
         if not hasattr(channel, "_lat") or not hasattr(channel, "_lng"):
-            return self.include_channels_without_coordinates
+            if self.include_channels_without_coordinates:
+                return (True, "")
+            else:
+                return (False, "Missing coordinate attributes")
 
         lat = channel._lat
         lng = channel._lng
 
         # Handle channels without coordinates
         if lat is None or lng is None:
-            return self.include_channels_without_coordinates
+            if self.include_channels_without_coordinates:
+                return (True, "")
+            else:
+                return (False, "Coordinates are None")
 
         # Check if coordinates are within bounds
         try:
             lat_float = float(lat)
             lng_float = float(lng)
 
-            return (
+            if (
                 self.min_lat <= lat_float <= self.max_lat
                 and self.min_lng <= lng_float <= self.max_lng
-            )
-        except (ValueError, TypeError):
+            ):
+                return (True, "")
+            else:
+                return (
+                    False,
+                    f"Coordinates ({lat_float:.4f}, {lng_float:.4f}) outside region bounds",
+                )
+        except (ValueError, TypeError) as e:
             # If coordinate conversion fails, apply fallback policy
-            return self.include_channels_without_coordinates
+            if self.include_channels_without_coordinates:
+                return (True, "")
+            else:
+                return (False, f"Coordinate conversion error: {e}")
 
 
 class BandFilter:
@@ -254,6 +298,7 @@ class BandFilter:
         self,
         generator,
         frequency_ranges: list[tuple[float, float]] = None,
+        debug: bool = False,
     ):
         """
         Initialize the band filter.
@@ -262,6 +307,7 @@ class BandFilter:
             generator: Any object with a channels(sequence) method that returns channels
             frequency_ranges: List of (min_freq, max_freq) tuples in MHz.
                             Defaults to [(144.0, 148.0), (420.0, 450.0)] for 2m and 70cm bands.
+            debug: If True, print debug information for filtered channels
         """
         self.generator = generator
         if frequency_ranges is None:
@@ -269,6 +315,7 @@ class BandFilter:
             self.frequency_ranges = [(144.0, 148.0), (420.0, 450.0)]
         else:
             self.frequency_ranges = frequency_ranges
+        self.debug = debug
         self._filtered_channels = None
 
     def channels(self, sequence):
@@ -293,12 +340,16 @@ class BandFilter:
         filtered_channels = []
 
         for channel in all_channels:
-            if self._should_include_channel(channel):
+            should_include, reason = self._should_include_channel(channel)
+            if should_include:
                 filtered_channels.append(channel)
+            elif self.debug:
+                channel_name = getattr(channel, "name", str(channel))
+                print(f"[BandFilter] Filtered out: {channel_name} - {reason}")
 
         return filtered_channels
 
-    def _should_include_channel(self, channel) -> bool:
+    def _should_include_channel(self, channel) -> Tuple[bool, str]:
         """
         Determine if a channel should be included based on frequency band criteria.
 
@@ -306,20 +357,24 @@ class BandFilter:
             channel: Channel object to evaluate
 
         Returns:
-            True if channel should be included, False otherwise
+            Tuple of (should_include, reason) where should_include is bool and reason is string
         """
         # Check if channel has rx_freq attribute
         if not hasattr(channel, "rx_freq"):
-            return False
+            return (False, "Missing rx_freq attribute")
 
         rx_freq = channel.rx_freq
 
         # Check if frequency falls within any of the allowed ranges
         for min_freq, max_freq in self.frequency_ranges:
             if min_freq <= rx_freq <= max_freq:
-                return True
+                return (True, "")
 
-        return False
+        # Build a reason string showing the allowed ranges
+        ranges_str = ", ".join(
+            [f"{min_f}-{max_f} MHz" for min_f, max_f in self.frequency_ranges]
+        )
+        return (False, f"Frequency {rx_freq} MHz not in allowed ranges: {ranges_str}")
 
 
 def sort_channels_by_distance(

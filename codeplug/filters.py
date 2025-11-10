@@ -1,5 +1,5 @@
 import math
-from typing import Optional, Union, List, Tuple
+from typing import Optional, Union, List, Tuple, Callable, Any
 
 
 def haversine_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
@@ -25,103 +25,158 @@ def haversine_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> fl
     return c * r
 
 
-class DistanceFilter:
+class FilterChain:
     """
-    A filter that wraps any channel generator and filters channels by distance from a reference point.
+    A chain of filters that can be passed to channel/zone generators.
+    Each filter in the chain is applied in sequence, and a channel must pass all filters.
+    """
+
+    def __init__(self, filters: List["BaseFilter"] = None):
+        """
+        Initialize the filter chain.
+
+        Args:
+            filters: List of BaseFilter instances to apply
+        """
+        self.filters = filters or []
+
+    def add_filter(self, filter_instance: "BaseFilter") -> "FilterChain":
+        """
+        Add a filter to the chain.
+
+        Args:
+            filter_instance: A BaseFilter instance to add
+
+        Returns:
+            Self for method chaining
+        """
+        self.filters.append(filter_instance)
+        return self
+
+    def should_include(self, item: Any) -> Tuple[bool, str]:
+        """
+        Test if an item should be included based on all filters in the chain.
+
+        Args:
+            item: The item (channel, zone, etc.) to test
+
+        Returns:
+            Tuple of (should_include, reason) where should_include is bool and reason is string
+        """
+        for filter_instance in self.filters:
+            should_include, reason = filter_instance.should_include(item)
+            if not should_include:
+                return (False, reason)
+        return (True, "")
+
+    def filter_items(self, items: List[Any], debug: bool = False) -> List[Any]:
+        """
+        Filter a list of items using the filter chain.
+
+        Args:
+            items: List of items to filter
+            debug: If True, print debug information for filtered items
+
+        Returns:
+            Filtered list of items
+        """
+        filtered_items = []
+        for item in items:
+            should_include, reason = self.should_include(item)
+            if should_include:
+                filtered_items.append(item)
+            elif debug:
+                item_name = getattr(item, "name", str(item))
+                print(f"[FilterChain] Filtered out: {item_name} - {reason}")
+        return filtered_items
+
+    def __len__(self) -> int:
+        """Return the number of filters in the chain."""
+        return len(self.filters)
+
+    def __bool__(self) -> bool:
+        """Return True if there are filters in the chain."""
+        return len(self.filters) > 0
+
+
+class BaseFilter:
+    """
+    Base class for all filters. Filters test whether an item should be included.
+    """
+
+    def should_include(self, item: Any) -> Tuple[bool, str]:
+        """
+        Determine if an item should be included.
+
+        Args:
+            item: The item to test
+
+        Returns:
+            Tuple of (should_include, reason) where should_include is bool and reason is string
+        """
+        raise NotImplementedError("Subclasses must implement should_include")
+
+
+class DistanceFilter(BaseFilter):
+    """
+    A filter that tests channels by distance from a reference point.
 
     Usage:
-        # Filter channels to only include those within 50km of New York City
-        filtered_gen = DistanceFilter(
-            generator=my_channel_generator,
-            reference_lat=40.7128,
-            reference_lng=-74.0060,
-            max_distance_km=50.0
-        )
-        channels = filtered_gen.channels(sequence)
+        filter_chain = FilterChain([
+            DistanceFilter(
+                reference_lat=40.7128,
+                reference_lng=-74.0060,
+                max_distance_km=50.0
+            )
+        ])
+        generator = MyChannelGenerator(filter_chain=filter_chain)
+        channels = generator.channels(sequence)
     """
 
     def __init__(
         self,
-        generator,
         reference_lat: float,
         reference_lng: float,
         max_distance_km: float,
-        include_channels_without_coordinates: bool = False,
-        debug: bool = False,
+        include_items_without_coordinates: bool = False,
     ):
         """
         Initialize the distance filter.
 
         Args:
-            generator: Any object with a channels(sequence) method that returns channels
             reference_lat: Reference latitude in decimal degrees
             reference_lng: Reference longitude in decimal degrees
             max_distance_km: Maximum distance in kilometers from reference point
-            include_channels_without_coordinates: Whether to include channels that don't have lat/lng
-            debug: If True, print debug information for filtered channels
+            include_items_without_coordinates: Whether to include items that don't have lat/lng
         """
-        self.generator = generator
         self.reference_lat = reference_lat
         self.reference_lng = reference_lng
         self.max_distance_km = max_distance_km
-        self.include_channels_without_coordinates = include_channels_without_coordinates
-        self.debug = debug
-        self._filtered_channels = None
+        self.include_items_without_coordinates = include_items_without_coordinates
 
-    def channels(self, sequence):
+    def should_include(self, item: Any) -> Tuple[bool, str]:
         """
-        Generate filtered channels based on distance criteria.
+        Determine if an item should be included based on distance criteria.
 
         Args:
-            sequence: Sequence object for generating internal IDs
+            item: Item object to evaluate (typically a channel)
 
         Returns:
-            List of channels within the specified distance
+            Tuple of (should_include, reason)
         """
-        if self._filtered_channels is None:
-            self._filtered_channels = self._filter_channels(sequence)
-        return self._filtered_channels
-
-    def _filter_channels(self, sequence):
-        """
-        Internal method to perform the actual filtering.
-        """
-        all_channels = self.generator.channels(sequence)
-        filtered_channels = []
-
-        for channel in all_channels:
-            should_include, reason = self._should_include_channel(channel)
-            if should_include:
-                filtered_channels.append(channel)
-            elif self.debug:
-                channel_name = getattr(channel, "name", str(channel))
-                print(f"[DistanceFilter] Filtered out: {channel_name} - {reason}")
-
-        return filtered_channels
-
-    def _should_include_channel(self, channel) -> Tuple[bool, str]:
-        """
-        Determine if a channel should be included based on distance criteria.
-
-        Args:
-            channel: Channel object to evaluate
-
-        Returns:
-            Tuple of (should_include, reason) where should_include is bool and reason is string
-        """
-        # Check if channel has coordinates
-        if not hasattr(channel, "_lat") or not hasattr(channel, "_lng"):
-            if self.include_channels_without_coordinates:
+        # Check if item has coordinates
+        if not hasattr(item, "_lat") or not hasattr(item, "_lng"):
+            if self.include_items_without_coordinates:
                 return (True, "")
             else:
                 return (False, "Missing coordinate attributes")
 
-        lat = channel._lat
-        lng = channel._lng
+        lat = item._lat
+        lng = item._lng
 
-        # Handle channels without coordinates
+        # Handle items without coordinates
         if lat is None or lng is None:
-            if self.include_channels_without_coordinates:
+            if self.include_items_without_coordinates:
                 return (True, "")
             else:
                 return (False, "Coordinates are None")
@@ -140,113 +195,76 @@ class DistanceFilter:
                 )
         except (ValueError, TypeError) as e:
             # If coordinate conversion fails, apply fallback policy
-            if self.include_channels_without_coordinates:
+            if self.include_items_without_coordinates:
                 return (True, "")
             else:
                 return (False, f"Coordinate conversion error: {e}")
 
 
-class RegionFilter:
+class RegionFilter(BaseFilter):
     """
-    A filter that wraps any channel generator and filters channels by geographic region bounds.
+    A filter that tests channels by geographic region bounds.
 
     Usage:
-        # Filter channels to only include those within a bounding box
-        filtered_gen = RegionFilter(
-            generator=my_channel_generator,
-            min_lat=40.0,
-            max_lat=41.0,
-            min_lng=-75.0,
-            max_lng=-73.0
-        )
-        channels = filtered_gen.channels(sequence)
+        filter_chain = FilterChain([
+            RegionFilter(
+                min_lat=40.0,
+                max_lat=41.0,
+                min_lng=-75.0,
+                max_lng=-73.0
+            )
+        ])
+        generator = MyChannelGenerator(filter_chain=filter_chain)
+        channels = generator.channels(sequence)
     """
 
     def __init__(
         self,
-        generator,
         min_lat: float,
         max_lat: float,
         min_lng: float,
         max_lng: float,
-        include_channels_without_coordinates: bool = False,
-        debug: bool = False,
+        include_items_without_coordinates: bool = False,
     ):
         """
         Initialize the region filter.
 
         Args:
-            generator: Any object with a channels(sequence) method that returns channels
             min_lat: Minimum latitude bound
             max_lat: Maximum latitude bound
             min_lng: Minimum longitude bound
             max_lng: Maximum longitude bound
-            include_channels_without_coordinates: Whether to include channels that don't have lat/lng
-            debug: If True, print debug information for filtered channels
+            include_items_without_coordinates: Whether to include items that don't have lat/lng
         """
-        self.generator = generator
         self.min_lat = min_lat
         self.max_lat = max_lat
         self.min_lng = min_lng
         self.max_lng = max_lng
-        self.include_channels_without_coordinates = include_channels_without_coordinates
-        self.debug = debug
-        self._filtered_channels = None
+        self.include_items_without_coordinates = include_items_without_coordinates
 
-    def channels(self, sequence):
+    def should_include(self, item: Any) -> Tuple[bool, str]:
         """
-        Generate filtered channels based on region criteria.
+        Determine if an item should be included based on region criteria.
 
         Args:
-            sequence: Sequence object for generating internal IDs
+            item: Item object to evaluate
 
         Returns:
-            List of channels within the specified region
+            Tuple of (should_include, reason)
         """
-        if self._filtered_channels is None:
-            self._filtered_channels = self._filter_channels(sequence)
-        return self._filtered_channels
-
-    def _filter_channels(self, sequence):
-        """
-        Internal method to perform the actual filtering.
-        """
-        all_channels = self.generator.channels(sequence)
-        filtered_channels = []
-
-        for channel in all_channels:
-            should_include, reason = self._should_include_channel(channel)
-            if should_include:
-                filtered_channels.append(channel)
-            elif self.debug:
-                channel_name = getattr(channel, "name", str(channel))
-                print(f"[RegionFilter] Filtered out: {channel_name} - {reason}")
-
-        return filtered_channels
-
-    def _should_include_channel(self, channel) -> Tuple[bool, str]:
-        """
-        Determine if a channel should be included based on region criteria.
-
-        Args:
-            channel: Channel object to evaluate
-
-        Returns:
-            Tuple of (should_include, reason) where should_include is bool and reason is string
-        """
-        # Check if channel has coordinates
-        if not hasattr(channel, "_lat") or not hasattr(channel, "_lng"):
-            if self.include_channels_without_coordinates:
+        # Check if item has coordinates
+        if not hasattr(item, "_lat") or not hasattr(item, "_lng"):
+            if self.include_items_without_coordinates:
                 return (True, "")
             else:
                 return (False, "Missing coordinate attributes")
 
-        lat = channel._lat
-        lng = channel._lng
+        lat = item._lat
+        lng = item._lng
 
-        # Handle channels without coordinates
+        # Handle items without coordinates
         if lat is None or lng is None:
-            if self.include_channels_without_coordinates:
+            if self.include_items_without_coordinates:
                 return (True, "")
             else:
                 return (False, "Coordinates are None")
@@ -268,102 +286,62 @@ class RegionFilter:
                 )
         except (ValueError, TypeError) as e:
             # If coordinate conversion fails, apply fallback policy
-            if self.include_channels_without_coordinates:
+            if self.include_items_without_coordinates:
                 return (True, "")
             else:
                 return (False, f"Coordinate conversion error: {e}")
 
 
-class BandFilter:
+class BandFilter(BaseFilter):
     """
-    A filter that wraps any channel generator and filters channels by frequency band.
+    A filter that tests channels by frequency band.
     By default, only passes through channels in the 2m (144-148 MHz) and 70cm (420-450 MHz) bands.
 
     Usage:
-        # Filter channels to only include 2m and 70cm bands
-        filtered_gen = BandFilter(
-            generator=my_channel_generator
-        )
-        channels = filtered_gen.channels(sequence)
+        filter_chain = FilterChain([
+            BandFilter()  # Uses default 2m and 70cm bands
+        ])
+        generator = MyChannelGenerator(filter_chain=filter_chain)
+        channels = generator.channels(sequence)
 
         # Or specify custom frequency ranges
-        filtered_gen = BandFilter(
-            generator=my_channel_generator,
-            frequency_ranges=[(144.0, 148.0), (420.0, 450.0)]
-        )
-        channels = filtered_gen.channels(sequence)
+        filter_chain = FilterChain([
+            BandFilter(frequency_ranges=[(144.0, 148.0), (420.0, 450.0)])
+        ])
     """
 
     def __init__(
         self,
-        generator,
         frequency_ranges: list[tuple[float, float]] = None,
-        debug: bool = False,
     ):
         """
         Initialize the band filter.
 
         Args:
-            generator: Any object with a channels(sequence) method that returns channels
             frequency_ranges: List of (min_freq, max_freq) tuples in MHz.
                             Defaults to [(144.0, 148.0), (420.0, 450.0)] for 2m and 70cm bands.
-            debug: If True, print debug information for filtered channels
         """
-        self.generator = generator
         if frequency_ranges is None:
             # Default to 2m and 70cm bands
             self.frequency_ranges = [(144.0, 148.0), (420.0, 450.0)]
         else:
             self.frequency_ranges = frequency_ranges
-        self.debug = debug
-        self._filtered_channels = None
 
-    def channels(self, sequence):
+    def should_include(self, item: Any) -> Tuple[bool, str]:
         """
-        Generate filtered channels based on frequency band criteria.
+        Determine if an item should be included based on frequency band criteria.
 
         Args:
-            sequence: Sequence object for generating internal IDs
+            item: Item object to evaluate (typically a channel)
 
         Returns:
-            List of channels within the specified frequency bands
+            Tuple of (should_include, reason)
         """
-        if self._filtered_channels is None:
-            self._filtered_channels = self._filter_channels(sequence)
-        return self._filtered_channels
-
-    def _filter_channels(self, sequence):
-        """
-        Internal method to perform the actual filtering.
-        """
-        all_channels = self.generator.channels(sequence)
-        filtered_channels = []
-
-        for channel in all_channels:
-            should_include, reason = self._should_include_channel(channel)
-            if should_include:
-                filtered_channels.append(channel)
-            elif self.debug:
-                channel_name = getattr(channel, "name", str(channel))
-                print(f"[BandFilter] Filtered out: {channel_name} - {reason}")
-
-        return filtered_channels
-
-    def _should_include_channel(self, channel) -> Tuple[bool, str]:
-        """
-        Determine if a channel should be included based on frequency band criteria.
-
-        Args:
-            channel: Channel object to evaluate
-
-        Returns:
-            Tuple of (should_include, reason) where should_include is bool and reason is string
-        """
-        # Check if channel has rx_freq attribute
-        if not hasattr(channel, "rx_freq"):
+        # Check if item has rx_freq attribute
+        if not hasattr(item, "rx_freq"):
             return (False, "Missing rx_freq attribute")
 
-        rx_freq = channel.rx_freq
+        rx_freq = item.rx_freq
 
         # Check if frequency falls within any of the allowed ranges
         for min_freq, max_freq in self.frequency_ranges:

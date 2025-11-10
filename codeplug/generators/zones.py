@@ -9,12 +9,28 @@ from .location_zones import LocationClusterZoneGenerator, DistanceBandedZoneGene
 
 
 class ZoneFromLocatorGenerator:
-    def __init__(self, channels):
+    def __init__(self, channels, filter_chain=None, debug=False):
         self.channels = channels
+        self.filter_chain = filter_chain
+        self.debug = debug
 
     def zones(self, seq):
         locators_to_channels = defaultdict(lambda: [])
-        for chan in self.channels:
+
+        # Pre-filter channels if filter chain is provided
+        filtered_channels = self.channels
+        if self.filter_chain:
+            filtered_channels = []
+            for chan in self.channels:
+                should_include, reason = self.filter_chain.should_include(chan)
+                if should_include:
+                    filtered_channels.append(chan)
+                elif self.debug:
+                    print(
+                        f"[ZoneFromLocatorGenerator] Filtered out channel: {chan.name} - {reason}"
+                    )
+
+        for chan in filtered_channels:
             if chan.locator is None:
                 continue
 
@@ -40,12 +56,28 @@ class ZoneFromLocatorGenerator:
 
 
 class ZoneFromCallsignGenerator:
-    def __init__(self, channels):
+    def __init__(self, channels, filter_chain=None, debug=False):
         self.channels = channels
+        self.filter_chain = filter_chain
+        self.debug = debug
 
     def zones(self, seq):
         prefix_to_channels = defaultdict(lambda: [])
-        for chan in self.channels:
+
+        # Pre-filter channels if filter chain is provided
+        filtered_channels = self.channels
+        if self.filter_chain:
+            filtered_channels = []
+            for chan in self.channels:
+                should_include, reason = self.filter_chain.should_include(chan)
+                if should_include:
+                    filtered_channels.append(chan)
+                elif self.debug:
+                    print(
+                        f"[ZoneFromCallsignGenerator] Filtered out channel: {chan.name} - {reason}"
+                    )
+
+        for chan in filtered_channels:
             if m := re.match("^([A-Z]{2}[0-9])", chan._rpt_callsign):
                 prefix = m.groups()[0]
                 if isinstance(chan, DigitalChannel):
@@ -64,13 +96,29 @@ class ZoneFromCallsignGenerator:
 
 class ZoneFromCallsignGenerator2:
     # NOTE: 26/12/2023 (jps): Per-callsign clustering of channels
-    def __init__(self, channels, with_qth=True):
+    def __init__(self, channels, with_qth=True, filter_chain=None, debug=False):
         self.channels = channels
         self.with_qth = with_qth
+        self.filter_chain = filter_chain
+        self.debug = debug
 
     def zones(self, seq):
         callsign_to_channels = defaultdict(lambda: [])
-        for chan in self.channels:
+
+        # Pre-filter channels if filter chain is provided
+        filtered_channels = self.channels
+        if self.filter_chain:
+            filtered_channels = []
+            for chan in self.channels:
+                should_include, reason = self.filter_chain.should_include(chan)
+                if should_include:
+                    filtered_channels.append(chan)
+                elif self.debug:
+                    print(
+                        f"[ZoneFromCallsignGenerator2] Filtered out channel: {chan.name} - {reason}"
+                    )
+
+        for chan in filtered_channels:
             callsign_to_channels[chan._rpt_callsign].append(chan)
 
         output = []
@@ -127,13 +175,29 @@ class AnalogZoneGenerator:
 
 
 class AnalogZoneByBandGenerator:
-    def __init__(self, channels, prefix):
+    def __init__(self, channels, prefix, filter_chain=None, debug=False):
         self.channels = channels
         self.prefix = prefix
+        self.filter_chain = filter_chain
+        self.debug = debug
 
     def zones(self, seq):
         zones = {}
-        for chan in self.channels:
+
+        # Pre-filter channels if filter chain is provided
+        filtered_channels = self.channels
+        if self.filter_chain:
+            filtered_channels = []
+            for chan in self.channels:
+                should_include, reason = self.filter_chain.should_include(chan)
+                if should_include:
+                    filtered_channels.append(chan)
+                elif self.debug:
+                    print(
+                        f"[AnalogZoneByBandGenerator] Filtered out channel: {chan.name} - {reason}"
+                    )
+
+        for chan in filtered_channels:
             if isinstance(chan, AnalogChannel):
                 if chan.band() not in zones:
                     zones[chan.band()] = []

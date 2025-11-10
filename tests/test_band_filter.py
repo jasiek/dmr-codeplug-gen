@@ -11,7 +11,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent / "codeplug"))
 
 from models import AnalogChannel, TxPower, ChannelWidth
 from generators import Sequence
-from filters import BandFilter
+from filters import BandFilter, FilterChain
 
 
 class MockAnalogChannelGenerator:
@@ -75,15 +75,15 @@ def test_default_band_filter():
     """Test the BandFilter with default settings (2m and 70cm)."""
     print("Testing BandFilter with default settings (2m and 70cm)...")
 
-    # Create mock generator
+    # Create mock generator and get all channels
     mock_generator = MockAnalogChannelGenerator()
-
-    # Create band filter with defaults
-    band_filter = BandFilter(generator=mock_generator)
-
-    # Get filtered channels
     sequence = Sequence()
-    filtered_channels = band_filter.channels(sequence)
+    all_channels = mock_generator.channels(sequence)
+
+    # Create band filter with defaults and apply to channels
+    band_filter = BandFilter()
+    filter_chain = FilterChain([band_filter])
+    filtered_channels = filter_chain.filter_items(all_channels)
 
     print(f"\nChannels in 2m (144-148 MHz) and 70cm (420-450 MHz) bands:")
     print(f"Total filtered channels: {len(filtered_channels)}")
@@ -105,12 +105,12 @@ def test_single_band_filter():
     # Test 2m only
     print("\n2m Band Only (144-148 MHz):")
     mock_generator = MockAnalogChannelGenerator()
-    band_2m_filter = BandFilter(
-        generator=mock_generator, frequency_ranges=[(144.0, 148.0)]
-    )
-
     sequence = Sequence()
-    channels_2m = band_2m_filter.channels(sequence)
+    all_channels = mock_generator.channels(sequence)
+
+    band_2m_filter = BandFilter(frequency_ranges=[(144.0, 148.0)])
+    filter_chain = FilterChain([band_2m_filter])
+    channels_2m = filter_chain.filter_items(all_channels)
     print(f"Total channels: {len(channels_2m)}")
     for channel in channels_2m:
         print(f"  - {channel.name}: {channel.rx_freq} MHz")
@@ -120,12 +120,12 @@ def test_single_band_filter():
     # Test 70cm only
     print("\n70cm Band Only (420-450 MHz):")
     mock_generator = MockAnalogChannelGenerator()
-    band_70cm_filter = BandFilter(
-        generator=mock_generator, frequency_ranges=[(420.0, 450.0)]
-    )
-
     sequence = Sequence()
-    channels_70cm = band_70cm_filter.channels(sequence)
+    all_channels = mock_generator.channels(sequence)
+
+    band_70cm_filter = BandFilter(frequency_ranges=[(420.0, 450.0)])
+    filter_chain = FilterChain([band_70cm_filter])
+    channels_70cm = filter_chain.filter_items(all_channels)
     print(f"Total channels: {len(channels_70cm)}")
     for channel in channels_70cm:
         print(f"  - {channel.name}: {channel.rx_freq} MHz")
@@ -142,21 +142,21 @@ def test_multi_band_filter():
     """Test the BandFilter with multiple custom bands."""
     print("\n\n--- Testing BandFilter with multiple custom bands ---")
 
-    # Create mock generator
+    # Create mock generator and get all channels
     mock_generator = MockAnalogChannelGenerator()
+    sequence = Sequence()
+    all_channels = mock_generator.channels(sequence)
 
     # Filter for 6m, 2m, and 70cm
     multi_band_filter = BandFilter(
-        generator=mock_generator,
         frequency_ranges=[
             (50.0, 54.0),  # 6m
             (144.0, 148.0),  # 2m
             (420.0, 450.0),  # 70cm
         ],
     )
-
-    sequence = Sequence()
-    filtered_channels = multi_band_filter.channels(sequence)
+    filter_chain = FilterChain([multi_band_filter])
+    filtered_channels = filter_chain.filter_items(all_channels)
 
     print(f"\nChannels in 6m, 2m, and 70cm bands:")
     print(f"Total filtered channels: {len(filtered_channels)}")
@@ -179,10 +179,12 @@ def test_edge_cases():
     # Test with empty frequency ranges
     print("\nTest 1: Empty frequency ranges (should return no channels)")
     mock_generator = MockAnalogChannelGenerator()
-    empty_filter = BandFilter(generator=mock_generator, frequency_ranges=[])
-
     sequence = Sequence()
-    filtered_channels = empty_filter.channels(sequence)
+    all_channels = mock_generator.channels(sequence)
+
+    empty_filter = BandFilter(frequency_ranges=[])
+    filter_chain = FilterChain([empty_filter])
+    filtered_channels = filter_chain.filter_items(all_channels)
     print(f"Channels found: {len(filtered_channels)}")
     assert (
         len(filtered_channels) == 0
@@ -192,13 +194,14 @@ def test_edge_cases():
     # Test with boundary values
     print("\nTest 2: Boundary values (exact frequency match)")
     mock_generator = MockAnalogChannelGenerator()
+    sequence = Sequence()
+    all_channels = mock_generator.channels(sequence)
+
     boundary_filter = BandFilter(
-        generator=mock_generator,
         frequency_ranges=[(145.230, 145.230)],  # Exact match for one channel
     )
-
-    sequence = Sequence()
-    filtered_channels = boundary_filter.channels(sequence)
+    filter_chain = FilterChain([boundary_filter])
+    filtered_channels = filter_chain.filter_items(all_channels)
     print(f"Channels found: {len(filtered_channels)}")
     assert len(filtered_channels) == 1, "Should match exactly one channel at boundary"
     assert filtered_channels[0].name == "2m Repeater 1"
@@ -207,16 +210,17 @@ def test_edge_cases():
     # Test with overlapping ranges
     print("\nTest 3: Overlapping frequency ranges")
     mock_generator = MockAnalogChannelGenerator()
+    sequence = Sequence()
+    all_channels = mock_generator.channels(sequence)
+
     overlap_filter = BandFilter(
-        generator=mock_generator,
         frequency_ranges=[
             (144.0, 146.0),  # Covers first two 2m repeaters
             (145.0, 148.0),  # Overlaps with above, covers all three 2m repeaters
         ],
     )
-
-    sequence = Sequence()
-    filtered_channels = overlap_filter.channels(sequence)
+    filter_chain = FilterChain([overlap_filter])
+    filtered_channels = filter_chain.filter_items(all_channels)
     print(f"Channels found: {len(filtered_channels)}")
     # Should still get 3 unique channels (no duplicates)
     assert (
@@ -232,17 +236,19 @@ def test_filter_caching():
     print("\n\n--- Testing filter result caching ---")
 
     mock_generator = MockAnalogChannelGenerator()
-    band_filter = BandFilter(generator=mock_generator)
+    sequence = Sequence()
+    all_channels = mock_generator.channels(sequence)
 
-    sequence1 = Sequence()
-    channels1 = band_filter.channels(sequence1)
+    band_filter = BandFilter()
+    filter_chain = FilterChain([band_filter])
 
-    sequence2 = Sequence()
-    channels2 = band_filter.channels(sequence2)
+    # Apply filter multiple times - should work consistently
+    channels1 = filter_chain.filter_items(all_channels)
+    channels2 = filter_chain.filter_items(all_channels)
 
-    # Should return the same cached result
-    assert channels1 is channels2, "Filter should cache and return same result"
-    print("✓ Filter caching test passed!")
+    # Should return the same count
+    assert len(channels1) == len(channels2), "Filter should return consistent results"
+    print("✓ Filter consistency test passed!")
 
 
 def main():

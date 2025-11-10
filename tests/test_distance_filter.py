@@ -5,7 +5,7 @@ Test script to demonstrate the DistanceFilter functionality.
 
 from codeplug.models import DigitalChannel, TxPower, DigitalAnytoneExtensions
 from codeplug.generators import Sequence
-from codeplug.filters import DistanceFilter, haversine_distance
+from codeplug.filters import DistanceFilter, FilterChain, haversine_distance
 
 
 class MockChannelGenerator:
@@ -108,8 +108,10 @@ def test_distance_filter():
     # NYC coordinates (approximately)
     nyc_lat, nyc_lng = 40.7128, -74.0060
 
-    # Create mock generator
+    # Create mock generator and get all channels
     mock_generator = MockChannelGenerator()
+    sequence = Sequence()
+    all_channels = mock_generator.channels(sequence)
 
     # Test different distance thresholds
     test_distances = [5, 20, 150, 500]
@@ -119,16 +121,15 @@ def test_distance_filter():
 
         # Create distance filter
         distance_filter = DistanceFilter(
-            generator=mock_generator,
             reference_lat=nyc_lat,
             reference_lng=nyc_lng,
             max_distance_km=max_distance,
-            include_channels_without_coordinates=False,
+            include_items_without_coordinates=False,
         )
 
-        # Get filtered channels
-        sequence = Sequence()
-        filtered_channels = distance_filter.channels(sequence)
+        # Apply filter to channels
+        filter_chain = FilterChain([distance_filter])
+        filtered_channels = filter_chain.filter_items(all_channels)
 
         print(f"Channels within {max_distance}km of NYC:")
         for channel in filtered_channels:
@@ -142,16 +143,19 @@ def test_distance_filter():
 
     # Test including channels without coordinates
     print(f"\n--- Testing with coordinates inclusion enabled ---")
+    mock_generator = MockChannelGenerator()
+    sequence = Sequence()
+    all_channels = mock_generator.channels(sequence)
+
     distance_filter_with_no_coords = DistanceFilter(
-        generator=MockChannelGenerator(),  # New instance to reset cache
         reference_lat=nyc_lat,
         reference_lng=nyc_lng,
         max_distance_km=50,
-        include_channels_without_coordinates=True,
+        include_items_without_coordinates=True,
     )
 
-    sequence = Sequence()
-    filtered_channels = distance_filter_with_no_coords.channels(sequence)
+    filter_chain = FilterChain([distance_filter_with_no_coords])
+    filtered_channels = filter_chain.filter_items(all_channels)
     print(f"Channels within 50km (including those without coordinates):")
     for channel in filtered_channels:
         if channel._lat is not None and channel._lng is not None:

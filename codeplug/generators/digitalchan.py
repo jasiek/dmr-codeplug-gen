@@ -118,6 +118,8 @@ class DigitalChannelGeneratorFromBrandmeister:
         aprs_config,
         callsign_matcher=None,
         default_contact_id=None,
+        filter_chain=None,
+        debug=False,
     ):
         self.devices = brandmeister.DeviceDB().devices
         self._channels = []
@@ -125,6 +127,8 @@ class DigitalChannelGeneratorFromBrandmeister:
         self.aprs_config = aprs_config
         self.callsign_matcher = callsign_matcher
         self.default_contact_id = default_contact_id
+        self.filter_chain = filter_chain
+        self.debug = debug
 
     def channels(self, sequence):
         if len(self._channels) == 0:
@@ -133,7 +137,10 @@ class DigitalChannelGeneratorFromBrandmeister:
 
     def generate_channels(self, sequence):
         """
-        Generate digital channels from Brandmeister repeater database.
+        Generate digital channels from Brandmeister repeater database with optional filtering.
+
+        If a filter_chain is provided, channels are pre-filtered before sequence assignment,
+        ensuring only channels that pass all filters receive internal IDs.
 
         This method processes repeaters from the Brandmeister device database and creates
         DigitalChannel objects for both talkgroup-specific channels and generic timeslot channels.
@@ -205,30 +212,45 @@ class DigitalChannelGeneratorFromBrandmeister:
                             else None
                         )
 
-                        self._channels.append(
-                            DigitalChannel(
-                                internal_id=sequence.next(),
-                                name=name,
-                                rx_freq=float(dev["tx"]),
-                                tx_freq=float(dev["rx"]),
-                                tx_power=TxPower.High,
-                                scanlist_id="-",
-                                tot=None,
-                                rx_only=False,
-                                admit_crit="Free",
-                                color=dev["colorcode"],
-                                slot=slot,
-                                rx_grouplist_id="-",
-                                tx_contact_id=str(tg.internal_id),
-                                aprs=self.aprs_config,
-                                anytone=DEFAULT_ANYTONE_EXTENSIONS,
-                                _lat=lat,
-                                _lng=lng,
-                                _locator=locator,
-                                _rpt_callsign=dev["callsign"],
-                                _qth=dev["city"],
-                            )
+                        # Create channel without ID first for filtering
+                        channel = DigitalChannel(
+                            internal_id=None,  # Will be assigned after filtering
+                            name=name,
+                            rx_freq=float(dev["tx"]),
+                            tx_freq=float(dev["rx"]),
+                            tx_power=TxPower.High,
+                            scanlist_id="-",
+                            tot=None,
+                            rx_only=False,
+                            admit_crit="Free",
+                            color=dev["colorcode"],
+                            slot=slot,
+                            rx_grouplist_id="-",
+                            tx_contact_id=str(tg.internal_id),
+                            aprs=self.aprs_config,
+                            anytone=DEFAULT_ANYTONE_EXTENSIONS,
+                            _lat=lat,
+                            _lng=lng,
+                            _locator=locator,
+                            _rpt_callsign=dev["callsign"],
+                            _qth=dev["city"],
                         )
+
+                        # Apply filter chain if provided
+                        if self.filter_chain:
+                            should_include, reason = self.filter_chain.should_include(
+                                channel
+                            )
+                            if not should_include:
+                                if self.debug:
+                                    print(
+                                        f"[DigitalChannelGeneratorFromBrandmeister] Filtered out: {name} - {reason}"
+                                    )
+                                continue
+
+                        # Assign ID and add to channels list
+                        channel.internal_id = sequence.next()
+                        self._channels.append(channel)
 
             for slot in [1, 2]:
                 name = " ".join(
@@ -247,30 +269,43 @@ class DigitalChannelGeneratorFromBrandmeister:
                     else None
                 )
 
-                self._channels.append(
-                    DigitalChannel(
-                        internal_id=sequence.next(),
-                        name=name,
-                        rx_freq=float(dev["tx"]),
-                        tx_freq=float(dev["rx"]),
-                        tx_power=TxPower.High,
-                        scanlist_id="-",
-                        tot=None,
-                        rx_only=False,
-                        admit_crit="Free",
-                        color=dev["colorcode"],
-                        slot=slot,
-                        rx_grouplist_id="-",
-                        tx_contact_id=self.default_contact_id,
-                        aprs=self.aprs_config,
-                        anytone=DEFAULT_ANYTONE_EXTENSIONS,
-                        _lat=lat,
-                        _lng=lng,
-                        _locator=locator,
-                        _rpt_callsign=dev["callsign"],
-                        _qth=dev["city"],
-                    )
+                # Create channel without ID first for filtering
+                channel = DigitalChannel(
+                    internal_id=None,  # Will be assigned after filtering
+                    name=name,
+                    rx_freq=float(dev["tx"]),
+                    tx_freq=float(dev["rx"]),
+                    tx_power=TxPower.High,
+                    scanlist_id="-",
+                    tot=None,
+                    rx_only=False,
+                    admit_crit="Free",
+                    color=dev["colorcode"],
+                    slot=slot,
+                    rx_grouplist_id="-",
+                    tx_contact_id=self.default_contact_id,
+                    aprs=self.aprs_config,
+                    anytone=DEFAULT_ANYTONE_EXTENSIONS,
+                    _lat=lat,
+                    _lng=lng,
+                    _locator=locator,
+                    _rpt_callsign=dev["callsign"],
+                    _qth=dev["city"],
                 )
+
+                # Apply filter chain if provided
+                if self.filter_chain:
+                    should_include, reason = self.filter_chain.should_include(channel)
+                    if not should_include:
+                        if self.debug:
+                            print(
+                                f"[DigitalChannelGeneratorFromBrandmeister] Filtered out: {name} - {reason}"
+                            )
+                        continue
+
+                # Assign ID and add to channels list
+                channel.internal_id = sequence.next()
+                self._channels.append(channel)
 
 
 class DigitalPMR446ChannelGenerator:

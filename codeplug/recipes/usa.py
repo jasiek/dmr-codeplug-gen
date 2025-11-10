@@ -38,11 +38,11 @@ from callsign_matchers import (
 from filters import (
     BandFilter,
     DistanceFilter,
+    FilterChain,
 )
 
-# Redwood City, CA coordinates for distance filtering
-REDWOOD_CITY_LAT = 37.4852
-REDWOOD_CITY_LNG = -122.2364
+MOUNTAIN_VIEW_LAT = 37.3861
+MOUNTAIN_VIEW_LNG = -122.0839
 
 # New York City, NY coordinates for distance filtering
 NYC_LAT = 40.7128
@@ -90,27 +90,30 @@ class Recipe(BaseRecipe):
         self.analog_aprs_config = self.analog_aprs.aprs_config_us(self.aprs_seq)
 
     def ca_digital_channel_generator(self, usa_tgs):
-        # Create separate digital channel generators for CA and NM
+        # Create filter chain for California digital channels
+        ca_filter_chain = FilterChain(
+            [
+                DistanceFilter(
+                    reference_lat=MOUNTAIN_VIEW_LAT,
+                    reference_lng=MOUNTAIN_VIEW_LNG,
+                    max_distance_km=50.0,
+                ),
+                BandFilter(),  # Default 2m and 70cm bands
+            ]
+        )
+
+        # Create digital channel generator with filter chain
         ca_digital_generator = DigitalChannelGeneratorFromBrandmeister(
             "High",
             usa_tgs,
             aprs_config=self.digital_aprs_config,
             callsign_matcher=CACallsignMatcher(),
             default_contact_id=self.bm_special_gen.parrot().internal_id,
-        )
-
-        # Apply distance filter to California digital channels (50km from Redwood City)
-        ca_digital_filtered = DistanceFilter(
-            ca_digital_generator,
-            reference_lat=REDWOOD_CITY_LAT,
-            reference_lng=REDWOOD_CITY_LNG,
-            max_distance_km=50.0,
+            filter_chain=ca_filter_chain,
             debug=self.debug,
         )
 
-        ca_digital_filtered = BandFilter(ca_digital_filtered, debug=self.debug)
-
-        return ca_digital_filtered
+        return ca_digital_generator
 
     def prepare_digital_channels(self):
         """Prepare digital (DMR) channels from Brandmeister for USA, UK, and Poland."""
@@ -134,36 +137,52 @@ class Recipe(BaseRecipe):
         self.digital_channels = self.ca_digital_channels
 
     def generate_ca_analog_channels(self):
-        # Create separate analog channel generators for CA and NM
+        # Get California repeaters
         ca_repeaters = RepeaterBookAPI().get_repeaters_by_state("06")  # California
 
-        ca_channel_generator_unfiltered = ChannelAggregator(
-            AnalogChannelGeneratorFromRepeaterBook(
-                ca_repeaters,
-                "High",
-                aprs=self.analog_aprs_config,
-            ),
+        # Create filter chain for CA 2m channels (distance + band)
+        ca_2m_filter_chain = FilterChain(
+            [
+                DistanceFilter(
+                    reference_lat=MOUNTAIN_VIEW_LAT,
+                    reference_lng=MOUNTAIN_VIEW_LNG,
+                    max_distance_km=50.0,
+                ),
+                BandFilter(frequency_ranges=[(144.0, 148.0)]),
+            ]
         )
 
-        # Apply distance filter to California repeaters (50km from Redwood City)
-        ca_channel_generator = DistanceFilter(
-            ca_channel_generator_unfiltered,
-            reference_lat=REDWOOD_CITY_LAT,
-            reference_lng=REDWOOD_CITY_LNG,
-            max_distance_km=50.0,
+        # Create filter chain for CA 70cm channels (distance + band)
+        ca_70cm_filter_chain = FilterChain(
+            [
+                DistanceFilter(
+                    reference_lat=MOUNTAIN_VIEW_LAT,
+                    reference_lng=MOUNTAIN_VIEW_LNG,
+                    max_distance_km=50.0,
+                ),
+                BandFilter(frequency_ranges=[(420.0, 450.0)]),
+            ]
+        )
+
+        # Generate 2m channels with filter chain
+        ca_2m_generator = AnalogChannelGeneratorFromRepeaterBook(
+            ca_repeaters,
+            "High",
+            aprs=self.analog_aprs_config,
+            filter_chain=ca_2m_filter_chain,
             debug=self.debug,
         )
+        ca_2m_channels = ca_2m_generator.channels(self.chan_seq)
 
-        ca_2m_filter = BandFilter(
-            ca_channel_generator, frequency_ranges=[(144.0, 148.0)], debug=self.debug
+        # Generate 70cm channels with filter chain
+        ca_70cm_generator = AnalogChannelGeneratorFromRepeaterBook(
+            ca_repeaters,
+            "High",
+            aprs=self.analog_aprs_config,
+            filter_chain=ca_70cm_filter_chain,
+            debug=self.debug,
         )
-        ca_2m_channels = ca_2m_filter.channels(self.chan_seq)
-
-        # CA 70cm band (420-450 MHz)
-        ca_70cm_filter = BandFilter(
-            ca_channel_generator, frequency_ranges=[(420.0, 450.0)], debug=self.debug
-        )
-        ca_70cm_channels = ca_70cm_filter.channels(self.chan_seq)
+        ca_70cm_channels = ca_70cm_generator.channels(self.chan_seq)
 
         return ca_2m_channels + ca_70cm_channels
 

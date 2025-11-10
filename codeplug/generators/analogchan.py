@@ -45,12 +45,14 @@ class AnalogPMR446ChannelGenerator:
 
 
 class AnalogChannelGeneratorFromPrzemienniki:
-    def __init__(self, source, power, *, aprs):
+    def __init__(self, source, power, *, aprs, filter_chain=None, debug=False):
         root = source
         self._repeaters = root.findall("repeaters/repeater")
         self.power = power
         self._channels = []
         self.aprs_config = aprs
+        self.filter_chain = filter_chain
+        self.debug = debug
 
     def channels(self, sequence):
         if len(self._channels) == 0:
@@ -99,33 +101,47 @@ class AnalogChannelGeneratorFromPrzemienniki:
 
             callsign = node.find("qra").text
             qth = node.find("qth").text
-            self._channels.append(
-                AnalogChannel(
-                    internal_id=sequence.next(),
-                    name=callsign,
-                    rx_freq=rpt_output,
-                    tx_freq=rpt_input,
-                    tx_power=TxPower.High,
-                    scanlist_id="-",
-                    tot=None,
-                    rx_only=False,
-                    admit_crit="Free",
-                    squelch=1,
-                    rx_tone=rx_tone,
-                    tx_tone=tx_tone,
-                    width=ChannelWidth.Narrow,
-                    aprs=self.aprs_config,
-                    _lat=lat,
-                    _lng=lng,
-                    _locator=locator,
-                    _rpt_callsign=callsign,
-                    _qth=qth,
-                )
+
+            # Create channel without ID first for filtering
+            channel = AnalogChannel(
+                internal_id=None,  # Will be assigned after filtering
+                name=callsign,
+                rx_freq=rpt_output,
+                tx_freq=rpt_input,
+                tx_power=TxPower.High,
+                scanlist_id="-",
+                tot=None,
+                rx_only=False,
+                admit_crit="Free",
+                squelch=1,
+                rx_tone=rx_tone,
+                tx_tone=tx_tone,
+                width=ChannelWidth.Narrow,
+                aprs=self.aprs_config,
+                _lat=lat,
+                _lng=lng,
+                _locator=locator,
+                _rpt_callsign=callsign,
+                _qth=qth,
             )
+
+            # Apply filter chain if provided
+            if self.filter_chain:
+                should_include, reason = self.filter_chain.should_include(channel)
+                if not should_include:
+                    if self.debug:
+                        print(
+                            f"[AnalogChannelGeneratorFromPrzemienniki] Filtered out: {callsign} - {reason}"
+                        )
+                    continue
+
+            # Assign ID and add to channels list
+            channel.internal_id = sequence.next()
+            self._channels.append(channel)
 
 
 class AnalogChannelGeneratorFromRepeaterBook:
-    def __init__(self, source, power, *, aprs):
+    def __init__(self, source, power, *, aprs, filter_chain=None, debug=False):
         """
         Initialize analog channel generator from RepeaterBook data
 
@@ -133,11 +149,15 @@ class AnalogChannelGeneratorFromRepeaterBook:
             source: JSON data from RepeaterBook API
             power: Transmit power setting
             aprs: APRS configuration
+            filter_chain: Optional FilterChain for pre-filtering channels
+            debug: If True, print debug information for filtered channels
         """
         self._repeaters = source["results"]
         self.power = power
         self._channels = []
         self.aprs_config = aprs
+        self.filter_chain = filter_chain
+        self.debug = debug
 
     def channels(self, sequence):
         if len(self._channels) == 0:
@@ -206,26 +226,39 @@ class AnalogChannelGeneratorFromRepeaterBook:
             if not name:
                 continue
 
-            self._channels.append(
-                AnalogChannel(
-                    internal_id=sequence.next(),
-                    name=name,
-                    rx_freq=rpt_output,
-                    tx_freq=rpt_input,
-                    tx_power=TxPower.High,
-                    scanlist_id="-",
-                    tot=None,
-                    rx_only=False,
-                    admit_crit="Free",
-                    squelch=1,
-                    rx_tone=rx_tone,
-                    tx_tone=tx_tone,
-                    width=ChannelWidth.Narrow,
-                    aprs=self.aprs_config,
-                    _lat=lat,
-                    _lng=lng,
-                    _locator=None,
-                    _rpt_callsign=callsign,
-                    _qth=qth,
-                )
+            # Create channel without ID first for filtering
+            channel = AnalogChannel(
+                internal_id=None,  # Will be assigned after filtering
+                name=name,
+                rx_freq=rpt_output,
+                tx_freq=rpt_input,
+                tx_power=TxPower.High,
+                scanlist_id="-",
+                tot=None,
+                rx_only=False,
+                admit_crit="Free",
+                squelch=1,
+                rx_tone=rx_tone,
+                tx_tone=tx_tone,
+                width=ChannelWidth.Narrow,
+                aprs=self.aprs_config,
+                _lat=lat,
+                _lng=lng,
+                _locator=None,
+                _rpt_callsign=callsign,
+                _qth=qth,
             )
+
+            # Apply filter chain if provided
+            if self.filter_chain:
+                should_include, reason = self.filter_chain.should_include(channel)
+                if not should_include:
+                    if self.debug:
+                        print(
+                            f"[AnalogChannelGeneratorFromRepeaterBook] Filtered out: {name} - {reason}"
+                        )
+                    continue
+
+            # Assign ID and add to channels list
+            channel.internal_id = sequence.next()
+            self._channels.append(channel)

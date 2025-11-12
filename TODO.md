@@ -1,7 +1,8 @@
 ## Things to fix
 
-- APRS contacts should be generated in BaseRecipe
+- ~~APRS contacts should be generated in BaseRecipe~~
 - APRS configuration can be generated in BaseRecipe
+- APRS and other messaging talkgroups are country-dependent, so the APRS contact generator needs to take a country into account
 - preparing digital contacts can be done in BaseRecipe
 - preparing digital channels should use configuration objects for a locality (for example California, USA) and generate channels on that basis. The rest should be done under the hood, maybe in BaseRecipe.
 - same for analog channels, can reuse the same configuration object

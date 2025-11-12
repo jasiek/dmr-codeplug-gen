@@ -8,6 +8,7 @@ class BaseRecipe:
         writer_class,
         timezone=None,
         debug=False,
+        aprs_region="EU",
     ):
         self.callsign = callsign
         self.dmr_id = dmr_id
@@ -16,6 +17,7 @@ class BaseRecipe:
         self.writer_class = writer_class
         self.timezone = timezone
         self.debug = debug
+        self.aprs_region = aprs_region  # "EU" or "US"
         # Subclasses can define their own location as (latitude, longitude)
         self.location = None
 
@@ -28,6 +30,12 @@ class BaseRecipe:
         self.roaming_zones = []
         self.scanlists = []
 
+        # APRS-related attributes initialized in prepare_aprs_contacts()
+        self.aprs_contact = None
+        self.analog_aprs = None
+        self.digital_aprs_config = None
+        self.analog_aprs_config = None
+
     def prepare(self):
         """Main preparation method that orchestrates all section preparation."""
         from generators import Sequence
@@ -39,6 +47,9 @@ class BaseRecipe:
         self.zone_seq = Sequence()
         self.rch_seq = Sequence()
 
+        # Prepare APRS contacts first (needed by both contacts and APRS config)
+        self.prepare_aprs_contacts()
+
         # Prepare each section in order (contacts first as they're used by channels)
         self.prepare_contacts()
         self.prepare_aprs()
@@ -49,13 +60,36 @@ class BaseRecipe:
         self.prepare_scanlists()
         self.prepare_grouplists()
 
+    def prepare_aprs_contacts(self):
+        """Prepare APRS digital contact. Called before prepare_contacts()."""
+        from generators.contacts import APRSDigitalContactGenerator
+
+        aprs_contact_gen = APRSDigitalContactGenerator()
+        self.aprs_contact = aprs_contact_gen.contacts(self.contact_seq)[0]
+        return aprs_contact_gen
+
     def prepare_contacts(self):
         """Prepare DMR contacts. Override in subclasses."""
         pass
 
     def prepare_aprs(self):
-        """Prepare APRS configurations. Override in subclasses."""
-        pass
+        """Prepare APRS configurations for both digital and analog modes."""
+        from generators.aprs import AnalogAPRSGenerator, DigitalAPRSGenerator
+
+        # Digital APRS configuration
+        digital_aprs_gen = DigitalAPRSGenerator(aprs_contact=self.aprs_contact)
+        self.digital_aprs_config = digital_aprs_gen.digital_aprs_config(self.aprs_seq)
+
+        # Analog APRS configuration
+        self.analog_aprs = AnalogAPRSGenerator(self.callsign)
+        # Pre-generate channels to setup APRS properly
+        _ = self.analog_aprs.channels(self.chan_seq)
+
+        # Select EU or US APRS config based on region
+        if self.aprs_region == "US":
+            self.analog_aprs_config = self.analog_aprs.aprs_config_us(self.aprs_seq)
+        else:  # Default to EU
+            self.analog_aprs_config = self.analog_aprs.aprs_config_eu(self.aprs_seq)
 
     def prepare_digital_channels(self):
         """Prepare digital (DMR) channels. Override in subclasses."""

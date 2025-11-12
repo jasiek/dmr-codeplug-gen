@@ -41,3 +41,9 @@ program-poland:
 
 poland:
 	$(MAKE) RECIPE=poland TIMEZONE=GMT+01:00 validate
+
+program-nyc:
+	$(MAKE) RECIPE=nyc TIMEZONE=GMT-05:00 program
+
+nyc:
+	$(MAKE) RECIPE=nyc TIMEZONE=GMT-05:00 validate

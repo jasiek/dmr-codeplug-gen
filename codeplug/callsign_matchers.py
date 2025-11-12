@@ -64,6 +64,33 @@ class NYNJCallsignMatcher(CallsignMatcher):
         return bool(self.pattern.match(callsign.strip()))
 
 
+class CTCallsignMatcher(CallsignMatcher):
+    """Matcher for Connecticut amateur radio callsigns.
+
+    Connecticut callsigns follow FCC regional patterns:
+    - Connecticut: Call sign district 1 (K1, N1, W1, KC1, KD1, etc.)
+
+    Matches:
+    - 1x2 format: K1XXX, N1XXX, W1XXX
+    - 2x1 format: KC1X, KD1X, etc.
+    - 2x2 format: KC1XX, KD1XX, etc.
+    - 2x3 format: KC1XXX, KD1XXX, etc.
+
+    Note: A-prefix callsigns are restricted to AA-AL range for US stations.
+    Call district 1 covers all of New England (CT, MA, ME, NH, RI, VT).
+    """
+
+    def __init__(self):
+        # Pattern for call district 1 (New England region including CT)
+        # Matches: K1XXX, N1XXX, W1XXX, KC1X, KD1XX, KC1XXX, AA1-AL1 formats
+        self.pattern = re.compile(
+            r"^(K[A-Z]?1|N[A-Z]?1|W[A-Z]?1|A[A-L]1)[A-Z]{1,3}$", re.IGNORECASE
+        )
+
+    def matches(self, callsign: str) -> bool:
+        return bool(self.pattern.match(callsign.strip()))
+
+
 class CACallsignMatcher(CallsignMatcher):
     """Matcher for California amateur radio callsigns.
 

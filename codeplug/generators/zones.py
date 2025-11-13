@@ -119,6 +119,8 @@ class ZoneFromCallsignGenerator2:
                     )
 
         for chan in filtered_channels:
+            if chan._rpt_callsign is None:
+                continue
             callsign_to_channels[chan._rpt_callsign].append(chan)
 
         output = []

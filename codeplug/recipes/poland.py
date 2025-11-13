@@ -80,7 +80,7 @@ class Recipe(BaseRecipe):
                 "High",
                 polish_tgs,
                 aprs_config=self.digital_aprs_config,
-                callsign_matcher=RegexMatcher(r"^S[P0-9]"),
+                callsign_matcher=RegexMatcher(r"^SR[0-9]"),
             ),
         ).channels(self.chan_seq)
 

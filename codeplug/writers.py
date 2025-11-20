@@ -67,13 +67,18 @@ class QDMRWriter:
     def write_scanlists(self, scanlists):
         self.codeplug["scanLists"] = []
         for scanlist in scanlists:
-            self.codeplug["scanLists"].append(
-                {
-                    "id": fmt_scanlist_id(scanlist.internal_id),
-                    "name": scanlist.name,
-                    "channels": [fmt_chan_id(id) for id in scanlist.channels],
-                }
-            )
+            channels = [fmt_chan_id(id) for id in scanlist.channels]
+            scanlist_entry = {
+                "id": fmt_scanlist_id(scanlist.internal_id),
+                "name": scanlist.name,
+                "channels": channels,
+            }
+            if channels:
+                scanlist_entry["primary"] = channels[0]
+                scanlist_entry["revert"] = channels[0]
+                if len(channels) > 1:
+                    scanlist_entry["secondary"] = channels[1]
+            self.codeplug["scanLists"].append(scanlist_entry)
 
     def write_analog_channels(self, channels):
         codeplug_channels = []
@@ -204,6 +209,9 @@ class QDMRWriter:
                     "source": aprs.source,
                     "destination": aprs.destination,
                     "path": aprs.path,
+                    # Problem with this field:
+                    # > The enum value 'Jogger' cannot be encoded. Valid values are . Another value might be chosen automatically.
+                    "icon": aprs.icon,
                     "anytone": {
                         "txDelay": 600,
                         "preWaveDelay": 600,

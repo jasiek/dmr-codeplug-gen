@@ -1,18 +1,26 @@
 from . import BaseRecipe
 
 from generators import Sequence
-from generators.grouplists import CountryGroupListGenerator
-from generators.contacts import (
-    BrandmeisterTGContactGenerator,
-    BrandmeisterSpecialContactGenerator,
-)
 from generators.analogchan import (
     AnalogPMR446ChannelGenerator,
     AnalogChannelGeneratorFromPrzemienniki,
 )
+from generators.contacts import (
+    BrandmeisterTGContactGenerator,
+    BrandmeisterSpecialContactGenerator,
+)
 from generators.digitalchan import (
     DigitalChannelGeneratorFromBrandmeister,
     HotspotDigitalChannelGenerator,
+)
+from generators.grouplists import CountryGroupListGenerator
+from generators.roaming import (
+    RoamingChannelGeneratorFromBrandmeister,
+    RoamingZoneFromCallsignGenerator,
+)
+from generators.scanlists import (
+    CallsignPrefixAnalogScanListGenerator,
+    CallsignPrefixDigitalScanListGenerator,
 )
 from generators.zones import (
     ZoneFromCallsignGenerator2,
@@ -20,13 +28,9 @@ from generators.zones import (
     PMRZoneGenerator,
     AnalogZoneGenerator,
 )
-from generators.roaming import (
-    RoamingChannelGeneratorFromBrandmeister,
-    RoamingZoneFromCallsignGenerator,
-)
-from datasources.przemienniki import PrzemiennikiAPI
 from aggregators import ChannelAggregator, ZoneAggregator, ContactAggregator
 from callsign_matchers import RegexMatcher
+from datasources.przemienniki import PrzemiennikiAPI
 
 
 class Recipe(BaseRecipe):
@@ -124,6 +128,40 @@ class Recipe(BaseRecipe):
         self.roaming_zones = RoamingZoneFromCallsignGenerator(
             self.roaming_channels
         ).zones(Sequence())
+
+    def prepare_scanlists(self):
+        """Prepare scan lists grouped by callsign prefix for analog and digital channels."""
+        scanlist_seq = Sequence()
+        analog_scanlist_gen = CallsignPrefixAnalogScanListGenerator(
+            self.analog_channels
+        )
+        digital_scanlist_gen = CallsignPrefixDigitalScanListGenerator(
+            self.digital_channels
+        )
+
+        analog_scanlists = analog_scanlist_gen.scanlists(scanlist_seq)
+        digital_scanlists = digital_scanlist_gen.scanlists(scanlist_seq)
+        self.scanlists = analog_scanlists + digital_scanlists
+
+        scanlist_map = {
+            scanlist.name: scanlist.internal_id for scanlist in self.scanlists
+        }
+
+        for channel in self.analog_channels:
+            prefix = analog_scanlist_gen.callsign_prefix(channel._rpt_callsign)
+            if not prefix:
+                continue
+            scanlist_name = f"{prefix} {analog_scanlist_gen.suffix}"
+            if scanlist_name in scanlist_map:
+                channel.scanlist_id = scanlist_map[scanlist_name]
+
+        for channel in self.digital_channels:
+            prefix = digital_scanlist_gen.callsign_prefix(channel._rpt_callsign)
+            if not prefix:
+                continue
+            scanlist_name = f"{prefix} {digital_scanlist_gen.suffix}"
+            if scanlist_name in scanlist_map:
+                channel.scanlist_id = scanlist_map[scanlist_name]
 
     def prepare_grouplists(self):
         """Prepare talkgroup lists for Polish country code (260)."""

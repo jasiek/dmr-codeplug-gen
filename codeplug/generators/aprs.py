@@ -78,7 +78,7 @@ class AnalogAPRSGenerator:
                 destination="APAT81-0",
                 path=["WIDE1-1", "WIDE2-1"],
                 period=DEFAULT_PERIOD,
-                icon="Runner",
+                icon="Jogger",
                 message=f"{self.source} testing",
             )
         return self._aprs_config_eu
@@ -93,7 +93,7 @@ class AnalogAPRSGenerator:
                 destination="APAT81-0",
                 path=["WIDE1-1", "WIDE2-1"],
                 period=DEFAULT_PERIOD,
-                icon="Runner",
+                icon="Jogger",
                 message=f"{self.source} testing",
             )
         return self._aprs_config_us

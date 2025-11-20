@@ -78,8 +78,9 @@ class Recipe(BaseRecipe):
             ),
             DigitalChannelGeneratorFromBrandmeister(
                 "High",
-                polish_tgs,
+                talkgroups=polish_tgs,
                 aprs_config=self.digital_aprs_config,
+                default_contact_id=self.bm_special_gen.parrot().internal_id,
                 callsign_matcher=RegexMatcher(r"^SR[0-9]"),
             ),
         ).channels(self.chan_seq)

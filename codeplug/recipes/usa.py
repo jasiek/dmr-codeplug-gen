@@ -122,7 +122,7 @@ class USABaseRecipe(BaseRecipe):
         # Create digital channel generator with filter chain
         return DigitalChannelGeneratorFromBrandmeister(
             "High",
-            talkgroups,
+            talkgroups=talkgroups,
             aprs_config=self.digital_aprs_config,
             callsign_matcher=callsign_matcher,
             default_contact_id=self.bm_special_gen.parrot().internal_id,

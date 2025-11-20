@@ -34,12 +34,12 @@ class HotspotDigitalChannelGenerator:
     def __init__(
         self,
         talkgroups,
-        *,
         aprs_config,
+        default_contact_id,
+        *,
         ts=2,
         f=431.100,
         color=1,
-        default_contact_id=None,
     ):
         self.f = f
         self.ts = ts
@@ -112,12 +112,11 @@ class HotspotDigitalChannelGenerator:
 class DigitalChannelGeneratorFromBrandmeister:
     def __init__(
         self,
-        power,
+        *power,
         talkgroups,
-        *,
+        default_contact_id,
         aprs_config,
         callsign_matcher=None,
-        default_contact_id=None,
         filter_chain=None,
         debug=False,
     ):

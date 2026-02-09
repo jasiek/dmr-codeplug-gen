@@ -1,7 +1,7 @@
 PLUGFILE=plug-${RECIPE}.yaml
 
 default:  validate
-all: data/radiod_users.json data/brandmeister_talkgroups.json
+all: data/radiod_users.json data/brandmeister_talkgroups.json Makefile
 
 data/radiod_users.json:
 	curl -o data/radiod_users.json https://radioid.net/static/users.json
@@ -14,7 +14,7 @@ ${PLUGFILE}: all $(wildcard codeplug/*.py)
 	python codeplug/cli.py --debug ${PLUGFILE} ${CALLSIGN} ${DMRID} ${RECIPE} ${TIMEZONE}
 
 validate: ${PLUGFILE} blank_radio/uv878_base.yml
-	dmrconf -y verify ${PLUGFILE}
+	dmrconf -R d878uv -y verify ${PLUGFILE}
 
 program: validate
 	dmrconf -y write ${PLUGFILE} --device cu.usbmodem0000000100001

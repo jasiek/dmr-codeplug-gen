@@ -165,6 +165,12 @@ class Recipe(BaseRecipe):
 
     def prepare_grouplists(self):
         """Prepare talkgroup lists for Polish country code (260)."""
-        self.grouplists = CountryGroupListGenerator(self.contacts, 260).grouplists(
-            Sequence()
+        self.grouplists = list(
+            CountryGroupListGenerator(self.contacts, 260).grouplists(Sequence())
         )
+
+        # Assign the Poland grouplist to all digital channels
+        if self.grouplists:
+            poland_grouplist_id = self.grouplists[0].internal_id
+            for channel in self.digital_channels:
+                channel.rx_grouplist_id = poland_grouplist_id

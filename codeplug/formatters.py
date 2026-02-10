@@ -35,3 +35,9 @@ def fmt_ts(ts: Slot) -> str:
 
 def fmt_aprs(id: ChannelID) -> str:
     return f"aprs{id}"
+
+
+def fmt_contact_name(name: str) -> str:
+    # Sanitize contact name to be compatible with codeplug requirements
+    # For example, remove or replace unsupported characters, limit length, etc.
+    return name.strip()[:16].strip()  # Limit to 16 characters

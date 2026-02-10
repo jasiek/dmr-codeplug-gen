@@ -45,7 +45,7 @@ class QDMRWriter:
                 {
                     "dmr": {
                         "id": fmt_contact_id(contact.internal_id),
-                        "name": contact.name,
+                        "name": fmt_contact_name(contact.name),
                         "type": contact.type.value,
                         "number": contact.calling_id,
                         "ring": False,

@@ -14,9 +14,9 @@ class AnalogPMR446ChannelGenerator:
         if self._channels != []:
             return self._channels
 
-        f = 446.00625
+        base_freq = 446.00625
         for chan_num in range(1, 17):
-            chan_freq = f + (chan_num - 1) * 0.0125
+            chan_freq = base_freq + (chan_num - 1) * 0.0125
             self._channels.append(
                 AnalogChannel(
                     internal_id=sequence.next(),
@@ -40,7 +40,6 @@ class AnalogPMR446ChannelGenerator:
                     _qth=None,
                 )
             )
-            f += 0.0125  # rounding problem here?
         return self._channels
 
 

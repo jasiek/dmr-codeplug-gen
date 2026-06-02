@@ -10,9 +10,9 @@ data/brandmeister_talkgroups.json:
 	curl -o data/brandmeister_talkgroups.json https://api.brandmeister.network/v2/talkgroup
 
 ${PLUGFILE}: all $(wildcard codeplug/*.py)
-	black .
+	uv run black .
 	rm ${PLUGFILE}
-	python codeplug/cli.py --debug ${PLUGFILE} ${CALLSIGN} ${DMRID} ${RECIPE} ${TIMEZONE}
+	uv run python codeplug/cli.py --debug ${PLUGFILE} ${CALLSIGN} ${DMRID} ${RECIPE} ${TIMEZONE}
 
 validate: ${PLUGFILE} blank_radio/uv878_base.yml
 	dmrconf -R d878uv -y verify ${PLUGFILE}
@@ -21,7 +21,7 @@ program: validate
 	dmrconf -y write ${PLUGFILE} --device cu.usbmodem0000000100001
 
 lint: $(wildcard codeplug/*.py)
-	pylint ./codeplug
+	uv run pylint ./codeplug
 
 clean:
 	rm -rf ${PLUGFILE}

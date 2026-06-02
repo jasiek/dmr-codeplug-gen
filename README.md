@@ -6,8 +6,7 @@ Script for generating a codeplug for the AnyTone AT-D878UV and other radios supp
 
 * define the env variable CALLSIGN as your callsign
 * define the env variable DMRID as your DMR ID (radioid.net)
-* `poetry install`
-* `poetry shell`
+* `uv sync`
 * Run `make` to build the codeplug. This will pull all data files and build a codeplug into `plug.yaml`.
 
 ### Dependencies

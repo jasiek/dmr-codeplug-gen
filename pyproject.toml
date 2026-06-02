@@ -1,35 +1,31 @@
-[tool.poetry]
+[project]
 name = "dmr-codeplug-pl"
 version = "0.1.0"
 description = ""
-authors = ["Jan Szumiec <jan.szumiec@gmail.com>"]
+authors = [{ name = "Jan Szumiec", email = "jan.szumiec@gmail.com" }]
+requires-python = ">=3.9"
+dependencies = [
+    "Unidecode>=1.3.6,<2",
+    "maidenhead>=1.7.0,<2",
+    "pyyaml>=6.0.1,<7",
+    "requests>=2.32.4,<3",
+    "lxml>=6.0.2,<7",
+]
 
-[tool.poetry.dependencies]
-python = "^3.9"
-Unidecode = "^1.3.6"
-maidenhead = "^1.7.0"
-pyyaml = "^6.0.1"
-requests = "^2.32.4"
-lxml = "^6.0.2"
-
-[tool.poetry.dev-dependencies]
-
-[tool.poetry.group.dev.dependencies]
-black = "^24.3.0"
-pylint = "^3.0.3"
-pytest = "^8.0.0"
+[dependency-groups]
+dev = [
+    "black>=24.3.0,<25",
+    "pylint>=3.0.3,<4",
+    "pytest>=8.0.0,<9",
+]
 
 [tool.pytest.ini_options]
 pythonpath = [
-    "."
+    ".",
 ]
 testpaths = [
-    "tests"
+    "tests",
 ]
 python_files = ["test_*.py", "*_test.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"

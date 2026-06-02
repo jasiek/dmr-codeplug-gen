@@ -189,7 +189,11 @@ class DigitalChannelGeneratorFromBrandmeister:
             ):
                 continue
 
-            if dev["rx"] == dev["tx"] or dev["pep"] == 1 or dev["statusText"] == "DMO":
+            if (
+                dev["rx"] == dev["tx"]
+                or dev["pep"] == 1
+                or dev.get("statusText") == "DMO"
+            ):
                 # Hotspot
                 continue
 

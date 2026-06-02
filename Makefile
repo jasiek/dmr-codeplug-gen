@@ -11,7 +11,7 @@ data/brandmeister_talkgroups.json:
 
 ${PLUGFILE}: all $(wildcard codeplug/*.py)
 	uv run black .
-	rm ${PLUGFILE}
+	rm -f ${PLUGFILE}
 	uv run python codeplug/cli.py --debug ${PLUGFILE} ${CALLSIGN} ${DMRID} ${RECIPE} ${TIMEZONE}
 
 validate: ${PLUGFILE} blank_radio/uv878_base.yml

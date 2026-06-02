@@ -21,7 +21,11 @@ class RoamingChannelGeneratorFromBrandmeister:
             if not dev["callsign"].startswith("SR"):
                 continue
 
-            if dev["rx"] == dev["tx"] or dev["pep"] == 1 or dev["statusText"] == "DMO":
+            if (
+                dev["rx"] == dev["tx"]
+                or dev["pep"] == 1
+                or dev.get("statusText") == "DMO"
+            ):
                 # Hotspot
                 continue
 

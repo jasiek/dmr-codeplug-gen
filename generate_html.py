@@ -8,7 +8,6 @@ import sys
 from pathlib import Path
 from html import escape
 
-
 # Parameter descriptions from QDMR manual
 PARAM_DESCRIPTIONS = {
     # General settings

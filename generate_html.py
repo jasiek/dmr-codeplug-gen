@@ -109,9 +109,9 @@ def render_compact_item(item, item_type, context):
     if not isinstance(item, dict):
         return ""
 
-    # Extract the actual data (skip wrapper keys like 'digital', 'analog', 'dmr')
+    # Extract the actual data (skip wrapper keys like 'dmr', 'fm')
     data = item
-    for key in ["digital", "analog", "dmr"]:
+    for key in ["digital", "analog", "dmr", "fm"]:
         if key in item and isinstance(item[key], dict):
             data = item[key]
             break

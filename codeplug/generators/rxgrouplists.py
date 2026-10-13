@@ -109,6 +109,32 @@ class RXGroupListGenerator:
                 for channel in channels:
                     channel.rx_grouplist_id = grouplist_id
 
+        # qdmr requires every DMR channel to reference an RXGroupList. Repeaters
+        # without static talkgroups on Brandmeister get a shared fallback list.
+        unassigned = [
+            channel
+            for channels in repeater_channels.values()
+            for channel in channels
+            if not channel.rx_grouplist_id
+        ]
+        if unassigned:
+            contact_ids = [
+                contact.internal_id
+                for contact in self._contacts
+                if contact.type == ContactType.GroupCall
+            ][:64]
+            if contact_ids:
+                grouplist_id = sequence.next()
+                self._grouplists.append(
+                    GroupList(
+                        internal_id=grouplist_id,
+                        name="RX Default",
+                        contact_ids=contact_ids,
+                    )
+                )
+                for channel in unassigned:
+                    channel.rx_grouplist_id = grouplist_id
+
         return self._grouplists
 
 

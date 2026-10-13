@@ -84,7 +84,7 @@ class QDMRWriter:
         codeplug_channels = []
         for chan in channels:
             ch = {
-                "analog": {
+                "fm": {
                     "id": fmt_chan_id(chan.internal_id),
                     "name": chan.name[:16],
                     "rxFrequency": chan.rx_freq,
@@ -105,13 +105,13 @@ class QDMRWriter:
             }
 
             if chan.aprs:
-                ch["analog"]["aprs"] = fmt_aprs(chan.aprs.internal_id)
+                ch["fm"]["aprs"] = fmt_aprs(chan.aprs.internal_id)
 
             if chan.rx_tone:
-                ch["analog"]["rxTone"] = {"ctcss": chan.rx_tone}
+                ch["fm"]["rxTone"] = {"ctcss": chan.rx_tone}
 
             if chan.tx_tone:
-                ch["analog"]["txTone"] = {"ctcss": chan.tx_tone}
+                ch["fm"]["txTone"] = {"ctcss": chan.tx_tone}
 
             codeplug_channels.append(ch)
         self.codeplug["channels"] += codeplug_channels
@@ -120,7 +120,7 @@ class QDMRWriter:
         codeplug_channels = []
         for chan in channels:
             ch = {
-                "digital": {
+                "dmr": {
                     "id": fmt_chan_id(chan.internal_id),
                     "name": chan.name[:16],
                     "rxFrequency": chan.rx_freq,
@@ -149,13 +149,13 @@ class QDMRWriter:
             }
 
             if chan.tx_contact_id:
-                ch["digital"]["contact"] = fmt_contact_id(chan.tx_contact_id)
+                ch["dmr"]["contact"] = fmt_contact_id(chan.tx_contact_id)
 
             if chan.rx_grouplist_id and chan.rx_grouplist_id != "-":
-                ch["digital"]["groupList"] = fmt_grouplist_id(chan.rx_grouplist_id)
+                ch["dmr"]["groupList"] = fmt_grouplist_id(chan.rx_grouplist_id)
 
             if chan.aprs:
-                ch["digital"]["aprs"] = fmt_aprs(chan.aprs.internal_id)
+                ch["dmr"]["aprs"] = fmt_aprs(chan.aprs.internal_id)
 
             codeplug_channels.append(ch)
         self.codeplug["channels"] += codeplug_channels

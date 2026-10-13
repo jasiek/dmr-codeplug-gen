@@ -14,11 +14,6 @@ from callsign_matchers import NYNJCallsignMatcher, CTCallsignMatcher, MultiMatch
 NYC_LAT = 40.7128
 NYC_LNG = -74.0060
 
-# RepeaterBook state codes
-STATE_NY = "36"  # New York
-STATE_NJ = "34"  # New Jersey
-STATE_CT = "09"  # Connecticut
-
 
 class Recipe(USABaseRecipe):
     """NYC area codeplug recipe (100km radius covering NY/NJ/CT)."""
@@ -73,30 +68,23 @@ class Recipe(USABaseRecipe):
 
     def generate_nyc_analog_channels(self):
         """Generate analog channels for NYC area (NY/NJ/CT)."""
-        # Get repeaters from NY, NJ, and CT
-        ny_repeaters = RepeaterBookAPI().get_repeaters_by_state(STATE_NY)
-        nj_repeaters = RepeaterBookAPI().get_repeaters_by_state(STATE_NJ)
-        ct_repeaters = RepeaterBookAPI().get_repeaters_by_state(STATE_CT)
+        repeaters = RepeaterBookAPI().repeaters_near(
+            self.reference_lat, self.reference_lng, self.max_distance_km
+        )
 
-        all_channels = []
+        # Generate 2m channels
+        nyc_2m_generator = self.create_analog_channel_generator(
+            repeaters, band_range=(144.0, 148.0)
+        )
+        nyc_2m_channels = nyc_2m_generator.channels(self.chan_seq)
 
-        # Generate channels for each state
-        for state_repeaters in [ny_repeaters, nj_repeaters, ct_repeaters]:
-            # Generate 2m channels
-            state_2m_generator = self.create_analog_channel_generator(
-                state_repeaters, band_range=(144.0, 148.0)
-            )
-            state_2m_channels = state_2m_generator.channels(self.chan_seq)
+        # Generate 70cm channels
+        nyc_70cm_generator = self.create_analog_channel_generator(
+            repeaters, band_range=(420.0, 450.0)
+        )
+        nyc_70cm_channels = nyc_70cm_generator.channels(self.chan_seq)
 
-            # Generate 70cm channels
-            state_70cm_generator = self.create_analog_channel_generator(
-                state_repeaters, band_range=(420.0, 450.0)
-            )
-            state_70cm_channels = state_70cm_generator.channels(self.chan_seq)
-
-            all_channels.extend(state_2m_channels + state_70cm_channels)
-
-        return all_channels
+        return nyc_2m_channels + nyc_70cm_channels
 
     def prepare_analog_channels(self):
         """Prepare analog channels for NYC area."""

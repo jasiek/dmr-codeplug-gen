@@ -145,13 +145,13 @@ class AnalogChannelGeneratorFromRepeaterBook:
         Initialize analog channel generator from RepeaterBook data
 
         Args:
-            source: JSON data from RepeaterBook API
+            source: RXF XML root from api.codeplug.org (radio perspective)
             power: Transmit power setting
             aprs: APRS configuration
             filter_chain: Optional FilterChain for pre-filtering channels
             debug: If True, print debug information for filtered channels
         """
-        self._repeaters = source["results"]
+        self._repeaters = source.findall("repeaters/repeater")
         self.power = power
         self._channels = []
         self.aprs_config = aprs
@@ -163,60 +163,42 @@ class AnalogChannelGeneratorFromRepeaterBook:
             self.generate_channels(sequence)
         return self._channels
 
+    @staticmethod
+    def _float(node, path):
+        found = node.xpath(path)
+        if not found or not (found[0].text or "").strip():
+            return None
+        try:
+            return float(found[0].text)
+        except ValueError:
+            return None
+
     def generate_channels(self, sequence):
-        for repeater in self._repeaters:
-            # Skip if not analog mode or if required fields are missing
-            if repeater.get("FM Analog") != "Yes":
+        for node in self._repeaters:
+            if node.findtext("mode") != "fm":
                 continue
 
-            try:
-                # Get frequencies - new format provides Input Freq directly
-                rpt_output = float(repeater.get("Frequency", 0))
-                rpt_input = float(repeater.get("Input Freq", 0))
+            # Radio perspective: rx is the repeater output, tx its input
+            rpt_output = self._float(node, './qrg[@type="rx"]')
+            rpt_input = self._float(node, './qrg[@type="tx"]')
 
-                # Calculate offset to check if it's a repeater
-                offset = rpt_input - rpt_output
-
-                # Skip if no offset (not a repeater)
-                if abs(offset) < 0.0001:
-                    continue
-
-                # Skip if frequencies are 0 or invalid
-                if rpt_output == 0 or rpt_input == 0:
-                    continue
-
-            except (ValueError, TypeError):
+            # Skip if frequencies are missing or invalid
+            if not rpt_output or not rpt_input:
                 continue
 
-            # Get tones - check both PL and TSQ fields
-            rx_tone = None
-            tx_tone = None
-            try:
-                # Try PL first, then TSQ as fallback
-                tone_str = repeater.get("PL") or repeater.get("TSQ")
-                if tone_str and tone_str.strip():
-                    tone_val = float(tone_str)
-                    rx_tone = tone_val
-                    tx_tone = tone_val
-            except (ValueError, TypeError):
-                pass
+            # Skip if no offset (not a repeater)
+            if abs(rpt_input - rpt_output) < 0.0001:
+                continue
 
-            # Get location data
-            lat = None
-            lng = None
-            try:
-                if repeater.get("Lat"):
-                    lat = float(repeater.get("Lat"))
-                if repeater.get("Long"):
-                    lng = float(repeater.get("Long"))
-            except (ValueError, TypeError):
-                pass
+            rx_tone = self._float(node, './ctcss[@type="rx"]')
+            tx_tone = self._float(node, './ctcss[@type="tx"]')
 
-            # Get callsign and location
-            callsign = repeater.get("Callsign", "").strip()
-            qth = repeater.get("Nearest City", "").strip()
-            if not qth:
-                qth = repeater.get("Landmark", "").strip()
+            lat = self._float(node, "./location/latitude")
+            lng = self._float(node, "./location/longitude")
+
+            # qth is "City, State, County"; keep the city for the channel name
+            callsign = (node.findtext("qra") or "").strip()
+            qth = (node.findtext("qth") or "").split(",")[0].strip()
 
             # Use callsign or frequency as name
             name = f"{callsign} {qth}".strip()
@@ -243,7 +225,7 @@ class AnalogChannelGeneratorFromRepeaterBook:
                 aprs=self.aprs_config,
                 _lat=lat,
                 _lng=lng,
-                _locator=None,
+                _locator=(node.findtext("location/locator") or None),
                 _rpt_callsign=callsign,
                 _qth=qth,
             )

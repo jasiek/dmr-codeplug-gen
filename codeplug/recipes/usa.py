@@ -135,7 +135,7 @@ class USABaseRecipe(BaseRecipe):
         Create an analog channel generator with location and band filtering.
 
         Args:
-            repeaters: List of repeater data from RepeaterBook
+            repeaters: RXF XML root from RepeaterBookAPI
             band_range: Tuple of (min_freq, max_freq) in MHz
         """
         if self.reference_lat is None or self.reference_lng is None:
@@ -219,8 +219,10 @@ class Recipe(USABaseRecipe):
 
     def generate_ca_analog_channels(self):
         """Generate analog channels for California."""
-        # Get California repeaters
-        ca_repeaters = RepeaterBookAPI().get_repeaters_by_state("06")  # California
+        # Get repeaters around the reference point
+        ca_repeaters = RepeaterBookAPI().repeaters_near(
+            self.reference_lat, self.reference_lng, self.max_distance_km
+        )
 
         # Generate 2m channels
         ca_2m_generator = self.create_analog_channel_generator(

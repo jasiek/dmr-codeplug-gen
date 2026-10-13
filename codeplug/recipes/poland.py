@@ -30,6 +30,7 @@ from generators.zones import (
 )
 from aggregators import ChannelAggregator, ZoneAggregator, ContactAggregator
 from callsign_matchers import RegexMatcher
+from filters import FilterChain, BandFilter
 from datasources.przemienniki import PrzemiennikiAPI
 
 
@@ -95,6 +96,9 @@ class Recipe(BaseRecipe):
             aprs=self.analog_aprs_config
         )
 
+        # Przemienniki band queries also return out-of-band (e.g. 23cm) repeaters
+        band_filter = FilterChain([BandFilter()])
+
         self.analog_channels = ChannelAggregator(
             self.analog_aprs,
             self.analog_pmr_chan_gen,
@@ -102,11 +106,13 @@ class Recipe(BaseRecipe):
                 PrzemiennikiAPI().repeaters_2m(),
                 "High",
                 aprs=self.analog_aprs_config,
+                filter_chain=band_filter,
             ),
             AnalogChannelGeneratorFromPrzemienniki(
                 PrzemiennikiAPI().repeaters_70cm(),
                 "High",
                 aprs=self.analog_aprs_config,
+                filter_chain=band_filter,
             ),
         ).channels(self.chan_seq)
 

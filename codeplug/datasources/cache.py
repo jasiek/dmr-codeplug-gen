@@ -13,9 +13,10 @@ DEFAULT_BACKOFF = 2.0  # seconds, doubled each retry when no Retry-After header
 
 
 class FileCache:
-    def __init__(self, prefix, method=json):
+    def __init__(self, prefix, method=json, rate_limiter=None):
         self.prefix = prefix
         self.method = method
+        self.rate_limiter = rate_limiter
         pathlib.Path(self.__cache_dir()).mkdir(parents=True, exist_ok=True)
 
     def cached(self, key, source):
@@ -42,18 +43,24 @@ class FileCache:
     def __retrieve(self, source):
         backoff = DEFAULT_BACKOFF
         for attempt in range(MAX_RETRIES):
+            if self.rate_limiter:
+                self.rate_limiter.wait()
             response = requests.get(source)
+            if self.rate_limiter:
+                self.rate_limiter.update(response)
             if response.status_code == 429:
-                retry_after = response.headers.get("Retry-After")
-                delay = float(retry_after) if retry_after else backoff
                 if attempt == MAX_RETRIES - 1:
                     break
+                retry_after = response.headers.get("Retry-After")
+                delay = float(retry_after) if retry_after else backoff
                 print(
                     f"429 Too Many Requests for {source}; "
                     f"retrying in {delay:.0f}s "
                     f"(attempt {attempt + 1}/{MAX_RETRIES})"
                 )
-                time.sleep(delay)
+                # A rate limiter already waits out Retry-After in wait().
+                if not (self.rate_limiter and retry_after):
+                    time.sleep(delay)
                 backoff *= 2
                 continue
             response.raise_for_status()

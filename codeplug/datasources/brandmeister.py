@@ -5,14 +5,18 @@ from datetime import datetime, timedelta
 import requests
 
 from .cache import FileCache
+from .ratelimit import RateLimiter
 
 ContactDB = json.load(open("data/brandmeister_talkgroups.json"))
 UnlistedContactDB = json.load(open("data_static/brandmeister_unlisted_talkgroups.json"))
 
+# Shared by every Brandmeister client so the quota is tracked across them.
+RATE_LIMITER = RateLimiter(min_interval=1.0)
+
 
 class DeviceDB(FileCache):
     def __init__(self):
-        FileCache.__init__(self, "bm_devices")
+        FileCache.__init__(self, "bm_devices", rate_limiter=RATE_LIMITER)
         self.devices = self.cached(
             "repeaters",
             f"https://api.brandmeister.network/v2/device/?repeater=true",
@@ -30,7 +34,7 @@ class DeviceDB(FileCache):
 
 class TalkgroupAPI(FileCache):
     def __init__(self):
-        FileCache.__init__(self, "static_talkgroups")
+        FileCache.__init__(self, "static_talkgroups", rate_limiter=RATE_LIMITER)
 
     def static_talkgroups(self, device_id):
         response_json = self.cached(

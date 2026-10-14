@@ -6,6 +6,11 @@ import re
 from abc import ABC, abstractmethod
 
 
+def base_callsign(callsign: str) -> str:
+    """Strip Brandmeister decorations, e.g. "W2NJR Sprgfld NJ" or "W2RCR-BASE"."""
+    return re.split(r"[\s/-]", callsign.strip(), maxsplit=1)[0].upper()
+
+
 class CallsignMatcher(ABC):
     """Abstract base class for callsign matching."""
 
@@ -61,7 +66,7 @@ class NYNJCallsignMatcher(CallsignMatcher):
         )
 
     def matches(self, callsign: str) -> bool:
-        return bool(self.pattern.match(callsign.strip()))
+        return bool(self.pattern.match(base_callsign(callsign)))
 
 
 class CTCallsignMatcher(CallsignMatcher):
@@ -88,7 +93,7 @@ class CTCallsignMatcher(CallsignMatcher):
         )
 
     def matches(self, callsign: str) -> bool:
-        return bool(self.pattern.match(callsign.strip()))
+        return bool(self.pattern.match(base_callsign(callsign)))
 
 
 class CACallsignMatcher(CallsignMatcher):
@@ -114,7 +119,7 @@ class CACallsignMatcher(CallsignMatcher):
         )
 
     def matches(self, callsign: str) -> bool:
-        return bool(self.pattern.match(callsign.strip()))
+        return bool(self.pattern.match(base_callsign(callsign)))
 
 
 class NMCallsignMatcher(CallsignMatcher):
@@ -140,7 +145,7 @@ class NMCallsignMatcher(CallsignMatcher):
         )
 
     def matches(self, callsign: str) -> bool:
-        return bool(self.pattern.match(callsign.strip()))
+        return bool(self.pattern.match(base_callsign(callsign)))
 
 
 class MultiMatcher(CallsignMatcher):

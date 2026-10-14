@@ -22,6 +22,13 @@ class DeviceDB(FileCache):
             f"https://api.brandmeister.network/v2/device/?repeater=true",
         )
 
+    def devices_by_callsign(self, callsign):
+        """All devices registered under callsign, hotspots included."""
+        return self.cached(
+            f"bycall_{callsign.upper()}",
+            f"https://api.brandmeister.network/v2/device/byCall?callsign={callsign}",
+        )
+
     def devices_recently_active(self, days=30):
         return [
             d

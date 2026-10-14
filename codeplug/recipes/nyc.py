@@ -47,7 +47,9 @@ class Recipe(USABaseRecipe):
         """Prepare digital (DMR) channels from Brandmeister for NYC area.
 
         Uses callsign filtering to match NY/NJ (call district 2) and CT (call district 1)
-        repeaters, then filters by distance from NYC.
+        repeaters, then filters by distance from NYC. RepeaterBook DMR listings
+        near NYC are cross-checked against BM to pick up repeaters that BM
+        lists as hotspots or with bad coordinates.
         """
         usa_tgs = self.get_usa_talkgroups()
 
@@ -58,8 +60,11 @@ class Recipe(USABaseRecipe):
         )
 
         # Generate NYC-area digital channels with callsign filtering
+        dmr_repeaters = RepeaterBookAPI().repeaters_near(
+            self.reference_lat, self.reference_lng, self.max_distance_km, modes=("dmr",)
+        )
         nyc_digital_generator = self.create_digital_channel_generator(
-            usa_tgs, callsign_matcher=nyc_callsign_matcher
+            usa_tgs, callsign_matcher=nyc_callsign_matcher, repeaterbook=dmr_repeaters
         )
         self.nyc_digital_channels = nyc_digital_generator.channels(self.chan_seq)
 

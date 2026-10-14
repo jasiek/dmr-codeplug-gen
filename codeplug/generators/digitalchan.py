@@ -4,6 +4,7 @@ import maidenhead as mh
 
 from models import DigitalChannel, TxPower, DigitalAnytoneExtensions
 from datasources import brandmeister
+from callsign_matchers import base_callsign
 
 
 def channel_label(callsign, tg):
@@ -118,9 +119,12 @@ class DigitalChannelGeneratorFromBrandmeister:
         aprs_config,
         callsign_matcher=None,
         filter_chain=None,
+        repeaterbook=None,
         debug=False,
     ):
-        self.devices = brandmeister.DeviceDB().devices
+        self.device_db = brandmeister.DeviceDB()
+        self.devices = self.device_db.devices
+        self.repeaterbook = repeaterbook
         self._channels = []
         self.talkgroups = talkgroups
         self.aprs_config = aprs_config
@@ -176,6 +180,15 @@ class DigitalChannelGeneratorFromBrandmeister:
         - Power: Set to High for all repeater channels
         - APRS: Uses the aprs_config provided to the generator
 
+        RepeaterBook Cross-Check:
+        - If a RepeaterBook DMR RXF root is passed as repeaterbook, each listed repeater
+          not already covered by the Brandmeister repeater list (same callsign and
+          frequency) is looked up on Brandmeister by callsign, hotspots included
+        - The matched device supplies color code and static TGs; RepeaterBook supplies
+          frequencies, location and QTH, since BM data for these is often wrong
+        - Such devices bypass the callsign matcher and hotspot check, as RepeaterBook
+          has already vouched for them as repeaters
+
         Parameters:
         - sequence: A sequence generator providing unique internal IDs for each channel
 
@@ -183,19 +196,19 @@ class DigitalChannelGeneratorFromBrandmeister:
         - Populates self._channels list with generated DigitalChannel objects
         - Each channel receives a sequential internal_id from the provided sequence
         """
+        listed = []
         for dev in self.devices:
             if self.callsign_matcher and not self.callsign_matcher.matches(
                 dev["callsign"]
             ):
                 continue
 
-            if (
-                dev["rx"] == dev["tx"]
-                or dev["pep"] == 1
-                or dev.get("statusText") == "DMO"
-            ):
-                # Hotspot
+            if is_hotspot(dev):
                 continue
+
+            listed.append(dev)
+
+        for dev in listed + self.repeaterbook_devices(listed):
 
             for tg_id, slot in brandmeister.TalkgroupAPI().static_talkgroups(dev["id"]):
                 if slot == 0:
@@ -309,6 +322,87 @@ class DigitalChannelGeneratorFromBrandmeister:
                 # Assign ID and add to channels list
                 channel.internal_id = sequence.next()
                 self._channels.append(channel)
+
+    def repeaterbook_devices(self, listed):
+        """BM devices for RepeaterBook DMR repeaters missing from listed."""
+        if self.repeaterbook is None:
+            return []
+
+        listed_ids = {dev["id"] for dev in listed}
+        listed_by_call = {}
+        for dev in listed:
+            listed_by_call.setdefault(base_callsign(dev["callsign"]), []).append(dev)
+
+        found = []
+        for node in self.repeaterbook.findall("repeaters/repeater"):
+            if node.findtext("mode") != "dmr":
+                continue
+            callsign = (node.findtext("qra") or "").strip().upper()
+            rb = repeaterbook_location(node)
+            if not callsign or rb is None:
+                continue
+
+            known = listed_by_call.get(callsign, [])
+            if any(same_frequency(dev, rb["tx"]) for dev in known):
+                continue
+
+            candidates = [
+                dev
+                for dev in self.device_db.devices_by_callsign(callsign)
+                if dev["id"] not in listed_ids
+            ]
+            match = next(
+                (dev for dev in candidates if same_frequency(dev, rb["tx"])), None
+            )
+            if match is None and not known and candidates:
+                # Callsign unknown to the repeater list: BM often registers the
+                # repeater as a hotspot with bogus frequencies, so take the most
+                # recently seen device under that call
+                match = max(candidates, key=lambda dev: dev["last_seen"] or "")
+            if match is None:
+                if self.debug:
+                    print(
+                        f"[DigitalChannelGeneratorFromBrandmeister] No BM device for RepeaterBook {callsign} {rb['tx']}"
+                    )
+                continue
+
+            listed_ids.add(match["id"])
+            found.append({**match, "callsign": callsign, **rb})
+        return found
+
+
+def is_hotspot(dev):
+    return dev["rx"] == dev["tx"] or dev["pep"] == 1 or dev.get("statusText") == "DMO"
+
+
+def same_frequency(dev, tx):
+    try:
+        return abs(float(dev["tx"]) - tx) < 0.0001
+    except (TypeError, ValueError):
+        return False
+
+
+def repeaterbook_location(node):
+    """BM-style device fields from a RepeaterBook RXF node (radio perspective)."""
+
+    def number(path):
+        try:
+            return float(node.findtext(path))
+        except (TypeError, ValueError):
+            return None
+
+    # Radio receives the repeater output (BM tx) and transmits on its input (BM rx)
+    tx = number('qrg[@type="rx"]')
+    rx = number('qrg[@type="tx"]')
+    if not tx or not rx:
+        return None
+    return {
+        "tx": tx,
+        "rx": rx,
+        "lat": number("location/latitude"),
+        "lng": number("location/longitude"),
+        "city": (node.findtext("qth") or "").split(",")[0].strip(),
+    }
 
 
 class DigitalPMR446ChannelGenerator:

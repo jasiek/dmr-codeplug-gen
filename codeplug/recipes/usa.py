@@ -91,7 +91,7 @@ class USABaseRecipe(BaseRecipe):
         return self.brandmeister_contact_gen.matched_contacts("^260")
 
     def create_digital_channel_generator(
-        self, talkgroups, callsign_matcher=None, bands=None
+        self, talkgroups, callsign_matcher=None, bands=None, repeaterbook=None
     ):
         """
         Create a digital channel generator with location-based filtering.
@@ -100,6 +100,7 @@ class USABaseRecipe(BaseRecipe):
             talkgroups: List of talkgroup contacts
             callsign_matcher: Optional callsign matcher for filtering
             bands: Optional band filter ranges, defaults to 2m and 70cm
+            repeaterbook: Optional RepeaterBook DMR RXF root to cross-check against BM
         """
         if self.reference_lat is None or self.reference_lng is None:
             raise ValueError("reference_lat and reference_lng must be set in subclass")
@@ -127,6 +128,7 @@ class USABaseRecipe(BaseRecipe):
             callsign_matcher=callsign_matcher,
             default_contact_id=self.bm_special_gen.parrot().internal_id,
             filter_chain=filter_chain,
+            repeaterbook=repeaterbook,
             debug=self.debug,
         )
 

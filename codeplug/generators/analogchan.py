@@ -145,7 +145,7 @@ class AnalogChannelGeneratorFromRepeaterBook:
         Initialize analog channel generator from RepeaterBook data
 
         Args:
-            source: RXF XML root from api.codeplug.org (radio perspective)
+            source: RXF XML root from api.webchirp.org (radio perspective)
             power: Transmit power setting
             aprs: APRS configuration
             filter_chain: Optional FilterChain for pre-filtering channels

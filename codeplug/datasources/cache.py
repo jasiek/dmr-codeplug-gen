@@ -29,6 +29,10 @@ class FileCache:
             self.write_cache(key, content)
             return content
 
+    def request_headers(self):
+        """Extra HTTP headers for fetches; override to add auth."""
+        return {}
+
     def write_cache(self, key, value):
         filename = self.__cache_key(key)
         with open(filename, "w") as f:
@@ -45,7 +49,7 @@ class FileCache:
         for attempt in range(MAX_RETRIES):
             if self.rate_limiter:
                 self.rate_limiter.wait()
-            response = requests.get(source)
+            response = requests.get(source, headers=self.request_headers())
             if self.rate_limiter:
                 self.rate_limiter.update(response)
             if response.status_code == 429:

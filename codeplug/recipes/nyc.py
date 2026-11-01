@@ -7,16 +7,34 @@ from generators.zones import (
 )
 from generators.scanlists import StateScanListGenerator
 from aggregators import ZoneAggregator
-from datasources.repeaterbook import RepeaterBookAPI
+from lxml import etree
+
+from datasources.repeaterbook import RepeaterBookAPI, qth_state_county, split_rxf
 from callsign_matchers import NYNJCallsignMatcher, CTCallsignMatcher, MultiMatcher
+from filters import AnyFilter, RegionFilter
 
 # New York City coordinates
 NYC_LAT = 40.7128
 NYC_LNG = -74.0060
 
+# Eastern Long Island (Suffolk east of ~Riverhead out to Montauk/Orient Point)
+# lies beyond the NYC radius. The box starts west of where the NYC circle
+# stops covering the island, so there is no gap. Its north edge sits in
+# Long Island Sound: Orient Point is 41.16N, while the CT shore opposite
+# (Milford through New London) is 41.22N and up.
+LONG_ISLAND_BOUNDS = dict(min_lat=40.55, max_lat=41.2, min_lng=-73.2, max_lng=-71.8)
+
+# RepeaterBook search circle covering the box above
+LONG_ISLAND_SEARCH = (40.95, -72.45, 70.0)
+
+LONG_ISLAND_COUNTIES = {"Nassau", "Suffolk"}
+
+# Analog zones and scan lists are built per region, in this order
+ANALOG_REGIONS = ("NYC", "NJ", "LI")
+
 
 class Recipe(USABaseRecipe):
-    """NYC area codeplug recipe (100km radius covering NY/NJ/CT)."""
+    """NYC area codeplug recipe (100km radius covering NY/NJ/CT, plus all of Long Island)."""
 
     def __init__(
         self,
@@ -43,12 +61,28 @@ class Recipe(USABaseRecipe):
         self.reference_lng = NYC_LNG
         self.max_distance_km = 100.0
 
+    def location_filter(self):
+        """NYC radius plus the rest of Long Island."""
+        return AnyFilter(
+            [super().location_filter(), RegionFilter(**LONG_ISLAND_BOUNDS)]
+        )
+
+    def repeaters(self, modes=("fm",)):
+        """RepeaterBook listings for the NYC radius and eastern Long Island."""
+        return RepeaterBookAPI().repeaters_near_any(
+            [
+                (self.reference_lat, self.reference_lng, self.max_distance_km),
+                LONG_ISLAND_SEARCH,
+            ],
+            modes=modes,
+        )
+
     def prepare_digital_channels(self):
         """Prepare digital (DMR) channels from Brandmeister for NYC area.
 
         Uses callsign filtering to match NY/NJ (call district 2) and CT (call district 1)
-        repeaters, then filters by distance from NYC. RepeaterBook DMR listings
-        near NYC are cross-checked against BM to pick up repeaters that BM
+        repeaters, then filters to the NYC radius plus Long Island. RepeaterBook DMR
+        listings in that area are cross-checked against BM to pick up repeaters that BM
         lists as hotspots or with bad coordinates.
         """
         usa_tgs = self.get_usa_talkgroups()
@@ -60,9 +94,7 @@ class Recipe(USABaseRecipe):
         )
 
         # Generate NYC-area digital channels with callsign filtering
-        dmr_repeaters = RepeaterBookAPI().repeaters_near(
-            self.reference_lat, self.reference_lng, self.max_distance_km, modes=("dmr",)
-        )
+        dmr_repeaters = self.repeaters(modes=("dmr",))
         nyc_digital_generator = self.create_digital_channel_generator(
             usa_tgs, callsign_matcher=nyc_callsign_matcher, repeaterbook=dmr_repeaters
         )
@@ -71,67 +103,74 @@ class Recipe(USABaseRecipe):
         # Combine all digital channels
         self.digital_channels = self.nyc_digital_channels
 
-    def generate_nyc_analog_channels(self):
-        """Generate analog channels for NYC area (NY/NJ/CT)."""
-        repeaters = RepeaterBookAPI().repeaters_near(
-            self.reference_lat, self.reference_lng, self.max_distance_km
-        )
+    def analog_repeaters_by_region(self):
+        """RepeaterBook FM listings split into ANALOG_REGIONS."""
+        parts = split_rxf(self.repeaters(), analog_region)
+        empty = etree.fromstring("<rxf><repeaters/></rxf>")
+        return {region: parts.get(region, empty) for region in ANALOG_REGIONS}
 
-        # Generate 2m channels
-        nyc_2m_generator = self.create_analog_channel_generator(
-            repeaters, band_range=(144.0, 148.0)
-        )
-        nyc_2m_channels = nyc_2m_generator.channels(self.chan_seq)
-
-        # Generate 70cm channels
-        nyc_70cm_generator = self.create_analog_channel_generator(
-            repeaters, band_range=(420.0, 450.0)
-        )
-        nyc_70cm_channels = nyc_70cm_generator.channels(self.chan_seq)
-
-        return nyc_2m_channels + nyc_70cm_channels
+    def generate_analog_channels(self, repeaters):
+        """2m and 70cm channels for one region's repeaters."""
+        return self.create_analog_channel_generator(repeaters).channels(self.chan_seq)
 
     def prepare_analog_channels(self):
-        """Prepare analog channels for NYC area."""
-        self.nyc_analog_channels = self.generate_nyc_analog_channels()
+        """Prepare analog channels for NYC, NJ and Long Island."""
+        self.regional_analog_channels = {
+            region: self.generate_analog_channels(repeaters)
+            for region, repeaters in self.analog_repeaters_by_region().items()
+        }
+        self.nyc_analog_channels = [
+            chan for chans in self.regional_analog_channels.values() for chan in chans
+        ]
 
         self.analog_channels = (
             self.analog_aprs.channels(self.chan_seq) + self.nyc_analog_channels
         )
 
     def prepare_zones(self):
-        """Prepare channel zones organized by callsign and band."""
+        """Per-repeater digital zones, plus per-band analog zones for each region."""
         zone_seq = Sequence()
         self.zones = ZoneAggregator(
             ZoneFromCallsignGenerator2(self.digital_channels),
-            AnalogZoneByBandGenerator(self.nyc_analog_channels, prefix="NYC"),
+            *(
+                AnalogZoneByBandGenerator(channels, prefix=region)
+                for region, channels in self.regional_analog_channels.items()
+            ),
         ).zones(zone_seq)
 
     def prepare_scanlists(self):
-        """Prepare scan lists for analog and digital channels."""
-        # Create scan lists for NYC area
-        nyc_scanlist_gen = StateScanListGenerator(
-            "NYC", self.nyc_analog_channels, self.nyc_digital_channels
-        )
-
-        # Generate all scan lists using a single sequence to avoid ID collisions
+        """One analog scan list per region, plus one for all digital channels."""
         scanlist_seq = Sequence()
-        nyc_scanlists = nyc_scanlist_gen.scanlists(scanlist_seq)
+        self.scanlists = []
+        for region, channels in self.regional_analog_channels.items():
+            digital = self.nyc_digital_channels if region == "NYC" else []
+            self.scanlists += StateScanListGenerator(
+                region, channels, digital
+            ).scanlists(scanlist_seq)
 
-        self.scanlists = nyc_scanlists
+        scanlist_map = {
+            scanlist.name: scanlist.internal_id for scanlist in self.scanlists
+        }
 
-        # Create a mapping of scanlist names to IDs for channel assignment
-        scanlist_map = {}
-        for scanlist in self.scanlists:
-            scanlist_map[scanlist.name] = scanlist.internal_id
+        for region, channels in self.regional_analog_channels.items():
+            for channel in channels:
+                if f"{region} Analog" in scanlist_map:
+                    channel.scanlist_id = scanlist_map[f"{region} Analog"]
 
-        # Assign scan list IDs to channels
-        # NYC analog channels
-        for channel in self.nyc_analog_channels:
-            if "NYC Analog" in scanlist_map:
-                channel.scanlist_id = scanlist_map["NYC Analog"]
-
-        # NYC digital channels
         for channel in self.nyc_digital_channels:
             if "NYC Digital" in scanlist_map:
                 channel.scanlist_id = scanlist_map["NYC Digital"]
+
+
+def analog_region(node):
+    """
+    Zone region for a RepeaterBook listing: "NJ" for New Jersey, "LI" for
+    Nassau/Suffolk, and "NYC" for everything else (the five boroughs,
+    Westchester and the Hudson Valley, and nearby CT/PA).
+    """
+    state, county = qth_state_county(node)
+    if state == "New Jersey":
+        return "NJ"
+    if state == "New York" and county in LONG_ISLAND_COUNTIES:
+        return "LI"
+    return "NYC"

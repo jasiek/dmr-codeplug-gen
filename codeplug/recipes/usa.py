@@ -90,6 +90,14 @@ class USABaseRecipe(BaseRecipe):
         """Get Poland Brandmeister talkgroups (260xxx)."""
         return self.brandmeister_contact_gen.matched_contacts("^260")
 
+    def location_filter(self):
+        """Filter for the recipe's coverage area; defaults to the reference radius."""
+        return DistanceFilter(
+            reference_lat=self.reference_lat,
+            reference_lng=self.reference_lng,
+            max_distance_km=self.max_distance_km,
+        )
+
     def create_digital_channel_generator(
         self, talkgroups, callsign_matcher=None, bands=None, repeaterbook=None
     ):
@@ -110,11 +118,7 @@ class USABaseRecipe(BaseRecipe):
 
         # Create filter chain
         filters = [
-            DistanceFilter(
-                reference_lat=self.reference_lat,
-                reference_lng=self.reference_lng,
-                max_distance_km=self.max_distance_km,
-            ),
+            self.location_filter(),
             BandFilter(frequency_ranges=bands) if bands else BandFilter(),
         ]
 
@@ -132,13 +136,14 @@ class USABaseRecipe(BaseRecipe):
             debug=self.debug,
         )
 
-    def create_analog_channel_generator(self, repeaters, band_range):
+    def create_analog_channel_generator(self, repeaters):
         """
         Create an analog channel generator with location and band filtering.
 
+        The band filter keeps what the radio can use (2m and 70cm).
+
         Args:
             repeaters: RXF XML root from RepeaterBookAPI
-            band_range: Tuple of (min_freq, max_freq) in MHz
         """
         if self.reference_lat is None or self.reference_lng is None:
             raise ValueError("reference_lat and reference_lng must be set in subclass")
@@ -149,12 +154,8 @@ class USABaseRecipe(BaseRecipe):
         # Create filter chain
         filter_chain = FilterChain(
             [
-                DistanceFilter(
-                    reference_lat=self.reference_lat,
-                    reference_lng=self.reference_lng,
-                    max_distance_km=self.max_distance_km,
-                ),
-                BandFilter(frequency_ranges=[band_range]),
+                self.location_filter(),
+                BandFilter(),
             ]
         )
 
@@ -226,19 +227,9 @@ class Recipe(USABaseRecipe):
             self.reference_lat, self.reference_lng, self.max_distance_km
         )
 
-        # Generate 2m channels
-        ca_2m_generator = self.create_analog_channel_generator(
-            ca_repeaters, band_range=(144.0, 148.0)
+        return self.create_analog_channel_generator(ca_repeaters).channels(
+            self.chan_seq
         )
-        ca_2m_channels = ca_2m_generator.channels(self.chan_seq)
-
-        # Generate 70cm channels
-        ca_70cm_generator = self.create_analog_channel_generator(
-            ca_repeaters, band_range=(420.0, 450.0)
-        )
-        ca_70cm_channels = ca_70cm_generator.channels(self.chan_seq)
-
-        return ca_2m_channels + ca_70cm_channels
 
     def prepare_analog_channels(self):
         """Prepare analog channels for California."""

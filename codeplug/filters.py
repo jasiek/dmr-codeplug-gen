@@ -117,6 +117,27 @@ class BaseFilter:
         raise NotImplementedError("Subclasses must implement should_include")
 
 
+class AnyFilter(BaseFilter):
+    """
+    Passes an item if any of the wrapped filters passes it (logical OR).
+
+    Useful for coverage areas that are a union of shapes, e.g. a radius
+    around a city plus a bounding box for an outlying region.
+    """
+
+    def __init__(self, filters: List[BaseFilter]):
+        self.filters = list(filters)
+
+    def should_include(self, item: Any) -> Tuple[bool, str]:
+        reasons = []
+        for filter_instance in self.filters:
+            should_include, reason = filter_instance.should_include(item)
+            if should_include:
+                return (True, "")
+            reasons.append(reason)
+        return (False, "; ".join(reasons))
+
+
 class DistanceFilter(BaseFilter):
     """
     A filter that tests channels by distance from a reference point.

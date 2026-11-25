@@ -4,6 +4,7 @@ import argparse
 
 from anytone import AT878UV
 from writers import QDMRWriter
+from radio_limits import DEFAULT_RADIO, RADIOS, get_limits
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate DMR codeplug")
@@ -12,6 +13,12 @@ if __name__ == "__main__":
     parser.add_argument("dmr_id", type=int, help="DMR ID")
     parser.add_argument("recipe", help="Recipe name")
     parser.add_argument("timezone", nargs="?", default=None, help="Timezone (optional)")
+    parser.add_argument(
+        "--radio",
+        default=DEFAULT_RADIO,
+        choices=sorted(RADIOS),
+        help="dmrconf radio key; output is trimmed to this radio's limits",
+    )
     parser.add_argument(
         "--debug",
         action="store_true",
@@ -29,4 +36,4 @@ if __name__ == "__main__":
         QDMRWriter,
         args.timezone,
         debug=args.debug,
-    ).generate()
+    ).generate(get_limits(args.radio))

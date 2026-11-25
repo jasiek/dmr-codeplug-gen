@@ -115,22 +115,28 @@ class BaseRecipe:
         """Prepare talkgroup lists. Override in subclasses."""
         pass
 
-    def generate(self):
+    def generate(self, radio_limits=None):
+        """Prepare all sections, trim them to radio_limits, and write the codeplug."""
+        from radio_limits import CodeplugTrimmer, DEFAULT_RADIO, get_limits
+
         self.prepare()
+        trimmed = CodeplugTrimmer(radio_limits or get_limits(DEFAULT_RADIO)).trim(
+            contacts=self.contacts,
+            grouplists=self.grouplists,
+            analog_channels=self.analog_channels,
+            digital_channels=self.digital_channels,
+            zones=self.zones,
+            scanlists=self.scanlists,
+            roaming_channels=self.roaming_channels,
+            roaming_zones=self.roaming_zones,
+            analog_aprs_config=self.analog_aprs_config,
+            digital_aprs_config=self.digital_aprs_config,
+        )
         with open(self.filename, "wt") as f:
             writer = self.writer_class(f)
             self.radio_class(
                 dmr_id=self.dmr_id,
                 callsign=self.callsign,
-                contacts=self.contacts,
-                grouplists=self.grouplists,
-                scanlists=self.scanlists,
-                analog_channels=self.analog_channels,
-                digital_channels=self.digital_channels,
-                zones=self.zones,
-                roaming_channels=self.roaming_channels,
-                roaming_zones=self.roaming_zones,
-                analog_aprs_config=self.analog_aprs_config,
-                digital_aprs_config=self.digital_aprs_config,
                 timezone=self.timezone,
+                **trimmed,
             ).generate(writer)

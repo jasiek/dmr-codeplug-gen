@@ -22,6 +22,10 @@ CALLSIGN=YOUR_CALLSIGN DMRID=YOUR_DMRID make
 # USA recipe
 CALLSIGN=YOUR_CALLSIGN DMRID=YOUR_DMRID RECIPE=usa make
 
+# Target radio (dmrconf key, default d878uv; also d878uv2, d578uv).
+# Output is trimmed to the radio's limits (codeplug/radio_limits.py).
+CALLSIGN=YOUR_CALLSIGN DMRID=YOUR_DMRID RADIO=d578uv make
+
 # Validate the generated codeplug
 make validate
 

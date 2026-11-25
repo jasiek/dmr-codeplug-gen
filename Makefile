@@ -1,4 +1,5 @@
-PLUGFILE=plug-${RECIPE}.yaml
+RADIO ?= d878uv
+PLUGFILE=plug-${RECIPE}-${RADIO}.yaml
 
 default:  validate
 all: data/radiod_users.json data/brandmeister_talkgroups.json Makefile
@@ -12,10 +13,10 @@ data/brandmeister_talkgroups.json:
 ${PLUGFILE}: all $(wildcard codeplug/*.py)
 	uv run black .
 	rm -f ${PLUGFILE}
-	uv run python codeplug/cli.py --debug ${PLUGFILE} ${CALLSIGN} ${DMRID} ${RECIPE} ${TIMEZONE}
+	uv run python codeplug/cli.py --debug --radio ${RADIO} ${PLUGFILE} ${CALLSIGN} ${DMRID} ${RECIPE} ${TIMEZONE}
 
 validate: ${PLUGFILE} blank_radio/uv878_base.yml
-	dmrconf -R d878uv -y verify ${PLUGFILE}
+	dmrconf -R ${RADIO} -y verify ${PLUGFILE}
 
 program: validate
 	dmrconf -y write ${PLUGFILE} --device cu.usbmodem0000000100001

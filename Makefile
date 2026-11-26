@@ -16,7 +16,7 @@ ${PLUGFILE}: all $(wildcard codeplug/*.py)
 	uv run python codeplug/cli.py --debug --radio ${RADIO} ${PLUGFILE} ${CALLSIGN} ${DMRID} ${RECIPE} ${TIMEZONE}
 
 validate: ${PLUGFILE} blank_radio/uv878_base.yml
-	dmrconf -R ${RADIO} -y verify ${PLUGFILE}
+	uv run python codeplug/radio_limits.py ${RADIO} ${PLUGFILE}
 
 program: validate
 	dmrconf -y write ${PLUGFILE} --device cu.usbmodem0000000100001
@@ -25,7 +25,7 @@ lint: $(wildcard codeplug/*.py)
 	uv run pylint ./codeplug
 
 clean:
-	rm -rf ${PLUGFILE}
+	rm -rf ${PLUGFILE} $(PLUGFILE:.yaml=.bin)
 
 distclean: clean
 	rm -rf data/*

@@ -242,7 +242,7 @@ class DigitalChannelGeneratorFromBrandmeister:
                             color=dev["colorcode"],
                             slot=slot,
                             rx_grouplist_id=None,
-                            tx_contact_id=str(tg.internal_id),
+                            tx_contact_id=tg.internal_id,
                             aprs=self.aprs_config,
                             anytone=DEFAULT_ANYTONE_EXTENSIONS,
                             _lat=lat,

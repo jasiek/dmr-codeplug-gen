@@ -20,7 +20,7 @@ from codeplug.models import (
     TxPower,
     Zone,
 )
-from codeplug.radio_limits import RADIOS, CodeplugTrimmer, get_limits
+from codeplug.radio_limits import RADIOS, CodeplugTrimmer, dmrconf_command, get_limits
 
 
 def contact(i):
@@ -184,3 +184,35 @@ def test_roaming_caps_and_dangling_references():
     )
     assert [ch.internal_id for ch in result["roaming_channels"]] == [1, 2, 3]
     assert [(z.name, z.channels) for z in result["roaming_zones"]] == [("A", [1, 2])]
+
+
+def test_radio_without_scanlists_or_roaming_drops_them_in_one_line():
+    channels = [analog(i, scanlist_id=1) for i in range(1, 4)]
+    scanlists = [ScanList(1, "S1", [1, 2]), ScanList(2, "S2", [3])]
+    rchans = [roaming_channel(i) for i in range(1, 3)]
+    rzones = [DigitalRoamingZone(1, "A", [1, 2])]
+    result, report = trim(
+        get_limits("dm32uvrf"),
+        analog_channels=channels,
+        scanlists=scanlists,
+        roaming_channels=rchans,
+        roaming_zones=rzones,
+    )
+    assert result["scanlists"] == []
+    assert result["roaming_channels"] == []
+    assert result["roaming_zones"] == []
+    assert all(ch.scanlist_id is None for ch in result["analog_channels"])
+    assert report.splitlines() == [
+        "[DM-32UV (RadioFoundry)] scan lists: kept 0 of 2",
+        "[DM-32UV (RadioFoundry)] roaming channels: kept 0 of 2",
+        "[DM-32UV (RadioFoundry)] roaming zones: kept 0 of 1",
+    ]
+
+
+def test_dmrconf_command():
+    assert dmrconf_command("D578UV", "p.yaml") == [
+        "dmrconf", "-R", "d578uv", "-y", "verify", "p.yaml",
+    ]  # fmt: skip
+    assert dmrconf_command("dm32uvrf", "p.yaml") == [
+        "dmrconf", "-R", "openuv380", "-y", "encode", "p.yaml", "p.bin",
+    ]  # fmt: skip

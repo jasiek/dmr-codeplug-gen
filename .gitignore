@@ -164,4 +164,5 @@ cython_debug/
 *.img
 *.conf
 plug-*.yaml
+plug-*.bin
 cache/

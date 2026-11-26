@@ -22,7 +22,9 @@ CALLSIGN=YOUR_CALLSIGN DMRID=YOUR_DMRID make
 # USA recipe
 CALLSIGN=YOUR_CALLSIGN DMRID=YOUR_DMRID RECIPE=usa make
 
-# Target radio (dmrconf key, default d878uv; also d878uv2, d578uv).
+# Target radio (RADIO key, default d878uv; also d878uv2, d578uv, dm32uvrf).
+# dm32uvrf: DM-32UV on RadioFoundry firmware (no scan lists or roaming);
+# validated with `dmrconf -R openuv380 encode` (its verify segfaults).
 # Output is trimmed to the radio's limits (codeplug/radio_limits.py).
 CALLSIGN=YOUR_CALLSIGN DMRID=YOUR_DMRID RADIO=d578uv make
 
